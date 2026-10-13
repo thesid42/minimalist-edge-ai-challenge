@@ -15,7 +15,7 @@ import torch_pruning as tp
 from torchvision import models
 from thop import profile
 
-from .challenge_data import dataset, load_split, balanced_ids, prepare, digest
+from .challenge_data import dataset, data_protocol, balanced_ids, prepare, digest
 from .export import export_fp32, quantize
 
 
@@ -138,8 +138,8 @@ def export_candidate(args):
 
 def evaluate(args):
     ds = dataset(args.root)
-    split = load_split(args.split, len(ds))
-    ids = balanced_ids(split["val"], ds.targets, args.limit)
+    protocol = data_protocol(len(ds), args.split)
+    ids = balanced_ids(protocol["evaluation"], ds.targets, args.limit)
     options = ort.SessionOptions()
     options.intra_op_num_threads = args.threads
     options.inter_op_num_threads = 1
@@ -149,33 +149,37 @@ def evaluate(args):
         raise ValueError(f"Input contract mismatch: {entry.shape}")
     matrix = np.zeros((10,10),dtype=np.int64)
     started = time.perf_counter()
-    for idx in ids:
+    for position, idx in enumerate(ids, 1):
         x,y = ds[idx]
         logits = session.run(None,{entry.name:x.numpy()[None]})[0]
         if logits.shape != (1,10) or not np.isfinite(logits).all():
             raise ValueError("Invalid class output")
         matrix[y,int(logits.argmax())] += 1
+        if position % 2000 == 0:
+            print(f"Evaluated {position}/{len(ids)} images", flush=True)
     support = matrix.sum(1)
     recalls = np.divide(matrix.diagonal(), support, out=np.zeros(10,dtype=float), where=support>0)
     result = {"model": str(Path(args.model).resolve()), "model_sha256": digest(args.model),
               "accuracy": float(matrix.trace()/matrix.sum()), "examples": len(ids),
               "per_class_recall": dict(zip(ds.classes,recalls.tolist())), "class_support": support.tolist(),
               "worst_class_accuracy": float(recalls[support>0].min()), "confusion_matrix":matrix.tolist(),
-              "validation_indices": ids, "split_sha256": digest(args.split),
-              "provisional": split.get("provisional",False), "full_val_count":len(split["val"]),
+              "evaluation_indices": ids, "split_sha256": protocol["split_sha256"],
+              "evaluation_indices_sha256": __import__("hashlib").sha256(np.array(ids,dtype="<i8").tobytes()).hexdigest(),
+              "protocol": protocol["protocol"], "evaluation_scope": protocol["evaluation_scope"],
+              "provisional": protocol["provisional"], "full_evaluation_count":len(protocol["evaluation"]),
               "evaluation_seconds":time.perf_counter()-started,
-              "accuracy_caveat":"Organizer split required for official claim; provisional checkpoint overlap is unknown",
+              "accuracy_caveat":protocol["accuracy_caveat"],
               "threads":args.threads,"provider":"CPUExecutionProvider"}
     Path(args.output).parent.mkdir(parents=True,exist_ok=True)
     Path(args.output).write_text(json.dumps(result,indent=2),encoding="utf-8")
-    print(json.dumps({k:v for k,v in result.items() if k not in ("validation_indices","confusion_matrix")},indent=2))
+    print(json.dumps({k:v for k,v in result.items() if k not in ("evaluation_indices","confusion_matrix")},indent=2))
 
 
 def recover(args):
     model, recipe = restore_recipe(args.recipe)
     ds = dataset(args.root)
-    split = load_split(args.split,len(ds))
-    train_ids = balanced_ids(split["train"],ds.targets,args.train_limit)
+    protocol = data_protocol(len(ds), args.split)
+    train_ids = balanced_ids(protocol["train"],ds.targets,args.train_limit)
     teacher = load_model(args.teacher,teacher=True).requires_grad_(False) if args.teacher else None
     torch.manual_seed(42)
     loader = torch.utils.data.DataLoader(torch.utils.data.Subset(ds,train_ids),
@@ -207,7 +211,8 @@ def recover(args):
                             "teacher_sha256":digest(args.teacher) if args.teacher else None,
                             "alpha":args.alpha,"temperature":args.temperature,"lr":args.lr,
                             "seed":42,"batch_size":args.batch_size,"bn_running_stats":"frozen",
-                            "split_sha256":digest(args.split),"history":history,
+                            "split_sha256":protocol["split_sha256"], "protocol":protocol["protocol"],
+                            "available_train_count":len(protocol["train"]), "history":history,
                             "seconds":time.perf_counter()-started})
     (out/"recipe.json").write_text(json.dumps(recipe,indent=2),encoding="utf-8")
 
@@ -216,7 +221,7 @@ def main():
     torch.set_num_threads(4);torch.manual_seed(42);np.random.seed(42)
     p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest="command",required=True)
     d=sub.add_parser("prepare");d.add_argument("--root",default="data");d.add_argument("--split")
-    d.add_argument("--output",default="results/challenge_data");d.add_argument("--calibration-count",type=int,default=256)
+    d.add_argument("--output",default="results/all_data/challenge_data");d.add_argument("--calibration-count",type=int,default=256)
     e=sub.add_parser("export");e.add_argument("--checkpoint",default="Models/student_mobilenetv2_distilled.pt")
     e.add_argument("--recipe");e.add_argument("--output",required=True);e.add_argument("--prune",type=float,default=0)
     e.add_argument("--round-to",type=int,default=8);e.add_argument("--calibration")
@@ -225,12 +230,12 @@ def main():
     e.add_argument("--protect-ends",action="store_true");e.add_argument("--method",choices=["MinMax","Entropy","Percentile"],default="MinMax")
     e.add_argument("--protect-depthwise",action="store_true")
     v=sub.add_parser("evaluate");v.add_argument("--model",required=True);v.add_argument("--root",default="data")
-    v.add_argument("--split",required=True);v.add_argument("--output",required=True)
-    v.add_argument("--limit",type=int,default=0,help="0 evaluates full validation; nonzero is a labelled diagnostic subset")
+    v.add_argument("--split",help="Optional legacy split; omitted uses every EuroSAT image");v.add_argument("--output",required=True)
+    v.add_argument("--limit",type=int,default=0,help="0 evaluates all data; nonzero is a labelled diagnostic subset")
     v.add_argument("--threads",type=int,default=1)
-    f=sub.add_parser("recover");f.add_argument("--recipe",required=True);f.add_argument("--split",required=True)
+    f=sub.add_parser("recover");f.add_argument("--recipe",required=True);f.add_argument("--split",help="Optional legacy split; omitted trains on all data")
     f.add_argument("--root",default="data");f.add_argument("--teacher");f.add_argument("--output",required=True)
-    f.add_argument("--epochs",type=int,default=1);f.add_argument("--train-limit",type=int,default=1000)
+    f.add_argument("--epochs",type=int,default=1);f.add_argument("--train-limit",type=int,default=0,help="0 uses all 27000 images; nonzero is a short diagnostic run")
     f.add_argument("--batch-size",type=int,default=8);f.add_argument("--lr",type=float,default=1e-4)
     f.add_argument("--temperature",type=float,default=4);f.add_argument("--alpha",type=float,default=.5)
     args=p.parse_args()

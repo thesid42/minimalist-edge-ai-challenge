@@ -1,0 +1,14 @@
+{
+  "accuracy": 0.98,
+  "params_million": 23.53,
+  "size_mb": 22.67,
+  "macs_giga": 4.13,
+  "worst_class_accuracy": null,
+  "latency_ms": null,
+  "peak_ram_mb": null,
+  "joules_per_inference": null,
+  "source": "Challenge PDF pages 2-3 baseline figures",
+  "source_pdf_sha256": "9099b26c4b16df3f2b868ab2ccd85f10019e1ad8e64bbb99b11a489594cc99ca",
+  "status": "PDF reference transcribed at user request, not reproduced measurements",
+  "caveat": "Parameter and MAC figures match supplied ResNet-50 teacher rather than MobileNetV2 student; size conflicts with both supplied checkpoints. Worst class is XX.XX placeholder; runtime and energy are absent."
+}

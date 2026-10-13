@@ -1,124 +1,80 @@
-# Confirmed challenge and exploration plan
+# EuroSAT compression: current plan
 
-The revised brief fixes the problem: compress an already-distilled torchvision MobileNetV2, trained on EuroSAT RGB satellite images, for ten land-use classes. ResNet-50 is an optional recovery teacher. Input remains 1 x 3 x 224 x 224. The strongest initial direction is **selective static quantization**, followed by cautious expansion-channel pruning with recovery if its measured benefit justifies the accuracy cost.
+The organizers clarified through the team that **no split will be supplied**, training may use **all 27,000 EuroSAT images**, and each team establishes its own baseline by running the supplied MobileNetV2 on its laptop. This supersedes the PDF's split instructions and printed baseline figures. The optional ResNet-50 is a recovery teacher, not the baseline.
 
-Small language models do not solve this supplied image-classification task. Replacing the supplied student with an unrelated architecture also weakens checkpoint reproducibility and would require organizer clarification. Work from the provided student.
+The pipeline now follows this protocol by default. `recover --train-limit 0` uses all images and is the default. `evaluate --limit 0` measures all images and is also the default. Calibration draws a representative balanced subset from the full training pool. Accuracy on that pool is labelled **training-set accuracy**; it does not estimate held-out performance.
 
-## What is confirmed and what remains missing
+## Our baseline
 
-The PDF's only downloadable Drive links point to the two supplied model files. It contains no download for the official split, baseline metrics or starter notebook. It explicitly says these are provided at kickoff. Local fallback testing is useful, but cannot claim official accuracy.
+Measure the unchanged supplied student before any recovery training or compression. It has **2,236,682 parameters**, approximately **0.32622G THOP MACs**, and **8.5063 MiB FP32 ONNX size**. Its original checkpoint is 8.7723 MiB; size ratios for comparisons use ONNX against ONNX.
 
-EuroSAT RGB is downloaded and checked: 27,000 images, ten alphabetically ordered classes, no unreadable files, matching torchvision archive checksum. Preprocessing follows the brief exactly: Resize(224), ToTensor, Normalize mean [.485,.456,.406], std [.229,.224,.225]. This is RGB, not the 13-band multispectral dataset. Dataset order is hashed because a numeric split is meaningful only against the same ordered file list.
+Full-data evaluation of the original student gives **99.16296% accuracy** and **95.84% minimum class recall**, for PermanentCrop. The class support sums to 27,000. All candidate accuracy comparisons use exactly the same image indices, preprocessing and class ordering.
 
-The diagnostic split is seed-42 class-stratified 80/20, with 21,600 train and 5,400 validation images. The pilot uses the same balanced 500 validation images for every candidate, 50 per class. Calibration uses only the provisional training partition. **The checkpoints' original training membership is unknown; provisional validation may overlap it.** All pilot accuracy is diagnostic and may be optimistic.
+`baseline_metrics.json` is generated from full-data accuracy and fresh laptop CPU runtime/RAM/energy measurements. `configs/pdf_baseline_reference.json` preserves the earlier printed reference, with its discrepancy explanation. It has no role in current ratios. Current evidence is under `results/all_data`; the original 500-image pilot is under `results/challenge`.
 
-Outstanding: official val_split.json, baseline_metrics.json, starter notebook, AI Hub account configuration and common device profile. If organizers explicitly permit a self-created split, retain its manifest and use exactly the same indices for baseline and final; do not silently treat this provisional split as theirs.
+Preprocessing remains Resize(224), ToTensor and ImageNet normalization. Fixed input is (1, 3, 224, 224). Dataset archive checksum and all 27,000 images have been verified, and sample ordering is hashed. The local CPU environment is tested and pinned. Current code uses no GPU.
 
-## Correct denominator
+## Current full-data comparison
 
-Measured directly from the supplied files and exact architectures:
+| Metric | Unchanged FP32 student | Selective INT8 |
+|---|---:|---:|
+| Training-set accuracy, all 27,000 images | 99.16296% | 98.41111% |
+| Worst-class recall | 95.84% | 95.43% |
+| Learned parameters | 2,236,682 | 2,236,682 |
+| Exported ONNX MiB | 8.5063 | 3.7720 |
+| CPU mean latency, 4 threads | 2.2676 ms | 5.2400 ms |
+| CPU median latency, 4 threads | 2.1036 ms | 5.1842 ms |
+| Peak process RSS, 4 threads | 78.73 MiB | 88.11 MiB |
+| Estimated energy, 4 threads | 0.04958 J/inference | 0.11916 J/inference |
 
-| Model | Trainable parameters | Checkpoint MiB | THOP MACs at 224 |
-|---|---:|---:|---:|
-| MobileNetV2 student | 2,236,682 | 8.772 | 0.3262 G |
-| ResNet-50 teacher | 23,528,522 | 90.063 | 4.1317 G |
+Selective precision loses 0.75185 percentage points of overall accuracy and 0.40667 points of worst-class recall. Storage is 2.255x smaller, but four-thread median latency is 2.465x higher and estimated energy is 2.403x higher. It remains a storage candidate rather than a winner across efficiency axes. The full-data vulnerable class shifts from PermanentCrop in FP32 to AnnualCrop in selective INT8; that makes crop-class calibration/layer sensitivity a useful next experiment.
 
-The brief's baseline table lists [23.53] M parameters, [4.13] G MACs and [22.67] MB, which is internally inconsistent with the provided student. Its parameter/MAC figures match the teacher. The printed accuracy is [98.00]% and worst-class accuracy is [XX.XX]%. At the user's explicit request, baseline_metrics.json transcribes the printed 98.00%, 23.53M, 22.67 MB and 4.13G values. Unknown fields remain null. The summary includes clearly named pdf_reference_* ratios using these numbers, alongside measured-student ratios; PDF ratios must not be represented as measured student compression. **Do not reuse the earlier pre-release 10x compression bands**: the new PDF has a weighted rubric but no numeric bands or exact combined score formula, despite referring to calibrated bands.
+Both graphs were measured in separate processes, serially, with identical timing input, provider, warmup/run counts and thread settings. Energy used 20-second four-thread windows; startup logs verify TDP/CPU-load estimation. Baseline mean latency is the primary `latency_ms` field, with median and P95 also retained. No teacher or PDF denominator is used.
 
-Record any later organizer JSON separately, reproduce baseline accuracy, and explain any discrepancy before submitting. Compression must be relative to the supplied MobileNetV2. Compare like-for-like ONNX file sizes as an engineering measurement; also report original checkpoint size and use the organizer's prescribed file denominator for official metrics. Quantization changes storage precision, not the number of learned parameters.
+## Evidence from the earlier pilot
 
-## Constraints and scoring implications
+The historical pilot used a temporary split, 500 evaluation images and short recovery on 500 training images. Those results are screening evidence, not current full-data results or claims of full-data training. The complete record is in [historical_pilot_analysis.md](docs/historical_pilot_analysis.md).
 
-Accuracy/reliability 25 points, compression 20, RAM/latency 20, energy 20, reproducibility 10, engineering judgment 5. Mean accuracy alone is insufficient: record all ten recalls, worst-class recall, support and confusion matrix. A small candidate with class collapse is a poor choice even if it wins size.
+- Full MinMax S8S8 at 256 calibration images reached 91.0% diagnostic accuracy; Percentile at the same sample count reached 96.2%.
+- Protecting the ends and depthwise convolutions reached 98.4%, versus 99.2% for the pilot FP32 student. It reduced ONNX size about 2.25x, with unchanged parameter count.
+- That selective INT8 graph was about 40% slower at one CPU thread, and slower at four threads too. It did not improve process RAM or estimated energy on this laptop. Keep the FP32 fallback.
+- Uniform channel pruning collapsed class performance even at nominal 5%. Expansion-only 5% was better, but fell to 83.2% before recovery.
+- One short epoch on 500 training images recovered expansion-pruned accuracy to 95.6% with CE and 96.0% with teacher guidance. Worst-class recalls remained 76% and 82%. The two-image KD gain is not statistically strong evidence of superiority.
 
-CPU-only is the preparation assumption; no GPU is provided. Prefer experiments that complete in minutes. Export the actual final model to ONNX and measure that artifact. Use static QDQ with real-image calibration and shape preprocessing, opset 13 / dynamo=False. The fixed external input shape does not establish permission to internally downsample: the brief also says input stays 224, so treat lower internal resolution as a clarification-dependent idea.
+Selective INT8 is freshly calibrated using the full training pool and evaluated on all data for the current comparison. Full-data recovery training has **not** been run in this protocol update. The commands now support it; budget its CPU time separately from the much shorter full-dataset inference benchmark.
 
-Laptop profiling is explicitly allowed if AI Hub is unavailable. The updated brief no longer specifies Arduino UNO Q. Use the common device if organizers name one; do not revive the earlier board/proxy assumption.
+## Experiments to prioritize
 
-Energy is a baseline/final ratio on the same machine. TDP estimation is allowed if labelled. Never rank teams by raw laptop Joules or derive unsupported board energy. Long enough measurement windows, consistent input/thread count and logging of power-estimation mode make the claim reproducible.
-
-## Initial evidence
-
-See results/challenge/summary.csv and summary.json for current consolidated measurements. Each candidate uses the same 500 provisional validation examples. No recovery is applied unless the candidate name explicitly says recovery.
-
-Diagnostic accuracy: FP32 measured baseline 99.2%; full S8S8 MinMax with 128 calibration images 92.6%; U8U8 at 128 images 91.4%; S8S8 MinMax at 256 images 91.0%; Percentile at 256 images 96.2%; keeping the first/last convolutions and classifier FP32 at 256 images 96.0%; also protecting depthwise layers 98.4%, with worst-class recall 94% versus baseline 96%.
-
-This is a useful controlled comparison: 256-image MinMax versus 256-image Percentile isolates the calibration method; 256-image full MinMax versus end-protected versus end-and-depthwise-protected isolates precision policy. Increasing sample count alone did not help in this run. U8U8 is worth testing on AVX2 but did not recover accuracy here. A local gain does not establish device-toolchain compatibility or official-split accuracy.
-
-Uniform structural pruning, nominal 5% / 10% with channel multiples of eight, dropped accuracy to 16.0% / 17.2%. Dependency handling and export parity pass, but both models collapse semantically. Expansion-only pruning, preserving bottleneck outputs/residual widths and ranking BN-scaled projection-column norms, improves the starting point but still drops to 83.2% / 51.0% without recovery. Nominal channel ratio is not parameter reduction: expansion 5% removes about 4.35% of parameters, while uniform 5% removes about 10.41%. Rounding can make small layers lose a larger fraction than the headline ratio.
-
-The initial results support protecting cheap sensitive layers and targeting high-parameter pointwise convolutions. They do **not** support choosing a pruned model without recovery. Three pipeline tests pass: split misuse rejection, balanced partition sampling, and deterministic dependency-safe replay / fixed-input ONNX export of the actual student. CPU dependency integrity passes. An eight-image teacher-guided recovery smoke test completes and its state replays into a valid ONNX graph; it is not an accuracy-improvement claim.
-
-## Recovery, runtime and energy results
-
-Expansion-only 5% pruning followed by one epoch on the same 500 provisional training images reached 95.6% with CE and 96.0% with teacher KL + CE, from 83.2% before recovery. Worst-class recall was 76% / 82%, versus baseline 96% and selective pointwise INT8 94%. The KD improvement is only two images out of 500; one seed cannot establish a reliable superiority claim. Reported recovery times were 71.7 / 101.6 seconds during partially concurrent preparation. They are indicative, not a controlled serial cost comparison. An accuracy recovery gain is clear; the accuracy/parameter tradeoff still does not beat the unpruned selective-quantization candidate for reliability.
-
-| Candidate | Diagnostic accuracy | Worst-class recall | ONNX MiB | CPU median, 1 thread | CPU median, 4 threads |
-|---|---:|---:|---:|---:|---:|
-| FP32 student | 99.2% | 96% | 8.506 | 7.077 ms | 2.167 ms |
-| Full S8S8, MinMax / 256 | 91.0% | 66% | 2.526 | 9.882 ms | 5.251 ms |
-| Full S8S8, Percentile / 256 | 96.2% | 80% | 2.526 | 9.709 ms | 5.788 ms |
-| Protect ends + depthwise | 98.4% | 94% | 3.772 | 9.917 ms | 5.333 ms |
-| Expansion 5% + CE | 95.6% | 76% | about 8.14 | 6.733 ms | 2.164 ms |
-| Expansion 5% + KD | 96.0% | 82% | about 8.14 | 6.763 ms | 2.058 ms |
-
-The selective INT8 graph is 2.255x smaller than measured FP32 ONNX, with unchanged parameter count, but 40.1% slower at one thread and 2.46x slower at four threads. Its RSS peak was 87.3 MiB versus baseline 85.3 MiB, so it did not improve peak process memory here. Full INT8 uses less RAM but loses much more accuracy. Small RSS differences can reflect process/runtime allocation variation and should not be overinterpreted.
-
-Same-machine, same-input, one-thread 20-second CodeCarbon windows estimated 0.09414 J/inference for FP32 and 0.13400 for selective INT8, a 1.424x increase. Startup logs explicitly show TDP / CPU-load fallback; idle GPU power was excluded. These are CPU/RAM estimates, not hardware-meter readings or AI Hub board measurements. The slower graph did not earn an energy win on this machine.
-
-Therefore keep **both** the original FP32 high-accuracy/runtime fallback and the selective INT8 storage candidate. The latter is worth testing on the actual organizer target, whose kernels may behave differently. Further pruning needs layer sensitivity and stronger low-cost recovery; do not submit the tested unrecovered pruning states. The published results cover thirteen model variants, twenty-six isolated thread-specific timing/RAM measurements and two energy estimates.
-
-## Exploration priorities
-
-| Priority | Area | Controlled experiment | What would justify keeping it |
+| Priority | Area | Controlled experiment | Decision criterion |
 |---|---|---|---|
-| 1 | Selective static INT8 | Full quantization vs protect ends vs protect ends + depthwise, same calibration | Near-baseline overall/worst-class recall with smaller storage and measured runtime benefit |
-| 1 | Calibration sensitivity | Balanced training samples 64/128/256/512; MinMax vs Percentile vs Entropy at fixed sample count | Improved vulnerable-class recall; stable result on full official validation |
-| 2 | Layer sensitivity | Quantize/prune one block at a time; compare margin changes and recall | Identify cheap layers to protect and safe pointwise channels to remove |
-| 2 | Expansion-only pruning | 1/2/5% first; round-to 1 vs 8; preserve bottlenecks, stems and head | Physical parameter/MAC reduction that survives short recovery |
-| 2 | Recovery cost versus accuracy | Same pruned state, same 500/1000 training images, one epoch: hard-label CE vs CE + teacher KL | Retained worst-class recall and a documented CPU-time budget |
-| 3 | BN-stat recalibration | Recompute BN statistics on training-only images without gradients; compare frozen-BN recovery | Cheap recovery of distribution shifts without many optimization steps |
-| 3 | Prune -> recover -> quantize | Best recovered small model, recalibrated on representative training images | Gains on both parameter count and disk footprint without compounded accuracy collapse |
-| 3 | Teacher-logit caching | Cache ResNet logits for a fixed deterministic training subset, reuse across recovery trials | Less CPU time than repeated teacher inference with equivalent loss/data |
-| 4 | Runtime execution | Same graphs with one/four threads; verify graph fusion and hardware target | Consistent latency/RAM/energy improvements without changing classification |
-| 4 | QAT or block removal | Only if PTQ/selective precision cannot meet accuracy and time remains | Clear advantage that exports and profiles within the remaining budget |
+| 1 | Selective precision | Full QDQ vs protected ends vs protected ends + depthwise, same calibration | Retain overall and minimum class recall with useful size/runtime tradeoffs |
+| 1 | Calibration sensitivity | 64/128/256/512 balanced samples; fixed-count MinMax vs Percentile vs Entropy | Stable full-data recall for vulnerable classes |
+| 2 | Layer sensitivity | Quantize or remove channels from one block at a time | Identify safe pointwise layers and cheap sensitive layers worth protecting |
+| 2 | Expansion-channel pruning | Start 1/2/5%, preserve bottleneck outputs/residual dimensions, compare round-to 1 and 8 | Physical parameter/MAC reduction that survives recovery |
+| 2 | All-data recovery | Same pruned state, one epoch over all 27,000 images, CE vs teacher KL + CE | Accuracy and worst-class recovery within the available CPU-time budget |
+| 3 | Teacher-logit caching | Cache teacher outputs for exact deterministic training inputs | Lower repeated recovery cost with matching distillation targets |
+| 3 | BN recalibration | Update BN running statistics on the full training pool without gradients | Cheap recovery before longer optimization |
+| 3 | Prune -> recover -> quantize | Recalibrate the best recovered student | Gains in parameter count and disk size without compounded accuracy loss |
+| 4 | Actual-target execution | Profile the shortlisted graphs on the common AI Hub device if available | Check whether ARM/device kernels improve INT8 beyond laptop behavior |
 
-For cached logits, bind the cache to teacher SHA, training indices, preprocessing and any augmentations. The current recovery has deterministic evaluation preprocessing; augmented images would invalidate a single cached logit per image. Freeze teacher weights, use no_grad, temperature-squared KL, and measure wall time. More teacher compute is a cost to justify, not an automatic requirement.
+Cache identity must include teacher hash, preprocessing, image ordering and augmentations. A single cached output per image is valid for deterministic inputs; augmented variants require corresponding targets. Teacher weights stay frozen, outputs use no_grad, and KL is scaled by temperature squared. Compare identical training order and seeds.
 
-Avoid spending time on mask-only unstructured sparsity as a size/latency optimization: standard dense storage and kernels retain the zeros. Avoid global aggressive pruning, uncontrolled architecture replacement, dynamic convolution quantization, and accuracy claims from the teacher denominator. FP16 is not a default CPU speedup; test only if the actual runtime/target supports it efficiently. Four-bit weight-only transformer examples do not automatically apply to convolutional MobileNetV2.
+Avoid mask-only sparsity as a dense-storage/CPU speed optimization. Avoid aggressive uniform pruning, unsupported dynamic convolution quantization, and substituting unrelated LLMs for the specified image task. Lower input resolution needs clarification because the brief fixes 224x224. No current numerical scoring bands justify reviving the old 10x compression target.
 
-## Experiment protocol and selection
+## Measurement and selection
 
-Reproduce the official student first. Keep its exact original weights unchanged. Use the organizer split and preprocessing for every accuracy comparison; separate training/calibration data from validation. Log source and output hashes, parameters, MACs, file bytes, confusion matrix, all recalls, sample count, technique settings and CPU training time after every stage.
+For each candidate record training-set accuracy, every class recall, worst class, confusion matrix, parameter count, MACs, exact file bytes, latency, peak RSS and energy. Baseline and candidate must use the same data, CPU thread count, provider and measurement method. Preserve source/output hashes and recipe settings.
 
-Timing uses isolated fresh processes: one model, batch one, fixed CPU thread count, 20 warmups, 300 timed runs, median/mean/P95 and 5-ms RSS polling. Accuracy evaluation runs separately, so importing PyTorch for dataset preprocessing does not contaminate the reported ONNX-worker RAM. RSS includes the Python/runtime process footprint; it is not just weights or activation memory. A single real image is sufficient for repeatable timing, not for dataset accuracy.
+Runtime measurements use fresh ONNX-only processes, fixed batch one, 20 warmups, 300 timed runs, mean/median/P95 and 5-ms RSS sampling. Dataset accuracy is computed in a separate process so PyTorch preprocessing imports do not contaminate the ONNX runtime RAM claim. Compare process peak RSS rather than pretending it is weight memory alone.
 
-Treat accuracy, worst-class recall, size, parameters, RAM, latency and energy as separate axes. Plot the Pareto curve. Keep a high-accuracy FP32 fallback until a candidate passes the official full validation and runtime checks. Retain documented failures: the scoring explicitly rewards decisions supported by negative results.
+CodeCarbon uses a TDP/CPU-load estimate on this Windows/AMD laptop. Measure baseline and candidate with identical thread settings and representative input, and at least a 20-second window; record mode and startup logs. These are CPU/RAM estimates, not hardware-meter or target-board energy.
 
-ONNX-size ratio and checkpoint-size ratio can differ due to serialization, folding and quantization metadata. Publish exact bytes and both formats instead of mixing denominators. CPU thread tuning must be applied identically to baseline and final. A parameter reduction need not reduce latency when operator overhead or alignment dominates.
+Select a Pareto point across accuracy, minimum recall, size, parameters, RAM, latency and energy. A storage gain with latency/energy regressions is a tradeoff, not an overall efficiency win. Keep an unchanged FP32 fallback until the shortlisted candidate passes complete all-data evaluation and runtime checks.
 
-## Competition time budget
+## Competition budget and deliverables
 
-1. First 30-45 minutes: obtain official split/baseline, verify dataset order, reproduce student, export FP32 and submit an early working AI Hub job if configured.
-2. Next 60-90 minutes: controlled calibration / selective-precision sweep. Full validation for the best two choices; capture per-class failures.
-3. Next 90-120 minutes: tiny expansion pruning, short CE/KD or BN recovery; reject class collapse quickly on a diagnostic subset before expensive full validation.
-4. Next 60 minutes: quantize the best recovered state and compare against the best unpruned selective-INT8 graph.
-5. Reserve at least 90 minutes at the end: same-method baseline/final timing, memory and energy, full validation, final Hub/local profile, Pareto plot, metrics.json, 1-2-page report and clean reproduction run.
+First reproduce the full-data laptop baseline and export a working fallback. Spend the initial experiment window on calibration/selective precision. Next try tiny expansion pruning and budget one all-data recovery epoch deliberately; full-data teacher-guided CPU training can be much longer than inference. Reserve at least 90 minutes for final full-dataset evaluation, same-method baseline/final runtime and energy, profiling, curve/report generation, and reproduction from the original checkpoint.
 
-With multiple teammates, assign evaluation/reproducibility, quantization, pruning/recovery, and profiling/reporting. Avoid simultaneous CPU-heavy experiments during measurements. No exact scoring optimizer is possible until organizers clarify the final numerical bands or formula; select a defensible Pareto point rather than chase the obsolete pre-release 10x target.
+Deliver one model, complete metrics.json, a 1-2-page technical report with tradeoff curve, and reproducible source. Include the organizer's all-data clarification in the report so the methodology is explicit. AI Hub remains optional when unavailable; laptop profiling is allowed. No final competition model is selected yet.
 
-## Submission and remaining work
-
-The brief requires one compressed model (preferably quantized ONNX), complete metrics.json, a 1-2-page technical report with tradeoff curve, and source that rebuilds it from the supplied checkpoint. Current results are preparation, not a final submission. Do not fill missing official fields with fabricated numbers.
-
-AI Hub authentication / common target are pending. The installed SDK helper records requests, job IDs and outputs; its live path is untested. Laptop fallback is explicitly allowed. Configure credentials locally; no secrets are stored in the repository.
-
-Earlier CIFAR source, compact results and reports are preserved in the local archive. After explicit approval of the exact scope, the obsolete GPU environment, uv install cache, archived generated practice models and CIFAR dataset were permanently removed. Cleanup recovered 8.15 GiB; the retained CPU environment, original checkpoints and current EuroSAT pipeline passed post-cleanup dependency and functional checks. Current model artifacts remain local and are reproducible from the published source.
-
-## Primary technical references
-
-- [Torchvision EuroSAT RGB documentation](https://docs.pytorch.org/vision/stable/generated/torchvision.datasets.EuroSAT.html)
-- [ONNX Runtime quantization guidance](https://onnxruntime.ai/docs/performance/model-optimizations/quantization.html): static quantization, preprocessing, QDQ, calibration and selective operator quantization.
-- [Torch-Pruning / DepGraph](https://github.com/VainF/Torch-Pruning): physical dependency-aware channel removal.
-- [PyTorch knowledge distillation tutorial](https://docs.pytorch.org/tutorials/beginner/knowledge_distillation_tutorial.html)
-- [Qualcomm AI Hub SDK documentation](https://workbench.aihub.qualcomm.com/docs/hub/api.html)
+The earlier obsolete GPU environment, installation cache and generated CIFAR data/models were removed after explicit approval, recovering 8.15 GiB. Current CPU dependencies, both original checkpoints, EuroSAT and current experiments remain intact. The GitHub repository is public and Anmol-tech's write invitation was sent.

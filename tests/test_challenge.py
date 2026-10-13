@@ -7,7 +7,7 @@ import torch
 import onnxruntime as ort
 
 from edgeprep.challenge import load_model, prune_model
-from edgeprep.challenge_data import validate_split, balanced_ids
+from edgeprep.challenge_data import validate_split, balanced_ids, data_protocol
 from edgeprep.export import export_fp32
 
 
@@ -23,6 +23,14 @@ class ChallengeTests(unittest.TestCase):
             with self.assertRaises(ValueError):validate_split(split,3)
         valid={'train':[0,1],'val':[2]}
         self.assertEqual(validate_split(valid,3),valid)
+
+    def test_organizer_all_data_protocol_has_no_holdout(self):
+        protocol=data_protocol(27000)
+        self.assertEqual(protocol["train"],list(range(27000)))
+        self.assertEqual(protocol["evaluation"],protocol["train"])
+        self.assertEqual(protocol["evaluation_scope"],"training_set")
+        self.assertFalse(protocol["provisional"])
+        self.assertIsNone(protocol["split_sha256"])
 
     def test_balancing_keeps_partition_and_has_no_duplicates(self):
         labels=[i//10 for i in range(100)]

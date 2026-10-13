@@ -1,125 +1,88 @@
 # Minimalist Edge AI Challenge - EuroSAT
 
-Compress the **provided, already-distilled MobileNetV2** for ten-class EuroSAT RGB land-use classification. The optional ResNet-50 supports recovery distillation. Input is fixed at **(1, 3, 224, 224)**. Benchmark exported ONNX on CPU.
+Compress the supplied, already-distilled MobileNetV2 for ten-class EuroSAT RGB land-use classification. The optional ResNet-50 is a recovery teacher. Input stays **(1, 3, 224, 224)**; benchmark the exported ONNX on CPU.
 
-The project is ready for diagnostic experiments. The organizers' `val_split.json`, reproduced baseline measurements, starter notebook and common AI Hub device are still pending. A provisional split is included for testing; its accuracy is **not an official score**, because the supplied checkpoints may have trained on those images.
+**Organizer clarification supplied by the team:** there is no official split. Use all **27,000 images** for training, and establish our own baseline by running the unchanged supplied student on our laptop. This supersedes the split instructions and printed baseline placeholders in the PDF. Accuracy on this same dataset is labelled **training-set accuracy**.
 
-The requested printed PDF baseline is transcribed in [baseline_metrics.json](baseline_metrics.json): 98.00%, 23.53M parameters, 22.67 MB and 4.13G MACs. Its parameter/MAC figures match the teacher; measured student values and explicit PDF-reference ratios are kept separately. No official validation split is embedded in the PDF.
+Current evidence is under [results/all_data](results/all_data). [baseline_metrics.json](baseline_metrics.json) contains the measured laptop reference once the measurement script completes. The old PDF figures are preserved in [configs/pdf_baseline_reference.json](configs/pdf_baseline_reference.json). Earlier 500-image pilot results are historical under [results/challenge](results/challenge); they must not be mixed with current ratios.
 
-Read [ANALYSIS.md](ANALYSIS.md) for constraints, current findings, prioritized experiments and event strategy. Results are under [results/challenge](results/challenge). Earlier speculative CIFAR preparation is archived locally and is not part of this repository.
+Read [ANALYSIS.md](ANALYSIS.md) for the exploration plan and measured tradeoffs.
 
 ## Models and data
 
-Place these original files in `Models/`:
+Place the original files in `Models/`:
 
 - [student_mobilenetv2_distilled.pt](https://drive.google.com/file/d/12bYZkUFWZicOYU7abdQ6GFRzxtFpCcpT/view?usp=sharing)
 - [teacher_resnet50_eurosat.pt](https://drive.google.com/file/d/1Zijt-4dCmNdk_nglwJWYdXW3U82zqmPu/view?usp=sharing)
 
-The links were embedded in the challenge brief. Checkpoint SHA256, parameters, checkpoint sizes and THOP MACs are in [results/checkpoint_audit.json](results/checkpoint_audit.json). Model binaries, dataset, environments and calibration arrays are kept out of Git.
+These are the PDF's model links. Checkpoint hashes and architecture measurements are in [results/checkpoint_audit.json](results/checkpoint_audit.json). Dataset, checkpoints, model exports, environments and calibration arrays are excluded from Git.
 
-EuroSAT RGB has 27,000 images / ten classes. Download once, ahead of the venue:
+EuroSAT RGB is locally verified: 27,000 valid images, ten classes, archive MD5 `c8fa014336c82ac7804f0398fcb19387`. A fresh clone can download it:
 
 ```powershell
 .venv\Scripts\python.exe -c "from torchvision.datasets import EuroSAT; EuroSAT('data',download=True)"
 ```
 
-Torchvision checks the archive MD5 against `c8fa014336c82ac7804f0398fcb19387`. Expected folder: `data/eurosat/2750/<class>/<image>.jpg`. The local copy was checked: 27,000 readable images, no invalid image files. Use the organizer's pre-cached data at the event if it differs; regenerate the manifest and verify sample ordering before using index-based splits.
+Exact preprocessing: torchvision Resize(224), ToTensor, ImageNet mean [.485,.456,.406] and std [.229,.224,.225]. The manifest hashes sample ordering. Calibration is a balanced representative subset of the whole training pool; it may overlap training-set evaluation under the clarified protocol.
 
-## Environment
+## Setup
 
-Python 3.11; CPU PyTorch 2.8.0 / torchvision 0.23.0 / torchaudio 2.8.0, ONNX Runtime 1.31.0, torch-pruning 1.6.1. These tested versions are pinned, rather than automatically upgrading during the event.
-
-On this prepared laptop, run `.venv\Scripts\python.exe` directly; activation is optional. CPU dependencies are installed and `pip check` passes. The obsolete GPU environment, uv installation cache and old CIFAR data/generated models were removed after approval, recovering 8.15 GiB. The CPU pipeline still passes dependency and export/pruning tests.
-
-Fresh install, Windows PowerShell:
+Python 3.11 and a tested CPU environment are installed. Fresh Windows install:
 
 ```powershell
 py -3.11 -m venv .venv
 .venv\Scripts\python.exe -m pip install --upgrade pip
 .venv\Scripts\python.exe -m pip install torch==2.8.0 torchvision==0.23.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cpu
 .venv\Scripts\python.exe -m pip install -r requirements-common.lock.txt
-.venv\Scripts\python.exe -m pip check
-```
-
-Linux/macOS: use `python3.11 -m venv .venv` and `.venv/bin/python`; install the PyTorch trio from the default index on macOS. `scripts/setup.ps1` is an alternative for Windows with `uv` on PATH. It keeps the uv cache and Python runtime inside the project.
-
-Verify:
-
-```powershell
-.venv\Scripts\python.exe -m edgeprep.verify
 .venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-## Prepare the official split
+Linux/macOS: use `python3.11`, `.venv/bin/python`, and the default PyTorch index on macOS. `scripts/setup.ps1` provides an alternative Windows installation with `uv` on PATH. Four functional checks pass. Approved cleanup recovered 8.15 GiB; CPU dependencies and current model/data artifacts remain intact.
 
-Place the supplied split and baseline JSON at the project root. The split must contain nonempty `train` and `val` lists of integer dataset indices, without duplicates or overlap.
-
-```powershell
-.venv\Scripts\python.exe -m edgeprep.challenge prepare --split val_split.json
-```
-
-This saves a hashed dataset-order manifest and 256 balanced **training** calibration images, with the exact brief preprocessing: Resize(224), ToTensor, ImageNet normalization. No validation images are used for calibration.
-
-Without `--split`, prepare explicitly writes `results/challenge_data/provisional_split.json`: class-stratified 80/20, seed 42, 21,600 train / 5,400 validation. It does not reconstruct the checkpoint's original split. A nonzero evaluation limit is a diagnostic subset, not full validation.
-
-## Export and evaluate
-
-Baseline:
+## Reproduce the current baseline and comparison
 
 ```powershell
-.venv\Scripts\python.exe -m edgeprep.challenge export --output artifacts/baseline
-.venv\Scripts\python.exe -m edgeprep.challenge evaluate --model artifacts/baseline/model_fp32.onnx --split val_split.json --output results/challenge/baseline_accuracy.json
+powershell -ExecutionPolicy Bypass -File scripts/measure_all_data.ps1
 ```
 
-Static per-channel QDQ INT8 with sensitive ends and depthwise layers left FP32:
+This prepares full-data calibration, exports the unchanged student and selective INT8, evaluates both on all 27,000 images, measures CPU 1/4-thread latency and RAM in isolated processes, estimates energy for both with four threads, builds `baseline_metrics.json`, and plots the current tradeoff. Expect several minutes for full-data inference. No baseline weights are retrained.
+
+Baseline size is **FP32 ONNX size**, and final size uses the same format. Original checkpoint size is separately audited. Ratios always use the MobileNetV2 student, never the teacher. CPU threads, input, execution provider and energy method must match between baseline and candidate. On this Windows/AMD laptop, CodeCarbon uses TDP/CPU-load estimation; inspect startup logs on other machines.
+
+Individual commands:
 
 ```powershell
-.venv\Scripts\python.exe -m edgeprep.challenge export --output artifacts/qdq_pointwise --calibration results/challenge_data/calibration.npy --protect-ends --protect-depthwise
-.venv\Scripts\python.exe -m edgeprep.challenge evaluate --model artifacts/qdq_pointwise/model_int8.onnx --split val_split.json --output results/challenge/qdq_pointwise_accuracy.json
+.venv\Scripts\python.exe -m edgeprep.challenge prepare
+.venv\Scripts\python.exe -m edgeprep.challenge export --output artifacts/all_data/baseline
+.venv\Scripts\python.exe -m edgeprep.challenge evaluate --model artifacts/all_data/baseline/model_fp32.onnx --threads 4 --output results/all_data/baseline_accuracy.json
+.venv\Scripts\python.exe -m edgeprep.challenge export --output artifacts/all_data/qdq_pointwise --calibration results/all_data/challenge_data/calibration.npy --protect-ends --protect-depthwise
 ```
 
-Exports use opset 13, `dynamo=False`, fixed batch 1, ONNX checker, FP32 numerical parity, and shape preprocessing before quantization. Every export records a recipe and source hash. Other flags: `--calibration-count 128`, `--unsigned` for U8U8, `--method Percentile` or `Entropy`, and `--prune 0.05 --pruning-scope expansion`. Pruning physically removes channels; it is not a sparsity mask.
+Export uses static per-channel QDQ, opset 13 / dynamo=False, fixed batch one, shape preprocessing, ONNX checking and numerical parity. Recipes record original checkpoint hashes and compression settings.
 
-CPU timing / peak RAM in an isolated ONNX worker:
+## Recovery on the entire dataset
 
 ```powershell
-.venv\Scripts\python.exe -m edgeprep.benchmark --model artifacts/baseline/model_fp32.onnx --size 224 --threads 1 --runs 300 --inputs results/challenge_data/timing_input.npy --labels results/challenge_data/timing_label.npy --output results/challenge/baseline_t1.json
+.venv\Scripts\python.exe -m edgeprep.challenge export --prune 0.02 --pruning-scope expansion --output artifacts/all_data/expansion02
+.venv\Scripts\python.exe -m edgeprep.challenge recover --recipe artifacts/all_data/expansion02/recipe.json --epochs 1 --batch-size 8 --output artifacts/all_data/expansion02_ce
+.venv\Scripts\python.exe -m edgeprep.challenge recover --recipe artifacts/all_data/expansion02/recipe.json --epochs 1 --batch-size 8 --teacher Models/teacher_resnet50_eurosat.pt --output artifacts/all_data/expansion02_kd
 ```
 
-Repeat identically for the candidate. Use `--threads 4` as a separate comparison. Warmup is 20 runs. Report median / mean / P95 and sampled peak RSS. The timing worker imports no PyTorch and holds only one model. Its single-image accuracy field is a smoke check; use the dedicated `*_accuracy.json` for dataset accuracy.
+Omitting `--split` uses all data. Recovery's `--train-limit 0` is now the default and means all 27,000 images. A nonzero limit is a deliberately shorter diagnostic experiment, not full-data training. Evaluation similarly defaults to the whole dataset; `--limit 500` is screening only. Legacy `--split` support remains for reproducing past experiments.
 
-Add `--energy-seconds 20` to measure CPU/RAM energy using CodeCarbon, excluding idle GPU power. On this Windows/AMD machine it is a TDP estimate. Baseline and final must use the same machine, CPU threads, input and measurement method; label the mode `tdp_estimate`.
+CE/KD use identical sample order, seed 42, LR 1e-4, one epoch, frozen BN running statistics; KD temperature 4 / alpha .5. Cache teacher logits for deterministic training inputs if repeated teacher inference costs too much CPU time. Budget full-data recovery separately from the several-minute inference benchmark.
 
-## Short recovery
+## Experiment sweep and submission
 
 ```powershell
-.venv\Scripts\python.exe -m edgeprep.challenge recover --recipe artifacts/expansion05/recipe.json --split val_split.json --train-limit 500 --batch-size 8 --epochs 1 --output artifacts/expansion05_ce_recovery
-.venv\Scripts\python.exe -m edgeprep.challenge recover --recipe artifacts/expansion05/recipe.json --split val_split.json --train-limit 500 --batch-size 8 --epochs 1 --teacher Models/teacher_resnet50_eurosat.pt --output artifacts/expansion05_kd_recovery
-.venv\Scripts\python.exe -m edgeprep.challenge export --recipe artifacts/expansion05_kd_recovery/recipe.json --output artifacts/expansion05_kd_export
+# Quick screening; all images remain available for training.
+powershell -ExecutionPolicy Bypass -File scripts/pilot.ps1 -Limit 500
+# Full-data scoring for every variant; considerably longer.
+powershell -ExecutionPolicy Bypass -File scripts/pilot.ps1 -Limit 0 -Energy
 ```
 
-CE and KD use the same seed, training subset and shuffle. Default learning rate 1e-4, KD temperature 4 / alpha .5, BN running statistics frozen. These are starting points for controlled comparisons, not tuned defaults. No replacement model or external pretrained checkpoint is downloaded. Recovery states use safe state dictionaries; the structural recipe is replayed before loading them.
+Measurements run serially. Current results have explicit evaluation scope and sample counts; do not report subset accuracy as a full-data result. Regenerate the local reference with `python -m edgeprep.local_baseline` after matching baseline accuracy / runtime / energy measurements.
 
-## Reproduce the pilot
+AI Hub is optional if no common target/account is available. Configure your token locally and use `edgeprep.hub_profile --plan` before submitting to the organizer's device. No credentials are committed. The live Hub path is untested.
 
-```powershell
-# Diagnostic: balanced 500-image provisional sample, 11 variants, CPU 1/4-thread timing.
-powershell -ExecutionPolicy Bypass -File scripts/pilot.ps1
-# Official split, full validation, including three 20-second energy estimates.
-powershell -ExecutionPolicy Bypass -File scripts/pilot.ps1 -Split val_split.json -Limit 0 -Energy
-```
-
-The script runs measurements serially to avoid competition between benchmark jobs. Do not mix results from different splits in one summary. Recovery comparisons are additional experiments; they are not included automatically in `pilot.ps1`.
-
-## AI Hub and submission
-
-Configure your own account locally: `.venv\Scripts\qai-hub.exe configure --api_token YOUR_TOKEN`. Do not commit the token. Use the organizer's common device, or document local CPU fallback as allowed in the brief.
-
-```powershell
-.venv\Scripts\python.exe -m edgeprep.hub_profile --list-devices
-.venv\Scripts\python.exe -m edgeprep.hub_profile --model artifacts/qdq_pointwise/model_int8.onnx --device "EXACT ORGANIZER DEVICE" --size 224 --plan
-```
-
-Remove `--plan` to submit. The helper uses the installed SDK's compile / profiled inference API and records job IDs and profiles; the live path is pending account configuration and target selection.
-
-Deliver one model, complete `metrics.json`, a 1-2-page report with a tradeoff curve, and reproducible source. `configs/metrics.template.json` is a scaffold with nulls, **not a completed submission**. Never substitute the teacher for the student compression denominator. Official accuracy and baseline figures must be confirmed on the provided split before selecting a final model.
+Deliver one selected model, complete metrics.json, a 1-2-page report with tradeoff curve, and source that recreates it from the checkpoint. `configs/metrics.template.json` is a scaffold, not a completed submission. Report overall training-set accuracy, all class recalls, worst class, parameters, file size, MACs, CPU latency, RAM and estimated/measured energy against our own laptop reference.
