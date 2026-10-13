@@ -8,7 +8,7 @@ Authenticated using the ignored .env key. Retrieved 78 catalogue entries. S24 CP
 | s24_npu_float | failed | Samsung Galaxy S24 (Family) | none | pending / n/a | pending / n/a |
 | s24_npu_float_retry | completed | Samsung Galaxy S24 (Family) | none | 0.366 | 100.0 |
 | rb3_npu_w8a8 | failed | Dragonwing RB3 Gen 2 Vision Kit | w8a8 | pending / n/a | pending / n/a |
-| rb3_onnx_npu_w8a8 | pending | Dragonwing RB3 Gen 2 Vision Kit | w8a8 | 0.614 | pending / n/a |
+| rb3_onnx_npu_w8a8 | completed | Dragonwing RB3 Gen 2 Vision Kit | w8a8 | 0.614 | 96.875 |
 
 All latency values in this table are Hub estimates. S24 CPU/NPU comparisons use the same source; numerical agreement is only 32 images. Actual placement, memory ranges, failure reasons and job IDs are in details.json.
 

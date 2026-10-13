@@ -1,0 +1,9 @@
+{
+  "examples": 32,
+  "scope": "numerical_smoke_check",
+  "top1_agreement_with_source": 0.96875,
+  "max_absolute_logit_error": 2.51505184173584,
+  "source_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+  "inputs_sha256": "2c75a98417368a573b598ed6010def4165e65016731ec04e3bef53ff3673569c",
+  "full_dataset_accuracy": null
+}

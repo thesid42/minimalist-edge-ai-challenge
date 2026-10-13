@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-13T17:30:31.557717+00:00",
+  "updated_utc": "2026-10-13T17:32:35.608537+00:00",
   "ordering": "Numbered phases and logical experimental progression; original wall-clock timestamps are not reconstructed",
   "records": [
     {
@@ -917,7 +917,7 @@
     {
       "name": "rb3_onnx_npu_w8a8",
       "phase": "remote_exploration",
-      "status": "pending",
+      "status": "completed",
       "device": "Dragonwing RB3 Gen 2 Vision Kit",
       "runtime": "onnx",
       "requested_compute": "npu",
@@ -937,8 +937,8 @@
         "CPU": 2,
         "NPU": 104
       },
-      "top1_agreement_pct": null,
-      "numerical_samples": null,
+      "top1_agreement_pct": 96.875,
+      "numerical_samples": 32,
       "accuracy_pct": null,
       "energy_j": null,
       "failure_details": [],
@@ -991,7 +991,7 @@
         },
         "validation_inference": "jgd621qep",
         "jgd621qep_status": {
-          "code": "RUNNING_INFERENCE",
+          "code": "SUCCESS",
           "message": ""
         }
       },
