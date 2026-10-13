@@ -15,6 +15,15 @@ def main():
         r=read(f'results/all_data/{name}_accuracy.json')
         if not r:continue
         sections.append(f'| {name} | {r["accuracy"]*100:.4f}% | {r["worst_class_accuracy"]*100:.4f}% | {(r["accuracy"]-baseline["accuracy"])*100:+.4f} pp |')
+    storage=read('results/storage_comparison/summary.json')
+    if storage:
+        sections+=['### Control: identical FP16 storage on the baseline\n',
+            '| Model | Storage MiB | All-data accuracy | Worst class recall |\n|---|---:|---:|---:|']
+        for r in storage['records']:
+            acc=f'{r["accuracy_pct"]:.4f}%' if r['accuracy_pct'] is not None else 'pending'
+            worst=f'{r["worst_recall_pct"]:.2f}%' if r['worst_recall_pct'] is not None else 'pending'
+            sections.append(f'| {r["name"]} | {r["size_mib"]:.6f} | {acc} | {worst} |')
+        sections.append(f'\nThe candidate is {storage["candidate_minus_baseline_weight16_bytes"]:,} bytes larger than the baseline under identical FP16 storage. Neither resolution reduction nor classifier recovery reduces the number of weights. The original FP32-versus-candidate FP16 size ratio is a precision conversion benefit available to both models. [Controlled experiment](matched_weight_storage.md).\n')
     training=read('results/all_data/resize192_head_ce_training.json')
     if training:
         recovery=training['recovery']

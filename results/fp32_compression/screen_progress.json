@@ -1,0 +1,11 @@
+{
+  "examples_per_model": 27000,
+  "target_per_model": 27000,
+  "models": [
+    "late_expansion10",
+    "head640",
+    "drop16"
+  ],
+  "elapsed_seconds": 519.26339680003,
+  "status": "completed"
+}

@@ -1,0 +1,12 @@
+{
+  "examples": 500,
+  "indices_sha256": "0c4a3891606ccc31b8c641e244b4320a0006d6264c934e44b12b2fd12a08c689",
+  "sample_manifest": "results/hub/resize192_labelled500/manifest.json",
+  "provider": "CPUExecutionProvider",
+  "baseline_fp32_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+  "baseline_weight16_sha256": "78c6780c485ae782f2ecf8b60e6dd3bfb0a2f9ebdcc9c2e039d3b00935130327",
+  "top1_agreement": 1.0,
+  "top1_disagreements": 0,
+  "max_absolute_logit_error": 0.05752946436405182,
+  "note": "Paired output check, separate from full-data labelled accuracy and latency."
+}

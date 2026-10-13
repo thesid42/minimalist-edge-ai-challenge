@@ -6,7 +6,7 @@ Quantization reduces numerical precision and weight storage. Channel pruning phy
 
 Two accuracy protocols exist: the historical 500-image pilot and the current 27,000-image training-set evaluation. They are separate tables. Remote runs retain the historical 32-image numerical check and now add a labelled 1,000-image balanced diagnostic subset. That subset excludes 512 calibration images but is not held-out generalization or full-dataset accuracy. All model changes still start from the supplied student.
 
-**Current saved winner:** [resize192_head_ce_w16](../best_models/resize192_head_ce_w16_e391533162d7/README.md). The versioned folder contains inference ONNX, recovered training weights, recipe, checksums and metrics. Older winners stay preserved. [Saving future winners](../docs/model_preservation.md).
+**Current saved winner:** [resize192_head640_head_ce_fp32](../best_models/resize192_head640_head_ce_fp32_8655a532a076/README.md). The versioned folder contains inference ONNX, recovered training weights, recipe, checksums and metrics. Older winners stay preserved. [Saving future winners](../docs/model_preservation.md).
 
 | Step | Experiment | Read |
 |---|---|---|
@@ -24,6 +24,8 @@ Two accuracy protocols exist: the historical 500-image pilot and the current 27,
 | 12 | Direct comparison of 192 model latencies | [Details](12_192_latency/README.md) |
 | 13 | Matched Mac CPU measurements | [Details](13_mac_cpu/README.md) |
 | 14 | Saved 192 FP16-storage model on an edge phone | [Details](14_saved192_edge_500/README.md) |
+| 15 | Baseline and recovered192 at identical weight precision | [Details](15_matched_weight_storage/README.md) |
+| 16 | Smaller recovered192 architectures with FP32 weights | [Details](16_fp32_structural_reduction/README.md) |
 
 Current CPU results:
 

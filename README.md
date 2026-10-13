@@ -10,7 +10,35 @@ Current evidence is under [results/all_data](results/all_data). [baseline_metric
 
 ## Latest completed results
 
-Refreshed from saved evidence at 2026-10-13 20:01 UTC. [Full results](docs/next_priority_results.md) and [numbered experiment log](experiments/README.md) are regenerated together.
+Refreshed from saved evidence at 2026-10-13 21:29 UTC. [Full results](docs/next_priority_results.md) and [numbered experiment log](experiments/README.md) are regenerated together.
+
+**Current direction: structural compression of recovered192, keeping FP32 throughout. Every new candidate uses all 27,000 images for evaluation.** [Full FP32 report](docs/fp32_model_reduction.md).
+
+| FP32 model / stage | Parameters | ONNX MiB | Accuracy / 27,000 | Worst class recall |
+|---|---:|---:|---:|---:|
+| Original student / FP32 | 2,236,682 | 8.506295 | 99.1630% | 95.84% |
+| Recovered192 reference / FP32 | 2,236,682 | 8.510991 | 99.1074% | 97.24% |
+| Late expansion channels / before recovery | 2,108,202 | 8.023564 | 98.3185% | 96.12% |
+| Final 640 channels / before recovery | 2,024,202 | 7.702886 | 98.9963% | 97.40% |
+| Residual block 16 removed / before recovery | 1,916,682 | 7.295685 | 96.4296% | 87.80% |
+| Final 640 / full-backbone recovery | 2,024,202 | 7.702886 | 98.8815% | 97.65% |
+| Remove block 16 / full-backbone recovery | 1,916,682 | 7.295685 | 98.6222% | 95.53% |
+| Final 640 / classifier-only recovery | 2,024,202 | 7.702886 | 99.1481% | 97.40% |
+
+New recovery uses GPU FP32 with AMP disabled; export and inference use CPU FP32. The older FP16 comparison below remains historical evidence.
+
+**New matched FP32 laptop measurements:** four CPU threads, three fresh serial repetitions per model.
+
+| FP32 model | Median latency | Range of run medians | Estimated J/image, mean ± SD |
+|---|---:|---:|---:|
+| original224_fp32 | 2.532 ms | 2.513–2.875 ms | 0.052934 ± 0.001388 |
+| parent192_fp32 | 1.966 ms | 1.929–2.941 ms | 0.041391 ± 0.000984 |
+| head640_head_ce | 1.979 ms | 1.910–2.125 ms | 0.040847 ± 0.000989 |
+| drop16_ce | 1.893 ms | 1.870–2.122 ms | 0.039281 ± 0.000442 |
+
+The 640-channel classifier-recovered model is 21.8% faster and uses 22.8% less estimated energy than original224 in this sequence. Accuracy is evaluated separately on all 27,000 images; latency repeats one real input 1,000 times per run. CodeCarbon estimates CPU energy from TDP/load and RAM from a heuristic; GPU is excluded. Small differences versus unpruned192 remain subject to run variability. [Measurements and full interpretation](docs/fp32_model_reduction.md).
+
+**Historical FP16-storage results follow:** these use separate measurements and an earlier winner.
 
 The measured 192 candidate uses **internal 192 + one full-data classifier recovery epoch + FP16 weight storage / FP32 CPU compute**. External input remains `(1,3,224,224)`.
 
@@ -18,14 +46,23 @@ The measured 192 candidate uses **internal 192 + one full-data classifier recove
 |---|---:|---:|
 | Accuracy on all 27,000 images | 99.1630% | **99.1111%** |
 | Worst class recall | 95.84% | **97.24%** |
-| ONNX size | 8.506 MiB | **4.288 MiB** |
+| Portable ONNX size (original FP32 vs candidate FP16 storage) | 8.506 MiB | **4.288 MiB** |
 | Four-thread median latency, 3 repetitions | 2.789 ms | **2.054 ms** |
 | Estimated J/inference, mean of 3 windows | 0.054927 | **0.045338** |
 
 Accuracy decreases 0.0519 percentage points; the candidate is 26.4% faster and uses 17.5% less estimated energy in this matched sequence. CodeCarbon uses CPU TDP/load plus a RAM heuristic on this Windows 10 laptop, with GPU excluded; these are not meter readings. FP16 storage halves file size while ORT folds weights to FP32 for CPU compute; it does not prove a RAM saving. Four threads outperformed 1/2/8 in the measured latency/energy tradeoff. Sleeping workers regressed latency here; the unrecovered 160 model loses too much accuracy (93.00%).
 
+**Controlled weight-storage comparison:** the baseline gets the same FP16 conversion.
 
-**Saved winner weights:** [resize192_head_ce_w16](best_models/resize192_head_ce_w16_e391533162d7/README.md), with the inference ONNX, full recovered checkpoint, portable recipe, checksums and results. [Current selection](best_models/current.json) / [winner history](best_models/registry.json). Future winners are saved separately; older weights are retained. [Preservation workflow](docs/model_preservation.md).
+| Model | FP32 ONNX | FP16-storage ONNX |
+|---|---:|---:|
+| Unchanged original224 | 8.506295 MiB | 4.283507 MiB |
+| Recovered192 | 8.510991 MiB | 4.288250 MiB |
+
+At identical FP16 storage, recovered192 is **4,973 bytes larger**. The roughly 50% portable-file reduction comes from weight precision; the baseline gets it too. Resolution reduction lowers spatial computation and recovery restores accuracy, while parameter count stays unchanged. [Full comparison and accuracy check](docs/matched_weight_storage.md).
+
+
+**Saved winner weights:** [resize192_head640_head_ce_fp32](best_models/resize192_head640_head_ce_fp32_8655a532a076/README.md), with the inference ONNX, full recovered checkpoint, portable recipe, checksums and results. [Current selection](best_models/current.json) / [winner history](best_models/registry.json). Future winners are saved separately; older weights are retained. [Preservation workflow](docs/model_preservation.md).
 
 A separate direct latency comparison of all 192 variants is now complete (five repetitions, four CPU threads, default spinning):
 
@@ -57,7 +94,7 @@ The exact saved FP16-storage source is uploaded without extra quantization. Hub 
 
 The first Hub table above uses the original 224 model, not the recovered 192 candidate. Actual NPU placement is recorded per operation. These are training-pool diagnostic accuracies (100/class), disjoint from 512 calibration images; they are not all-data scores or held-out results. W8A16 gains two correct predictions over W8A8 on this sample at higher latency; its worst class is 88% vs W8A8's 89%, so it is not a uniform accuracy improvement. Hub power modes expose latency, not measured joules.
 
-New training uses `.venv-train-gpu` / RTX 3070 / CUDA; laptop export, evaluation and inference use `.venv` / CPU. AI Hub can use CPU or NPU. A real 100-image, five-step GPU recovery, CPU export and CPU inference verification passed; it is a pipeline check, not a new competition result. **18 functional tests and dependency checks pass.**
+New training uses `.venv-train-gpu` / RTX 3070 / CUDA; laptop export, evaluation and inference use `.venv` / CPU. AI Hub can use CPU or NPU. A real 100-image, five-step GPU recovery, CPU export and CPU inference verification passed; it is a pipeline check, not a new competition result. **20 functional tests pass; both environments passed dependency checks.**
 
 See [GPU setup](docs/gpu_training.md). Refresh the README, log and saved notebook tables after each completed result: `.venv\Scripts\python.exe scripts/refresh_results.py`. This reads evidence only and submits no jobs or training.
 

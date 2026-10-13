@@ -17,3 +17,5 @@ model, recipe = restore_recipe("best_models/resize192_head_ce_w16_e391533162d7/r
 ```
 
 Run the saved ONNX with CPUExecutionProvider. Preserve this version when promoting a future winner.
+
+A subsequent controlled comparison applies the same FP16 storage conversion to the unchanged baseline: 4.283507 MiB for baseline versus 4.288250 MiB for this saved candidate. The file reduction versus original FP32 comes from precision and is available to both; internal192 reduces computation, without removing parameters. The measured S24 compiled payload is 8.523 MiB. [Matched storage experiment](../../docs/matched_weight_storage.md). This qualification does not change the preserved weights or historical measurements.

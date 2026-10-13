@@ -1,0 +1,91 @@
+{
+  "records": [
+    {
+      "name": "late_expansion10",
+      "label": "late_expansion10",
+      "phase": "fp32_structural_initial",
+      "status": "completed",
+      "model": "E:\\Projects\\Minimilist challenge\\artifacts\\fp32_compression\\late_expansion10\\model_fp32.onnx",
+      "model_sha256": "e8045e0daefe039156bc3a02c5472ae047fa57e8754ad021f44ca3c5046b90a2",
+      "parameters": 2108202,
+      "macs": 234307712.0,
+      "file_bytes": 8413317,
+      "size_mib": 8.023564338684082,
+      "parameter_reduction_pct": 5.74422291590847,
+      "size_reduction_vs_parent_pct": 5.727026997045526,
+      "weight_precision": "FP32",
+      "compute_precision": "FP32",
+      "recipe_replay_verified": true,
+      "fp32_parity_max_error": 1.6927719116210938e-05,
+      "evidence": "results/fp32_compression/late_expansion10_accuracy.json",
+      "implementation": [
+        "scripts/fp32_structural_screen.py",
+        "edgeprep/structural.py",
+        "edgeprep/challenge.py"
+      ],
+      "accuracy_pct": 98.31851851851852,
+      "worst_recall_pct": 96.12,
+      "examples": 27000,
+      "scope": "training_set"
+    },
+    {
+      "name": "head640",
+      "label": "head640",
+      "phase": "fp32_structural_initial",
+      "status": "completed",
+      "model": "E:\\Projects\\Minimilist challenge\\artifacts\\fp32_compression\\head640\\model_fp32.onnx",
+      "model_sha256": "198d6824f4a0ae5fb7a7076c0c3bb8fa01444fabc945693d5488489c56612d43",
+      "parameters": 2024202,
+      "macs": 232203520.0,
+      "file_bytes": 8077061,
+      "size_mib": 7.702885627746582,
+      "parameter_reduction_pct": 9.499785843494967,
+      "size_reduction_vs_parent_pct": 9.494845660015372,
+      "weight_precision": "FP32",
+      "compute_precision": "FP32",
+      "recipe_replay_verified": true,
+      "fp32_parity_max_error": 1.5020370483398438e-05,
+      "evidence": "results/fp32_compression/head640_accuracy.json",
+      "implementation": [
+        "scripts/fp32_structural_screen.py",
+        "edgeprep/structural.py",
+        "edgeprep/challenge.py"
+      ],
+      "accuracy_pct": 98.9962962962963,
+      "worst_recall_pct": 97.39999999999999,
+      "examples": 27000,
+      "scope": "training_set"
+    },
+    {
+      "name": "drop16",
+      "label": "drop16",
+      "phase": "fp32_structural_initial",
+      "status": "completed",
+      "model": "E:\\Projects\\Minimilist challenge\\artifacts\\fp32_compression\\drop16\\model_fp32.onnx",
+      "model_sha256": "ad284b63fdb19976e6b88b5204c14c6fb65f944309ef67b768744c72d1f5eab2",
+      "parameters": 1916682,
+      "macs": 228005120.0,
+      "file_bytes": 7650080,
+      "size_mib": 7.295684814453125,
+      "parameter_reduction_pct": 14.306906390805663,
+      "size_reduction_vs_parent_pct": 14.27925688400401,
+      "weight_precision": "FP32",
+      "compute_precision": "FP32",
+      "recipe_replay_verified": true,
+      "fp32_parity_max_error": 7.152557373046875e-06,
+      "evidence": "results/fp32_compression/drop16_accuracy.json",
+      "implementation": [
+        "scripts/fp32_structural_screen.py",
+        "edgeprep/structural.py",
+        "edgeprep/challenge.py"
+      ],
+      "accuracy_pct": 96.42962962962963,
+      "worst_recall_pct": 87.8,
+      "examples": 27000,
+      "scope": "training_set"
+    }
+  ],
+  "parent_recipe": "E:\\Projects\\Minimilist challenge\\artifacts\\all_data\\resize192_head_ce\\recipe.json",
+  "precision": "FP32",
+  "updated_utc": "2026-10-13T21:06:48.687015+00:00"
+}

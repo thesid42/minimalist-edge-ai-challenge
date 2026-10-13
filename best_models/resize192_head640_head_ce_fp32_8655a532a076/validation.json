@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "verified_utc": "2026-10-13T21:28:39.232454+00:00",
+  "model_sha256": "8655a532a07639d47592b634e9596dd36c808ee1632a835fab1f6af8be4612df",
+  "checkpoint_sha256": "e0ef5aa269222ab7d86e80d297de7aebc57e3207208164d6d301dcf8e718be06",
+  "all_checkpoint_tensors_cpu": true,
+  "all_floating_checkpoint_tensors_fp32_finite": true,
+  "all_onnx_floating_initializers_fp32": true,
+  "exact_checkpoint_recipe_replay": true,
+  "source_and_saved_onnx_logits_bit_identical": true,
+  "cpu_pytorch_onnx_max_error": 2.288818359375e-05,
+  "internal_resolution": 192,
+  "final_feature_channels": 640,
+  "trained_parameter_count": 6410,
+  "only_changed_state_tensors": [
+    "student.classifier.1.weight",
+    "student.classifier.1.bias"
+  ],
+  "training_count": 27000,
+  "full_accuracy_count": 27000,
+  "cpu_benchmark_repetitions": 3,
+  "old_winner_still_preserved": true
+}

@@ -80,10 +80,14 @@ def restore_recipe(path):
         source = Path("Models") / PureWindowsPath(recipe["source_checkpoint"]).name
     if digest(source) != recipe["source_sha256"]:
         raise ValueError("Checkpoint differs from the recipe's original source")
+    recipe["source_checkpoint"] = str(source.resolve())
     model = prune_model(load_model(source), recipe["pruning_ratio"], recipe["round_to"],recipe.get("pruning_scope","uniform"))
     if recipe.get("internal_resolution"):
         from .resolution import InternalResize
         model = InternalResize(model, recipe["internal_resolution"]).eval()
+    if recipe.get("structural_edits"):
+        from .structural import apply_edits
+        model = apply_edits(model, recipe["structural_edits"], recipe.get("internal_resolution", 224))
     if recipe.get("recovered_checkpoint"):
         recovered = Path(recipe["recovered_checkpoint"])
         if not recovered.exists(): recovered = Path(path).parent / "recovered_state.pt"
@@ -91,6 +95,7 @@ def restore_recipe(path):
             raise ValueError("Recovered checkpoint hash differs from recipe")
         state = torch.load(recovered, map_location="cpu", weights_only=True)
         model.load_state_dict(state, strict=True)
+        recipe["recovered_checkpoint"] = str(recovered.resolve())
     return model, recipe
 
 
@@ -108,6 +113,7 @@ def export_candidate(args):
     params = sum(p.numel() for p in model.parameters())
     macs, _ = profile(copy.deepcopy(model), inputs=(torch.randn(1,3,224,224),), verbose=False)
     error = export_fp32(model, out / "model_fp32.onnx", size=224, opset=13, fixed_batch=True)
+    recipe.pop("weight_storage", None)  # This path writes FP32, even from a weight16 bundle.
     recipe.update(parameters=params, macs=macs, input_shape=[1,3,224,224], opset=13,
                   fp32_parity_max_error=error, quantization=None)
     if args.calibration:
@@ -144,6 +150,8 @@ def export_candidate(args):
 
 
 def evaluate(args):
+    # Avoid preprocessing thread pools competing with the ONNX inference workers.
+    torch.set_num_threads(1)
     ds = dataset(args.root)
     protocol = data_protocol(len(ds), args.split)
     ids = balanced_ids(protocol["evaluation"], ds.targets, args.limit)
@@ -176,7 +184,7 @@ def evaluate(args):
               "provisional": protocol["provisional"], "full_evaluation_count":len(protocol["evaluation"]),
               "evaluation_seconds":time.perf_counter()-started,
               "accuracy_caveat":protocol["accuracy_caveat"],
-              "threads":args.threads,"provider":"CPUExecutionProvider"}
+              "threads":args.threads,"preprocessing_threads":torch.get_num_threads(),"provider":"CPUExecutionProvider"}
     Path(args.output).parent.mkdir(parents=True,exist_ok=True)
     Path(args.output).write_text(json.dumps(result,indent=2),encoding="utf-8")
     print(json.dumps({k:v for k,v in result.items() if k not in ("evaluation_indices","confusion_matrix")},indent=2))

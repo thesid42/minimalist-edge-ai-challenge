@@ -1,0 +1,25 @@
+{
+  "name": "resize192_head640_head_ce_fp32",
+  "saved_utc": "2026-10-13T21:27:31.660133+00:00",
+  "selection_reason": "Balanced FP32 structural-compression winner: 640 final feature channels and classifier-only recovery on all 27000 images, 7.703 MiB versus 8.506 MiB original baseline, 99.1481% training-set accuracy and 97.40% worst-class recall. Matched three-repetition four-thread CPU measurements show 1.9791 ms and 0.040847 estimated J per image, 21.8% lower latency and 22.8% lower estimated energy than original224. Runtime is effectively similar to unpruned recovered192 within variability; actual size falls 9.5% and accuracy gains eleven correct images. The smaller block-removal model loses more accuracy and class balance. Weights, checkpoint storage and CPU compute remain FP32; older winners are preserved.",
+  "selection_method": "Explicit experiment winner; balance accuracy, worst-class recall, size, CPU latency and estimated energy. Not highest accuracy alone.",
+  "files": {
+    "model.onnx": {
+      "sha256": "8655a532a07639d47592b634e9596dd36c808ee1632a835fab1f6af8be4612df",
+      "bytes": 8077061
+    },
+    "recovered_state.pt": {
+      "sha256": "e0ef5aa269222ab7d86e80d297de7aebc57e3207208164d6d301dcf8e718be06",
+      "bytes": 8328203
+    }
+  },
+  "inference_model": "model.onnx",
+  "training_checkpoint": "recovered_state.pt",
+  "recipe": "recipe.json",
+  "metrics": "metrics.json",
+  "weight_precision": "FP32",
+  "cpu_compute_precision": "FP32",
+  "training_data_count": 27000,
+  "evaluation_count": 27000,
+  "accuracy_scope": "training_set"
+}

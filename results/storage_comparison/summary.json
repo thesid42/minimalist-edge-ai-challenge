@@ -1,0 +1,142 @@
+{
+  "updated_utc": "2026-10-13T20:51:43.207842+00:00",
+  "onnx_version": "1.23.2",
+  "onnxruntime_version": "1.31.0",
+  "conversion": {
+    "source_onnx": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
+    "source_onnx_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+    "output_sha256": "78c6780c485ae782f2ecf8b60e6dd3bfb0a2f9ebdcc9c2e039d3b00935130327",
+    "stored_float_values": 2219626,
+    "cast_nodes": 106,
+    "weight_storage_precision": "FP16 initializers",
+    "compute_precision": "FP32, restored through constant Cast nodes; not FP16 convolution",
+    "note": "ORT graph optimization can fold constant casts and expand weights back to FP32 in RAM. Disk savings do not imply RAM or compute savings."
+  },
+  "baseline_rounding_verified": true,
+  "baseline_operations_unchanged": true,
+  "baseline_storage_reduction_pct": 49.64309086039269,
+  "candidate_minus_baseline_weight16_bytes": 4973,
+  "structural_parameter_reduction": 0,
+  "paired_output_check": {
+    "examples": 500,
+    "indices_sha256": "0c4a3891606ccc31b8c641e244b4320a0006d6264c934e44b12b2fd12a08c689",
+    "sample_manifest": "results/hub/resize192_labelled500/manifest.json",
+    "provider": "CPUExecutionProvider",
+    "baseline_fp32_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+    "baseline_weight16_sha256": "78c6780c485ae782f2ecf8b60e6dd3bfb0a2f9ebdcc9c2e039d3b00935130327",
+    "top1_agreement": 1.0,
+    "top1_disagreements": 0,
+    "max_absolute_logit_error": 0.05752946436405182,
+    "note": "Paired output check, separate from full-data labelled accuracy and latency."
+  },
+  "records": [
+    {
+      "name": "baseline_fp32",
+      "label": "baseline_fp32",
+      "phase": "matched_weight_storage",
+      "status": "completed",
+      "model": "artifacts/baseline/model_fp32.onnx",
+      "model_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "file_bytes": 8919497,
+      "size_mib": 8.506295204162598,
+      "stored_float_values": 2219626,
+      "float_initializer_payload_bytes": 8878504,
+      "initializer_dtype_counts": {
+        "FLOAT": 106
+      },
+      "cast_nodes": 0,
+      "resize_nodes": 0,
+      "accuracy_pct": 99.16296296296296,
+      "worst_recall_pct": 95.84,
+      "examples": 27000,
+      "scope": "training_set",
+      "accuracy_evidence": "results/all_data/baseline_accuracy.json",
+      "evidence": "results/storage_comparison/summary.json",
+      "implementation": [
+        "scripts/compare_weight_storage.py",
+        "edgeprep/weight_storage.py"
+      ]
+    },
+    {
+      "name": "baseline_weight16",
+      "label": "baseline_weight16",
+      "phase": "matched_weight_storage",
+      "status": "completed",
+      "model": "artifacts/baseline_weight16/model_weight16.onnx",
+      "model_sha256": "78c6780c485ae782f2ecf8b60e6dd3bfb0a2f9ebdcc9c2e039d3b00935130327",
+      "file_bytes": 4491583,
+      "size_mib": 4.283507347106934,
+      "stored_float_values": 2219626,
+      "float_initializer_payload_bytes": 4439252,
+      "initializer_dtype_counts": {
+        "FLOAT16": 106
+      },
+      "cast_nodes": 106,
+      "resize_nodes": 0,
+      "accuracy_pct": 99.16666666666667,
+      "worst_recall_pct": 95.88,
+      "examples": 27000,
+      "scope": "training_set",
+      "accuracy_evidence": "results/storage_comparison/baseline_weight16_accuracy.json",
+      "evidence": "results/storage_comparison/summary.json",
+      "implementation": [
+        "scripts/compare_weight_storage.py",
+        "edgeprep/weight_storage.py"
+      ]
+    },
+    {
+      "name": "recovered192_fp32",
+      "label": "recovered192_fp32",
+      "phase": "matched_weight_storage",
+      "status": "completed",
+      "model": "artifacts/all_data/resize192_head_ce/model_fp32.onnx",
+      "model_sha256": "ce00f44eaff23ca7ab07b4512b5a0fb989796e2a532725032dd29d7657c9ab1f",
+      "file_bytes": 8924421,
+      "size_mib": 8.510991096496582,
+      "stored_float_values": 2219626,
+      "float_initializer_payload_bytes": 8878504,
+      "initializer_dtype_counts": {
+        "FLOAT": 106
+      },
+      "cast_nodes": 0,
+      "resize_nodes": 1,
+      "accuracy_pct": 99.10740740740741,
+      "worst_recall_pct": 97.24000000000001,
+      "examples": 27000,
+      "scope": "training_set",
+      "accuracy_evidence": "results/all_data/resize192_head_ce_accuracy.json",
+      "evidence": "results/storage_comparison/summary.json",
+      "implementation": [
+        "scripts/compare_weight_storage.py",
+        "edgeprep/weight_storage.py"
+      ]
+    },
+    {
+      "name": "recovered192_weight16",
+      "label": "recovered192_weight16",
+      "phase": "matched_weight_storage",
+      "status": "completed",
+      "model": "best_models/resize192_head_ce_w16_e391533162d7/model_weight16.onnx",
+      "model_sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+      "file_bytes": 4496556,
+      "size_mib": 4.288249969482422,
+      "stored_float_values": 2219626,
+      "float_initializer_payload_bytes": 4439252,
+      "initializer_dtype_counts": {
+        "FLOAT16": 106
+      },
+      "cast_nodes": 106,
+      "resize_nodes": 1,
+      "accuracy_pct": 99.11111111111111,
+      "worst_recall_pct": 97.24000000000001,
+      "examples": 27000,
+      "scope": "training_set",
+      "accuracy_evidence": "results/all_data/resize192_head_ce_w16_accuracy.json",
+      "evidence": "results/storage_comparison/summary.json",
+      "implementation": [
+        "scripts/compare_weight_storage.py",
+        "edgeprep/weight_storage.py"
+      ]
+    }
+  ]
+}

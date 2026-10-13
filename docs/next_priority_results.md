@@ -66,6 +66,17 @@ Training-set accuracy on identical 27,000 indices; no held-out generalization cl
 | resize160 | 93.0037% | 78.0500% | -6.1593 pp |
 | resize192_head_ce | 99.1074% | 97.2400% | -0.0556 pp |
 | resize192_head_ce_w16 | 99.1111% | 97.2400% | -0.0519 pp |
+### Control: identical FP16 storage on the baseline
+
+| Model | Storage MiB | All-data accuracy | Worst class recall |
+|---|---:|---:|---:|
+| baseline_fp32 | 8.506295 | 99.1630% | 95.84% |
+| baseline_weight16 | 4.283507 | 99.1667% | 95.88% |
+| recovered192_fp32 | 8.510991 | 99.1074% | 97.24% |
+| recovered192_weight16 | 4.288250 | 99.1111% | 97.24% |
+
+The candidate is 4,973 bytes larger than the baseline under identical FP16 storage. Neither resolution reduction nor classifier recovery reduces the number of weights. The original FP32-versus-candidate FP16 size ratio is a precision conversion benefit available to both models. [Controlled experiment](matched_weight_storage.md).
+
 
 Classifier recovery: one epoch, 27,000 training images, batch 32, LR 0.0001, 12,810 trained head parameters. Backbone weights/BN buffers unchanged: True. Runtime 540.9 seconds. No teacher or augmentation.
 

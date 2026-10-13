@@ -66,7 +66,7 @@ def save(name, accuracy_path, benchmark_path, reason, destination=None):
         'training_checkpoint':'recovered_state.pt' if checkpoint else None,
         'recipe':'recipe.json','metrics':'metrics.json',
         'weight_precision':recipe.get('weight_storage',{}).get('weight_storage_precision','FP32'),
-        'cpu_compute_precision':'FP32' if recipe.get('weight_storage') else 'See recipe',
+        'cpu_compute_precision':'FP32' if not recipe.get('quantization') else 'See recipe',
         'training_data_count':len(recipe.get('recovery',{}).get('train_indices',[])),
         'evaluation_count':accuracy['examples'],'accuracy_scope':accuracy['evaluation_scope']}
     # Saving the identical snapshot again verifies it and preserves its original date.
@@ -74,6 +74,7 @@ def save(name, accuracy_path, benchmark_path, reason, destination=None):
         old=read(bundle/'manifest.json')
         manifest['saved_utc']=old['saved_utc']
     (bundle/'manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
+    precision_note='FP16 storage is restored to FP32 for CPU compute.' if recipe.get('weight_storage') else 'Weights, checkpoint storage and CPU compute remain FP32.'
     document=f'''# Saved winner: {name}
 
 {reason}
@@ -83,7 +84,7 @@ def save(name, accuracy_path, benchmark_path, reason, destination=None):
 - **Reproduction:** `recipe.json` includes resolution, preprocessing contract, recovery settings and original checkpoint hash. Restore it with `edgeprep.challenge.restore_recipe`; obtain the original supplied checkpoint under `Models/` first.
 - **Evidence:** `metrics.json` records full-data accuracy and the hash-matched CPU benchmark; `manifest.json` records checksums and selection reasoning.
 
-Accuracy: {accuracy['accuracy']*100:.4f}% on 27,000 training-pool images; worst class {accuracy['worst_class_accuracy']*100:.2f}%. CPU median latency {benchmark['median_ms']:.4f} ms, {benchmark['threads']} threads. These retain the original measurement protocol, not a new benchmark. Energy is an estimate. FP16 storage is restored to FP32 for CPU compute.
+Accuracy: {accuracy['accuracy']*100:.4f}% on 27,000 training-pool images; worst class {accuracy['worst_class_accuracy']*100:.2f}%. CPU median latency {benchmark['median_ms']:.4f} ms, {benchmark['threads']} threads. These retain the original measurement protocol, not a new benchmark. Energy is an estimate. {precision_note}
 
 For the recovered model, load with:
 

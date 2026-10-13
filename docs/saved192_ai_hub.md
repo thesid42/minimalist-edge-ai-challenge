@@ -37,6 +37,8 @@ The uploaded portable source is **4,496,556 bytes / 4.288 MiB**. Both compiled O
 
 This confirms a distinction between the smaller portable file and the compiler-produced deployment artifact. The source disk saving is real, but it does not survive this specific Hub compile path. NPU execution is verified by per-operation placement; float precision inside the device kernel is not inferred from file size or the source label.
 
+A controlled local experiment applies the same FP16 storage conversion to the original baseline: it becomes 4.283507 MiB versus 4.288250 MiB for this candidate. Equal-precision storage shows no candidate size advantage. [Matched weight-storage evidence](matched_weight_storage.md).
+
 Older original224 results were measured on the S24 family and a different 1,000-image sample. They are historical context, not a fresh matched baseline for this exact-phone 192 test. Do not calculate model speedup or compare accuracy across those samples.
 
 No energy measurement is claimed. [Qualcomm profile metric definitions](https://workbench.aihub.qualcomm.com/docs/hub/howitworks-inference.html). Hub process-memory ranges are retained in profile.json; they are not total board/NPU memory.

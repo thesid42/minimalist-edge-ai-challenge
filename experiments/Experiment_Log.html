@@ -7805,7 +7805,7 @@ a.anchor-link {
 <h1 id="Sequential-experiment-notebook">Sequential experiment notebook<a class="anchor-link" href="#Sequential-experiment-notebook">¶</a></h1><p>Read the numbered folders in order. Each README explains <strong>what changed, implementation, results and interpretation</strong>, with links to the original evidence. <code>Experiment_Log.ipynb</code> presents the same tables with saved outputs; no rerunning training is required to read it. <code>runs.json</code> is the machine-readable registry.</p>
 <p>Quantization reduces numerical precision and weight storage. Channel pruning physically removes parts of the network. Recovery trains a compressed model to restore accuracy. Device compilation prepares it for a particular runtime.</p>
 <p>Two accuracy protocols exist: the historical 500-image pilot and the current 27,000-image training-set evaluation. They are separate tables. Remote runs retain the historical 32-image numerical check and now add a labelled 1,000-image balanced diagnostic subset. That subset excludes 512 calibration images but is not held-out generalization or full-dataset accuracy. All model changes still start from the supplied student.</p>
-<p><strong>Current saved winner:</strong> <a href="../best_models/resize192_head_ce_w16_e391533162d7/README.md">resize192_head_ce_w16</a>. The versioned folder contains inference ONNX, recovered training weights, recipe, checksums and metrics. Older winners stay preserved. <a href="../docs/model_preservation.md">Saving future winners</a>.</p>
+<p><strong>Current saved winner:</strong> <a href="../best_models/resize192_head640_head_ce_fp32_8655a532a076/README.md">resize192_head640_head_ce_fp32</a>. The versioned folder contains inference ONNX, recovered training weights, recipe, checksums and metrics. Older winners stay preserved. <a href="../docs/model_preservation.md">Saving future winners</a>.</p>
 </div>
 </div>
 </div>
@@ -7891,331 +7891,44 @@ a.anchor-link {
 <td>completed</td>
 </tr>
 <tr>
-<th>5</th>
-<td>qdq_protected</td>
-<td>historical_pilot</td>
-<td>completed</td>
+<th>...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
 </tr>
 <tr>
-<th>6</th>
-<td>qdq_pointwise</td>
-<td>historical_pilot</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>7</th>
-<td>prune05</td>
-<td>historical_pilot</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>8</th>
-<td>prune10</td>
-<td>historical_pilot</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>9</th>
-<td>expansion05</td>
-<td>historical_pilot</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>10</th>
-<td>expansion10</td>
-<td>historical_pilot</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>11</th>
-<td>expansion05_ce</td>
-<td>historical_pilot</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>12</th>
-<td>expansion05_kd</td>
-<td>historical_pilot</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>13</th>
-<td>baseline</td>
-<td>current_all_data</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>14</th>
-<td>qdq_pointwise</td>
-<td>current_all_data</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>15</th>
-<td>qdq_percentile512</td>
-<td>current_all_data</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>16</th>
-<td>resize192</td>
-<td>current_all_data</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>17</th>
-<td>resize160</td>
-<td>current_all_data</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>18</th>
-<td>resize192_head_ce</td>
-<td>current_all_data</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>19</th>
-<td>resize192_head_ce_w16</td>
-<td>current_all_data</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>20</th>
-<td>s24_cpu_fp32</td>
-<td>remote_exploration</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>21</th>
-<td>s24_npu_float</td>
-<td>remote_exploration</td>
-<td>failed</td>
-</tr>
-<tr>
-<th>22</th>
-<td>s24_npu_float_retry</td>
-<td>remote_exploration</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>23</th>
-<td>rb3_npu_w8a8</td>
-<td>remote_exploration</td>
-<td>failed</td>
-</tr>
-<tr>
-<th>24</th>
-<td>rb3_onnx_npu_w8a8</td>
-<td>remote_exploration</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>25</th>
-<td>rb3_onnx_npu_w8a16</td>
-<td>remote_exploration</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>26</th>
-<td>s24_npu_float_retry_balanced</td>
-<td>remote_exploration</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>27</th>
-<td>s24_npu_float_retry_power_saver</td>
-<td>remote_exploration</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>28</th>
-<td>rb3_onnx_npu_w8a8_balanced</td>
-<td>remote_exploration</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>29</th>
-<td>rb3_onnx_npu_w8a8_power_saver</td>
-<td>remote_exploration</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>30</th>
-<td>resize192_s24_cpu</td>
-<td>remote_exploration</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>31</th>
-<td>resize192_s24_npu</td>
-<td>remote_exploration</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>32</th>
-<td>cpu_threads_1</td>
-<td>runtime_energy</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>33</th>
-<td>cpu_threads_2</td>
-<td>runtime_energy</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>34</th>
-<td>cpu_threads_4</td>
-<td>runtime_energy</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>35</th>
-<td>cpu_threads_8</td>
-<td>runtime_energy</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>36</th>
-<td>baseline_spin</td>
-<td>runtime_energy</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>37</th>
-<td>baseline_sleep</td>
-<td>runtime_energy</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>38</th>
-<td>resize192_head_ce_w16_spin</td>
-<td>runtime_energy</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>39</th>
-<td>resize192_head_ce_w16_sleep</td>
-<td>runtime_energy</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>40</th>
-<td>gpu_training_pipeline</td>
-<td>training_environment</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>41</th>
-<td>latency_baseline</td>
-<td>matched_192_latency</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>42</th>
-<td>latency_resize192</td>
-<td>matched_192_latency</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>43</th>
-<td>latency_resize192_head_ce</td>
-<td>matched_192_latency</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>44</th>
-<td>latency_resize192_head_ce_w16</td>
-<td>matched_192_latency</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>45</th>
-<td>mac_baseline_spin</td>
-<td>mac_cpu_runtime</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>46</th>
-<td>mac_baseline_sleep</td>
-<td>mac_cpu_runtime</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>47</th>
-<td>mac_candidate_spin</td>
-<td>mac_cpu_runtime</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>48</th>
-<td>mac_candidate_sleep</td>
-<td>mac_cpu_runtime</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>49</th>
-<td>mac_full_baseline_spin</td>
-<td>mac_cpu_full_runtime</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>50</th>
-<td>mac_full_baseline_sleep</td>
-<td>mac_cpu_full_runtime</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>51</th>
-<td>mac_full_candidate_spin</td>
-<td>mac_cpu_full_runtime</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>52</th>
-<td>mac_full_candidate_sleep</td>
-<td>mac_cpu_full_runtime</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>53</th>
-<td>mac_baseline_eval50</td>
-<td>mac_cpu_diagnostic50</td>
-<td>completed</td>
-</tr>
-<tr>
-<th>54</th>
+<th>66</th>
 <td>mac_candidate_eval50</td>
 <td>mac_cpu_diagnostic50</td>
 <td>completed</td>
 </tr>
 <tr>
-<th>55</th>
+<th>67</th>
 <td>mac_baseline_eval15000</td>
 <td>mac_cpu_diagnostic15000</td>
 <td>completed</td>
 </tr>
 <tr>
-<th>56</th>
+<th>68</th>
 <td>mac_candidate_eval15000</td>
 <td>mac_cpu_diagnostic15000</td>
 <td>completed</td>
 </tr>
 <tr>
-<th>57</th>
+<th>69</th>
 <td>mac_baseline_eval27000</td>
 <td>mac_cpu_full_data</td>
 <td>completed</td>
 </tr>
 <tr>
-<th>58</th>
+<th>70</th>
 <td>mac_candidate_eval27000</td>
 <td>mac_cpu_full_data</td>
 <td>completed</td>
 </tr>
 </tbody>
 </table>
+<p>71 rows × 3 columns</p>
 </div>
 </div>
 </div>
@@ -8872,7 +8585,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="07.-Next-experiments,-not-yet-measured">07. Next experiments, not yet measured<a class="anchor-link" href="#07.-Next-experiments,-not-yet-measured">¶</a></h1><p>Same-device W8A8 vs W8A16 is now measured in step 06. Prioritize fixed-count MSE vs MinMax calibration, beta Lite-MP, 1-2% expansion pruning with full-data CE/KD, and BN recalibration. Compare every candidate against a reference on the same device/runtime. Full-data classifier-only recovery of the 192 variant is recorded in step 08 when complete; full-backbone pruned-model CE/KD remains pending.</p>
+<h1 id="07.-Next-experiments,-not-yet-measured">07. Next experiments, not yet measured<a class="anchor-link" href="#07.-Next-experiments,-not-yet-measured">¶</a></h1><p>Same-device W8A8 vs W8A16 is now measured in step 06. The equal-precision baseline storage control is now in step 15; use it in future comparisons and measure its matched latency/energy before attributing gains to a particular knob. Prioritize fixed-count MSE vs MinMax calibration, beta Lite-MP, 1-2% expansion pruning with full-data CE/KD, and BN recalibration. Compare every candidate against a reference on the same device/runtime. Full-data classifier-only recovery of the 192 variant is recorded in step 08 when complete; full-backbone pruned-model CE/KD remains pending.</p>
 </div>
 </div>
 </div>
@@ -9712,6 +9425,271 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="15.-Baseline-and-recovered192-at-identical-weight-precision">15. Baseline and recovered192 at identical weight precision<a class="anchor-link" href="#15.-Baseline-and-recovered192-at-identical-weight-precision">¶</a></h1><p>Apply the same FP16 initializer storage / FP32 restore conversion to the unchanged baseline. Compare original224 and recovered192 at both FP32 and FP16 storage, verify every rounded baseline initializer and unchanged baseline operations, then measure baseline FP16 accuracy on all 27000 images. A paired 500-image output check is separate. The baseline also becomes about 4.28 MiB, so the selected model has no storage advantage at equal precision; resolution and recovery remove no parameters. Source-versus-compiled deployment size remains separate.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=cell-35">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">registry</span><span class="p">[</span><span class="s2">"records"</span><span class="p">]</span> <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="s2">"phase"</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'matched_weight_storage'</span> <span class="ow">and</span> <span class="n">r</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'baseline_fp32'</span><span class="p">,</span> <span class="s1">'baseline_weight16'</span><span class="p">,</span> <span class="s1">'recovered192_fp32'</span><span class="p">,</span> <span class="s1">'recovered192_weight16'</span><span class="p">]]</span>
+<span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([{</span><span class="n">k</span><span class="p">:</span><span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'label'</span><span class="p">,</span> <span class="s1">'file_bytes'</span><span class="p">,</span> <span class="s1">'size_mib'</span><span class="p">,</span> <span class="s1">'stored_float_values'</span><span class="p">,</span> <span class="s1">'accuracy_pct'</span><span class="p">,</span> <span class="s1">'worst_recall_pct'</span><span class="p">,</span> <span class="s1">'examples'</span><span class="p">]}</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>label</th>
+<th>file_bytes</th>
+<th>size_mib</th>
+<th>stored_float_values</th>
+<th>accuracy_pct</th>
+<th>worst_recall_pct</th>
+<th>examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>baseline_fp32</td>
+<td>8919497</td>
+<td>8.5063</td>
+<td>2219626</td>
+<td>99.1630</td>
+<td>95.84</td>
+<td>27000</td>
+</tr>
+<tr>
+<th>1</th>
+<td>baseline_weight16</td>
+<td>4491583</td>
+<td>4.2835</td>
+<td>2219626</td>
+<td>99.1667</td>
+<td>95.88</td>
+<td>27000</td>
+</tr>
+<tr>
+<th>2</th>
+<td>recovered192_fp32</td>
+<td>8924421</td>
+<td>8.5110</td>
+<td>2219626</td>
+<td>99.1074</td>
+<td>97.24</td>
+<td>27000</td>
+</tr>
+<tr>
+<th>3</th>
+<td>recovered192_weight16</td>
+<td>4496556</td>
+<td>4.2882</td>
+<td>2219626</td>
+<td>99.1111</td>
+<td>97.24</td>
+<td>27000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cell-36">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="16.-Smaller-recovered192-architectures-with-FP32-weights">16. Smaller recovered192 architectures with FP32 weights<a class="anchor-link" href="#16.-Smaller-recovered192-architectures-with-FP32-weights">¶</a></h1><p>The team now requires FP32 throughout and all 27000 images for every new comparison. Physically reduce late expansion channels, final feature channels or one residual block. Save exact edits and FP32 state, verify replay and export, measure initial full-data accuracy, recover head640 and drop16 with a full-backbone GPU epoch, then recover the initial head640 with only 6410 classifier parameters trained. GPU AMP remains disabled. Reevaluate all three recovered models on the entire pool on CPU. Matched runtime/estimated energy compares original224, parent192, classifier-recovered head640 and recovered drop16 at FP32, with three fresh serial repetitions each. Older FP16 winners remain preserved.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=cell-37">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">registry</span><span class="p">[</span><span class="s2">"records"</span><span class="p">]</span> <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="s2">"phase"</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'fp32_structural_comparison'</span> <span class="ow">and</span> <span class="n">r</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'original224_fp32'</span><span class="p">,</span> <span class="s1">'parent192_fp32'</span><span class="p">,</span> <span class="s1">'initial_late_expansion10'</span><span class="p">,</span> <span class="s1">'initial_head640'</span><span class="p">,</span> <span class="s1">'initial_drop16'</span><span class="p">,</span> <span class="s1">'head640_ce'</span><span class="p">,</span> <span class="s1">'drop16_ce'</span><span class="p">,</span> <span class="s1">'head640_head_ce'</span><span class="p">]]</span>
+<span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([{</span><span class="n">k</span><span class="p">:</span><span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'label'</span><span class="p">,</span> <span class="s1">'parameters'</span><span class="p">,</span> <span class="s1">'size_mib'</span><span class="p">,</span> <span class="s1">'accuracy_pct'</span><span class="p">,</span> <span class="s1">'worst_recall_pct'</span><span class="p">,</span> <span class="s1">'examples'</span><span class="p">,</span> <span class="s1">'median_cpu_4t_ms'</span><span class="p">,</span> <span class="s1">'estimated_cpu_4t_j'</span><span class="p">]}</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>label</th>
+<th>parameters</th>
+<th>size_mib</th>
+<th>accuracy_pct</th>
+<th>worst_recall_pct</th>
+<th>examples</th>
+<th>median_cpu_4t_ms</th>
+<th>estimated_cpu_4t_j</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>Original student / FP32</td>
+<td>2236682</td>
+<td>8.5063</td>
+<td>99.1630</td>
+<td>95.8400</td>
+<td>27000</td>
+<td>2.5321</td>
+<td>0.0529</td>
+</tr>
+<tr>
+<th>1</th>
+<td>Recovered192 reference / FP32</td>
+<td>2236682</td>
+<td>8.5110</td>
+<td>99.1074</td>
+<td>97.2400</td>
+<td>27000</td>
+<td>1.9662</td>
+<td>0.0414</td>
+</tr>
+<tr>
+<th>2</th>
+<td>Late expansion channels / before recovery</td>
+<td>2108202</td>
+<td>8.0236</td>
+<td>98.3185</td>
+<td>96.1200</td>
+<td>27000</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr>
+<th>3</th>
+<td>Final 640 channels / before recovery</td>
+<td>2024202</td>
+<td>7.7029</td>
+<td>98.9963</td>
+<td>97.4000</td>
+<td>27000</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr>
+<th>4</th>
+<td>Residual block 16 removed / before recovery</td>
+<td>1916682</td>
+<td>7.2957</td>
+<td>96.4296</td>
+<td>87.8000</td>
+<td>27000</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr>
+<th>5</th>
+<td>Final 640 / full-backbone recovery</td>
+<td>2024202</td>
+<td>7.7029</td>
+<td>98.8815</td>
+<td>97.6500</td>
+<td>27000</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr>
+<th>6</th>
+<td>Remove block 16 / full-backbone recovery</td>
+<td>1916682</td>
+<td>7.2957</td>
+<td>98.6222</td>
+<td>95.5333</td>
+<td>27000</td>
+<td>1.8932</td>
+<td>0.0393</td>
+</tr>
+<tr>
+<th>7</th>
+<td>Final 640 / classifier-only recovery</td>
+<td>2024202</td>
+<td>7.7029</td>
+<td>99.1481</td>
+<td>97.4000</td>
+<td>27000</td>
+<td>1.9791</td>
+<td>0.0408</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cell-38">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Latest-matched-runtime-and-estimated-energy">Latest matched runtime and estimated energy<a class="anchor-link" href="#Latest-matched-runtime-and-estimated-energy">¶</a></h2><p>Same laptop, four CPU threads and three repetitions. Accuracy is separately measured on all 27,000 images. Remote device results stay separate.</p>
 </div>
 </div>
@@ -9721,7 +9699,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
