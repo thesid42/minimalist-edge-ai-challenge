@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "pdf_pages": 2,
+  "pdf_sha256": "70502b92c6286ed54e6ff40d99613831269ba8889540907770a620824057bedf",
+  "selected_model_sha256": "8655a532a07639d47592b634e9596dd36c808ee1632a835fab1f6af8be4612df",
+  "render_review": "Both pages inspected; no clipping, overlap or missing text",
+  "report_scope": "Selected smaller192 FP32 architecture and its recovery stages; original baseline and unpruned parent for comparison",
+  "source_requirements": "Challenge PDF: 1-2 page technical report, retained/discarded choices, tradeoff curve, reproducibility"
+}
