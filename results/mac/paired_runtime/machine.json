@@ -1,0 +1,21 @@
+{
+  "cpu": "Apple M4 Pro",
+  "os": "macOS-27.0.1-arm64-arm-64bit",
+  "power_source": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=36307043)\t100%; charged; 0:00 remaining present: true",
+  "settings": {
+    "baseline": "artifacts/mac/baseline/model_fp32.onnx",
+    "candidate": "best_models/resize192_head_ce_w16_e391533162d7/model_weight16.onnx",
+    "output": "results/mac/paired_runtime",
+    "inputs": "results/mac/data/timing_input.npy",
+    "labels": "results/mac/data/timing_label.npy",
+    "threads": 4,
+    "repetitions": 3,
+    "runs": 1000,
+    "warmup": 100,
+    "energy_seconds": 30
+  },
+  "candidate_status": "provided",
+  "protocol": "Serial fresh processes; rotated scenario order each repetition; CPU only; batch size one",
+  "power_caveat": "CodeCarbon CPU-load/TDP and RAM heuristic only, not Apple sensors or a device power meter",
+  "accuracy_caveat": "Timing sample correctness is only a smoke test, not model accuracy"
+}

@@ -117,3 +117,27 @@ powershell -ExecutionPolicy Bypass -File scripts/notebook.ps1
 ```
 
 JupyterLab and the project kernel are installed locally. The notebook reads evidence only; it never reruns training or submits Hub jobs. Timing JSON files also contain a one-image smoke-check field called accuracy; use the separate *_accuracy.json dataset measurements in these tables.
+
+<!-- BEGIN MAC CPU RESULTS -->
+## 13. Matched Mac CPU measurement
+
+[Details](13_mac_cpu/README.md): exact saved winner against a freshly measured baseline on Apple M4 Pro. Small-sample accuracy and estimated power remain separate from full-data and Windows evidence.
+<!-- END MAC CPU RESULTS -->
+
+<!-- BEGIN MAC FULL CPU RESULTS -->
+## 13. Matched Mac CPU measurement
+
+[Details](13_mac_cpu/README.md): exact saved winner against a freshly measured baseline on Apple M4 Pro. Subset scores, full-data accuracy and estimated power retain separate evidence from Windows results.
+<!-- END MAC FULL CPU RESULTS -->
+
+<!-- BEGIN MAC HALF SAMPLE RESULTS -->
+Step 13 also includes a separate [50-image CPU diagnostic recheck](../results/mac/eval50/README.md).
+<!-- END MAC HALF SAMPLE RESULTS -->
+
+<!-- BEGIN MAC 15000 SAMPLE RESULTS -->
+Step 13 also includes a separate [15,000-image CPU diagnostic recheck](../results/mac/eval15000/README.md).
+<!-- END MAC 15000 SAMPLE RESULTS -->
+
+<!-- BEGIN MAC FULL DATA RESULTS -->
+Step 13 also includes a separate [27,000-image CPU full-data evaluation](../results/mac/eval27000/README.md).
+<!-- END MAC FULL DATA RESULTS -->

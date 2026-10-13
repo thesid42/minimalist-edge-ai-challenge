@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "candidate_sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+  "all_runtime_and_subset_model_hashes_match": true,
+  "new_notebook_report_cell_executed_standalone": true,
+  "full_notebook_reexecuted": false,
+  "report_table_sha256": "4dd0fc8e5d6b999335ad15fd9ce210ec1eebda36ec8e507cee9db2c4de841d64"
+}

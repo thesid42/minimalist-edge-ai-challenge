@@ -1,0 +1,5 @@
+[codecarbon INFO @ 11:53:36] Codecarbon configuration: force_mode_cpu_load from CODECARBON_FORCE_MODE_CPU_LOAD
+[codecarbon INFO @ 11:53:36] offline tracker init
+[codecarbon INFO @ 11:53:36] Codecarbon configuration: force_mode_cpu_load from CODECARBON_FORCE_MODE_CPU_LOAD
+[codecarbon WARNING @ 11:53:36] Multiple instances of codecarbon are allowed to run at the same time.
+[codecarbon WARNING @ 11:53:39] Error while trying to count physical CPUs: [Errno 2] No such file or directory: 'lscpu'. Defaulting to 1.

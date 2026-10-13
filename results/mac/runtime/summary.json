@@ -1,0 +1,69 @@
+{
+  "machine": {
+    "cpu": "Apple M4 Pro",
+    "os": "macOS-27.0.1-arm64-arm-64bit",
+    "power_source": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=36307043)\t100%; charged; 0:00 remaining present: true",
+    "settings": {
+      "baseline": "artifacts/mac/baseline/model_fp32.onnx",
+      "candidate": null,
+      "output": "results/mac/runtime",
+      "inputs": "results/mac/data/timing_input.npy",
+      "labels": "results/mac/data/timing_label.npy",
+      "threads": 4,
+      "repetitions": 3,
+      "runs": 1000,
+      "warmup": 100,
+      "energy_seconds": 30
+    },
+    "candidate_status": "not_available_not_measured",
+    "protocol": "Serial fresh processes; rotated scenario order each repetition; CPU only; batch size one",
+    "power_caveat": "CodeCarbon CPU-load/TDP and RAM heuristic only, not Apple sensors or a device power meter",
+    "accuracy_caveat": "Timing sample correctness is only a smoke test, not model accuracy"
+  },
+  "records": [
+    {
+      "name": "baseline_spin",
+      "model_sha256": "33f281351022a7580ba30c6dc3c7a0d22ba05a3b20e70eea11bf6c7b73202876",
+      "file_bytes": 8919497,
+      "replicates": 3,
+      "median_ms": 2.2629585,
+      "median_range_ms": [
+        2.2447705,
+        2.338625
+      ],
+      "p95_ms": 2.41925145,
+      "peak_rss_mib": 108.734375,
+      "estimated_energy_j_per_inference": 0.0326551295869597,
+      "estimated_power_w": 14.115760693106482,
+      "cpu_power_mode": "cpu_load",
+      "cpu_tdp_w": 35.0,
+      "evidence": [
+        "/Users/anmol/Work/minimalist-edge-ai-challenge/results/mac/runtime/baseline_spin_rep1.json",
+        "/Users/anmol/Work/minimalist-edge-ai-challenge/results/mac/runtime/baseline_spin_rep2.json",
+        "/Users/anmol/Work/minimalist-edge-ai-challenge/results/mac/runtime/baseline_spin_rep3.json"
+      ]
+    },
+    {
+      "name": "baseline_sleep",
+      "model_sha256": "33f281351022a7580ba30c6dc3c7a0d22ba05a3b20e70eea11bf6c7b73202876",
+      "file_bytes": 8919497,
+      "replicates": 3,
+      "median_ms": 2.6733960000000003,
+      "median_range_ms": [
+        2.627312,
+        2.7118539999999998
+      ],
+      "p95_ms": 2.8741833499999996,
+      "peak_rss_mib": 106.921875,
+      "estimated_energy_j_per_inference": 0.02548356008845511,
+      "estimated_power_w": 9.55333164377681,
+      "cpu_power_mode": "cpu_load",
+      "cpu_tdp_w": 35.0,
+      "evidence": [
+        "/Users/anmol/Work/minimalist-edge-ai-challenge/results/mac/runtime/baseline_sleep_rep1.json",
+        "/Users/anmol/Work/minimalist-edge-ai-challenge/results/mac/runtime/baseline_sleep_rep2.json",
+        "/Users/anmol/Work/minimalist-edge-ai-challenge/results/mac/runtime/baseline_sleep_rep3.json"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "evaluation_count": 15000,
+  "class_support": [
+    1500,
+    1500,
+    1500,
+    1500,
+    1500,
+    1500,
+    1500,
+    1500,
+    1500,
+    1500
+  ],
+  "class_to_idx": {
+    "AnnualCrop": 0,
+    "Forest": 1,
+    "HerbaceousVegetation": 2,
+    "Highway": 3,
+    "Industrial": 4,
+    "Pasture": 5,
+    "PermanentCrop": 6,
+    "Residential": 7,
+    "River": 8,
+    "SeaLake": 9
+  },
+  "seed": 42,
+  "available_examples": 27000,
+  "evaluation_indices_sha256": "7a44bf5756ceacd1e0a04289debe220be701bf81387ab6c4fc5d344f022a0c06"
+}

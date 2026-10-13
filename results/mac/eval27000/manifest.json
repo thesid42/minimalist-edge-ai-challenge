@@ -1,0 +1,33 @@
+{
+  "evaluation_count": 27000,
+  "class_support": [
+    3000,
+    3000,
+    3000,
+    2500,
+    2500,
+    2000,
+    2500,
+    3000,
+    2500,
+    3000
+  ],
+  "class_to_idx": {
+    "AnnualCrop": 0,
+    "Forest": 1,
+    "HerbaceousVegetation": 2,
+    "Highway": 3,
+    "Industrial": 4,
+    "Pasture": 5,
+    "PermanentCrop": 6,
+    "Residential": 7,
+    "River": 8,
+    "SeaLake": 9
+  },
+  "available_examples": 27000,
+  "seed": 42,
+  "evaluation_indices_sha256": "13514cad90157691bd28761946d0c07f050e5ba4038a020d20a58f558e3022cf",
+  "selection": "Seeded balanced interleaved selection from all available EuroSAT images",
+  "scope": "training_set",
+  "full_dataset_evaluated": true
+}
