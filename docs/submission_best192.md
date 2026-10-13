@@ -62,3 +62,9 @@ CodeCarbon 3.3.1 uses CPU TDP/load estimation (45 W) plus a RAM heuristic; GPU i
 ONNX SHA-256: `8655a532a07639d47592b634e9596dd36c808ee1632a835fab1f6af8be4612df`.
 
 [Repository](https://github.com/thesid42/minimalist-edge-ai-challenge). Source: challenge PDF sections 2, 3, 5, 6 and 9; the organizer all-data/laptop-baseline clarification governs evaluation.
+
+## Challenge metrics JSON
+
+[metrics.json](../metrics.json) follows the field names in Section 8, with team name **Less is neural**. Accuracy and recall are fractions between 0 and 1; size_mb and peak_ram_mb use MiB as in the brief code. Latency is the median of three run medians, and energy is the mean of three matched CodeCarbon windows, labelled tdp_estimate. The exact final model has no AI Hub profile yet.
+
+Regenerate without new training or measurements: `python scripts/build_submission_metrics.py --team-name "Less is neural"`. The generator checks dataset count, model hashes and matching CPU repetitions before writing the file.

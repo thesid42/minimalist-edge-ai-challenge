@@ -10,7 +10,7 @@ Current evidence is under [results/all_data](results/all_data). [baseline_metric
 
 ## Latest completed results
 
-Refreshed from saved evidence at 2026-10-13 21:38 UTC. [Full results](docs/next_priority_results.md) and [numbered experiment log](experiments/README.md) are regenerated together.
+Refreshed from saved evidence at 2026-10-13 21:52 UTC. [Full results](docs/next_priority_results.md) and [numbered experiment log](experiments/README.md) are regenerated together.
 
 **Current direction: structural compression of recovered192, keeping FP32 throughout. Every new candidate uses all 27,000 images for evaluation.** [Full FP32 report](docs/fp32_model_reduction.md).
 
@@ -63,6 +63,9 @@ At identical FP16 storage, recovered192 is **4,973 bytes larger**. The roughly 5
 
 
 **Submission report for the selected smaller192 FP32 model:** [two-page PDF](output/pdf/best192_fp32_technical_report.pdf) / [editable text](docs/submission_best192.md). It includes the pipeline tradeoff curve, matched metrics, per-class recall, energy mode and reproduction details.
+
+
+**Challenge-format metrics:** [metrics.json](metrics.json), team **Less is neural**, uses the same matched FP32 baseline/final evidence and the Section 8 field names. Energy is marked tdp_estimate. The winner bundle also contains submission_metrics.json; its detailed metrics.json remains separate.
 
 
 **Saved winner weights:** [resize192_head640_head_ce_fp32](best_models/resize192_head640_head_ce_fp32_8655a532a076/README.md), with the inference ONNX, full recovered checkpoint, portable recipe, checksums and results. [Current selection](best_models/current.json) / [winner history](best_models/registry.json). Future winners are saved separately; older weights are retained. [Preservation workflow](docs/model_preservation.md).

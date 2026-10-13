@@ -1,0 +1,128 @@
+{
+  "team_name": "Less is neural",
+  "baseline": {
+    "accuracy": 0.9916296296296296,
+    "params_million": 2.236682,
+    "size_mb": 8.506295204162598,
+    "macs_giga": 0.32621952,
+    "latency_ms": 2.5321499999999997,
+    "peak_ram_mb": 86.171875,
+    "joules_per_inference": 0.052933972295826595
+  },
+  "final": {
+    "accuracy": 0.9914814814814815,
+    "params_million": 2.024202,
+    "size_mb": 7.702885627746582,
+    "macs_giga": 0.23220352,
+    "latency_ms": 1.9790999999999999,
+    "peak_ram_mb": 86.03125,
+    "joules_per_inference": 0.04084741588552873
+  },
+  "worst_class_accuracy": 0.974,
+  "codecarbon_mode": "tdp_estimate",
+  "techniques_applied": [
+    "Internal resolution reduction to 192x192 with fixed external (1,3,224,224) input",
+    "Structured final-feature channel pruning: 1280 to 640 channels, with dependent BN and classifier inputs removed",
+    "Classifier-only cross-entropy recovery on all 27000 images; FP32 weights and compute"
+  ],
+  "ai_hub_profile_summary": "No AI Hub compile/profile for this exact selected FP32 model. All submitted efficiency figures are laptop CPU measurements; older models' Hub profiles are not attributed to this model.",
+  "measurement_machine": "AMD Ryzen 7 5800H with Radeon Graphics; 27.86 GiB RAM; Windows-10-10.0.19045-SP0; ONNX Runtime 1.31.0, CPUExecutionProvider, 4 threads, batch 1",
+  "measurement_details": {
+    "schema_source": "The Minimalist Edge AI Challenge.pdf, Section 8",
+    "baseline_role": "Unchanged supplied MobileNetV2, measured locally under organizer own-laptop-baseline clarification",
+    "model_format": "Uncompressed FP32 ONNX for both baseline and final",
+    "accuracy_units": "Fraction between 0 and 1",
+    "size_and_ram_units": "MiB (2**20 bytes), matching the brief code despite its mb field labels",
+    "evaluation_scope": "training_set",
+    "training_examples": 27000,
+    "evaluation_examples": 27000,
+    "data_protocol": "Organizer clarification: train and evaluate on all EuroSAT images; no held-out split",
+    "input_shape": [
+      1,
+      3,
+      224,
+      224
+    ],
+    "output_shape": [
+      1,
+      10
+    ],
+    "internal_resolution": 192,
+    "weight_precision": "FP32",
+    "cpu_compute_precision": "FP32",
+    "quantization": null,
+    "latency_statistic": "Median of three per-run medians; 1000 timings after 100 warmups per fresh process",
+    "latency_input": "One real preprocessed image repeated; accuracy measured separately on all 27000 images",
+    "benchmark_order": "Serial fresh processes, rotating model order, no concurrent training",
+    "peak_ram_statistic": "Maximum sampled process RSS across three repetitions",
+    "energy_statistic": "Mean of three 30-second CodeCarbon windows",
+    "energy_scope": "Process-attributed CPU TDP/load estimate plus estimated system RAM; GPU excluded; not a hardware meter reading",
+    "codecarbon_version": "3.3.1",
+    "cpu_tdp_w": 45.0,
+    "energy_sample_sd_j": {
+      "baseline": 0.0013875251588279245,
+      "final": 0.0009892178754378855
+    },
+    "latency_range_ms": {
+      "baseline": [
+        2.5129,
+        2.8754999999999997
+      ],
+      "final": [
+        1.9099,
+        2.1250999999999998
+      ]
+    },
+    "macs_note": "THOP computation counts exclude the internal bilinear resize overhead",
+    "per_class_recall": {
+      "baseline": {
+        "AnnualCrop": 0.9873333333333333,
+        "Forest": 0.9986666666666667,
+        "HerbaceousVegetation": 0.9913333333333333,
+        "Highway": 0.9976,
+        "Industrial": 0.9988,
+        "Pasture": 0.9925,
+        "PermanentCrop": 0.9584,
+        "Residential": 0.9973333333333333,
+        "River": 0.9928,
+        "SeaLake": 0.9986666666666667
+      },
+      "final": {
+        "AnnualCrop": 0.989,
+        "Forest": 0.996,
+        "HerbaceousVegetation": 0.9906666666666667,
+        "Highway": 0.992,
+        "Industrial": 0.9952,
+        "Pasture": 0.9845,
+        "PermanentCrop": 0.974,
+        "Residential": 0.9973333333333333,
+        "River": 0.9928,
+        "SeaLake": 0.999
+      }
+    },
+    "baseline_worst_class_accuracy": 0.9584,
+    "final_model": "best_models/resize192_head640_head_ce_fp32_8655a532a076/model.onnx",
+    "baseline_model_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+    "final_model_sha256": "8655a532a07639d47592b634e9596dd36c808ee1632a835fab1f6af8be4612df",
+    "final_checkpoint_sha256": "e0ef5aa269222ab7d86e80d297de7aebc57e3207208164d6d301dcf8e718be06",
+    "ratios_final_to_baseline": {
+      "accuracy": 0.9998506013296482,
+      "params_million": 0.9050021415650503,
+      "size_mb": 0.9055511762602757,
+      "macs_giga": 0.7118014274559659,
+      "latency_ms": 0.7815887684378888,
+      "peak_ram_mb": 0.9983680870353581,
+      "joules_per_inference": 0.7716673076648966
+    },
+    "accuracy_change_percentage_points": -0.01481481481481195,
+    "evidence": {
+      "baseline_accuracy": "results/all_data/baseline_accuracy.json",
+      "final_accuracy": "results/fp32_compression/head640_head_ce_accuracy.json",
+      "baseline_runtime": "results/fp32_compression/runtime/original224_fp32_summary.json",
+      "final_runtime": "results/fp32_compression/runtime/head640_head_ce_summary.json",
+      "recipe": "best_models/resize192_head640_head_ce_fp32_8655a532a076/recipe.json",
+      "manifest": "best_models/resize192_head640_head_ce_fp32_8655a532a076/manifest.json",
+      "technical_report": "output/pdf/best192_fp32_technical_report.pdf"
+    }
+  }
+}

@@ -19,3 +19,5 @@ model, recipe = restore_recipe("best_models/resize192_head640_head_ce_fp32_8655a
 Run the saved ONNX with CPUExecutionProvider. Preserve this version when promoting a future winner.
 
 [Two-page submission technical report](../../output/pdf/best192_fp32_technical_report.pdf) / [editable report](../../docs/submission_best192.md).
+
+[Challenge Section 8 metrics](submission_metrics.json), also provided as [root metrics.json](../../metrics.json), records team **Less is neural** and the matched baseline/final measurements. The existing metrics.json in this bundle preserves detailed experiment evidence.
