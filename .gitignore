@@ -22,3 +22,5 @@ results/hub/**/*.onnx
 results/hub/**/*.data
 results/hub/**/*.dlc
 results/hub/**/*.tflite
+
+.ipynb_checkpoints/

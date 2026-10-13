@@ -37,7 +37,7 @@ py -3.11 -m venv .venv
 .venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-Linux/macOS: use `python3.11`, `.venv/bin/python`, and the default PyTorch index on macOS. `scripts/setup.ps1` provides an alternative Windows installation with `uv` on PATH. Four functional checks pass. Approved cleanup recovered 8.15 GiB; CPU dependencies and current model/data artifacts remain intact.
+Linux/macOS: use `python3.11`, `.venv/bin/python`, and the default PyTorch index on macOS. `scripts/setup.ps1` provides an alternative Windows installation with `uv` on PATH. Seven functional checks pass. Approved cleanup recovered 8.15 GiB; CPU dependencies and current model/data artifacts remain intact.
 
 ## Reproduce the current baseline and comparison
 
@@ -86,3 +86,13 @@ Measurements run serially. Current results have explicit evaluation scope and sa
 AI Hub credentials are read automatically from the ignored project-root `.env` (`QAI_HUB_API_TOKEN=`). Access was verified and the live catalogue saved with 78 entries. Run `.venv\Scripts\python.exe -m edgeprep.hub_auth --check` after editing the key. See [AI Hub device and experiment guide](docs/ai_hub.md) for CPU/NPU, real calibration, reproduction commands and live results.
 
 Deliver one selected model, complete metrics.json, a 1-2-page report with tradeoff curve, and source that recreates it from the checkpoint. `configs/metrics.template.json` is a scaffold, not a completed submission. Report overall training-set accuracy, all class recalls, worst class, parameters, file size, MACs, CPU latency, RAM and estimated/measured energy against our own laptop reference.
+
+## Read the experiments in Jupyter
+
+The summary notebook has saved outputs and can be read on GitHub or through `experiments/Experiment_Log.html`. JupyterLab and ipykernel are installed in the existing CPU environment. Launch it with:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/notebook.ps1
+```
+
+For a fresh clone, install `requirements-notebook.lock.txt` after CPU setup. The launcher installs a project kernel under .venv, uses local runtime/cache directories, and opens the summary notebook. Its cells only read saved results and plots; executing it does not train models or submit cloud jobs.

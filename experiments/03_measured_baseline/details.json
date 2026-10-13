@@ -1,6 +1,7 @@
 [
   {
     "name": "baseline",
+    "label": "Unchanged FP32 student",
     "phase": "current_all_data",
     "status": "completed",
     "accuracy_pct": 99.16296296296296,

@@ -1,6 +1,7 @@
 [
   {
     "name": "baseline",
+    "label": "Unchanged FP32 student",
     "phase": "historical_pilot",
     "status": "completed",
     "accuracy_pct": 99.2,
@@ -26,6 +27,7 @@
   },
   {
     "name": "qdq_s8",
+    "label": "Full INT8, signed / MinMax 128",
     "phase": "historical_pilot",
     "status": "completed",
     "accuracy_pct": 92.60000000000001,
@@ -60,6 +62,7 @@
   },
   {
     "name": "qdq_u8",
+    "label": "Full INT8, unsigned / MinMax 128",
     "phase": "historical_pilot",
     "status": "completed",
     "accuracy_pct": 91.4,
@@ -94,6 +97,7 @@
   },
   {
     "name": "qdq_s8_256",
+    "label": "Full INT8 / MinMax 256",
     "phase": "historical_pilot",
     "status": "completed",
     "accuracy_pct": 91.0,
@@ -129,6 +133,7 @@
   },
   {
     "name": "qdq_percentile",
+    "label": "Full INT8 / Percentile 256",
     "phase": "historical_pilot",
     "status": "completed",
     "accuracy_pct": 96.2,
@@ -163,6 +168,7 @@
   },
   {
     "name": "qdq_protected",
+    "label": "INT8 with first/last/head protected",
     "phase": "historical_pilot",
     "status": "completed",
     "accuracy_pct": 96.0,
@@ -201,6 +207,7 @@
   },
   {
     "name": "qdq_pointwise",
+    "label": "Selective INT8 / MinMax 256",
     "phase": "historical_pilot",
     "status": "completed",
     "accuracy_pct": 98.4,
@@ -257,6 +264,7 @@
   },
   {
     "name": "prune05",
+    "label": "Uniform channel pruning 5%",
     "phase": "historical_pilot",
     "status": "completed",
     "accuracy_pct": 16.0,
@@ -282,6 +290,7 @@
   },
   {
     "name": "prune10",
+    "label": "Uniform channel pruning 10%",
     "phase": "historical_pilot",
     "status": "completed",
     "accuracy_pct": 17.2,
@@ -307,6 +316,7 @@
   },
   {
     "name": "expansion05",
+    "label": "Expansion-only pruning 5%",
     "phase": "historical_pilot",
     "status": "completed",
     "accuracy_pct": 83.2,
@@ -333,6 +343,7 @@
   },
   {
     "name": "expansion10",
+    "label": "Expansion-only pruning 10%",
     "phase": "historical_pilot",
     "status": "completed",
     "accuracy_pct": 51.0,
@@ -359,6 +370,7 @@
   },
   {
     "name": "expansion05_ce",
+    "label": "Expansion 5% + short CE recovery",
     "phase": "historical_pilot",
     "status": "completed",
     "accuracy_pct": 95.6,
@@ -405,6 +417,7 @@
   },
   {
     "name": "expansion05_kd",
+    "label": "Expansion 5% + short teacher KD recovery",
     "phase": "historical_pilot",
     "status": "completed",
     "accuracy_pct": 96.0,

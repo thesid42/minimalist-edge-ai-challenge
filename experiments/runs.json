@@ -1,9 +1,10 @@
 {
-  "updated_utc": "2026-10-13T17:21:45.135561+00:00",
+  "updated_utc": "2026-10-13T17:30:31.557717+00:00",
   "ordering": "Numbered phases and logical experimental progression; original wall-clock timestamps are not reconstructed",
   "records": [
     {
       "name": "baseline",
+      "label": "Unchanged FP32 student",
       "phase": "historical_pilot",
       "status": "completed",
       "accuracy_pct": 99.2,
@@ -29,6 +30,7 @@
     },
     {
       "name": "qdq_s8",
+      "label": "Full INT8, signed / MinMax 128",
       "phase": "historical_pilot",
       "status": "completed",
       "accuracy_pct": 92.60000000000001,
@@ -63,6 +65,7 @@
     },
     {
       "name": "qdq_u8",
+      "label": "Full INT8, unsigned / MinMax 128",
       "phase": "historical_pilot",
       "status": "completed",
       "accuracy_pct": 91.4,
@@ -97,6 +100,7 @@
     },
     {
       "name": "qdq_s8_256",
+      "label": "Full INT8 / MinMax 256",
       "phase": "historical_pilot",
       "status": "completed",
       "accuracy_pct": 91.0,
@@ -132,6 +136,7 @@
     },
     {
       "name": "qdq_percentile",
+      "label": "Full INT8 / Percentile 256",
       "phase": "historical_pilot",
       "status": "completed",
       "accuracy_pct": 96.2,
@@ -166,6 +171,7 @@
     },
     {
       "name": "qdq_protected",
+      "label": "INT8 with first/last/head protected",
       "phase": "historical_pilot",
       "status": "completed",
       "accuracy_pct": 96.0,
@@ -204,6 +210,7 @@
     },
     {
       "name": "qdq_pointwise",
+      "label": "Selective INT8 / MinMax 256",
       "phase": "historical_pilot",
       "status": "completed",
       "accuracy_pct": 98.4,
@@ -260,6 +267,7 @@
     },
     {
       "name": "prune05",
+      "label": "Uniform channel pruning 5%",
       "phase": "historical_pilot",
       "status": "completed",
       "accuracy_pct": 16.0,
@@ -285,6 +293,7 @@
     },
     {
       "name": "prune10",
+      "label": "Uniform channel pruning 10%",
       "phase": "historical_pilot",
       "status": "completed",
       "accuracy_pct": 17.2,
@@ -310,6 +319,7 @@
     },
     {
       "name": "expansion05",
+      "label": "Expansion-only pruning 5%",
       "phase": "historical_pilot",
       "status": "completed",
       "accuracy_pct": 83.2,
@@ -336,6 +346,7 @@
     },
     {
       "name": "expansion10",
+      "label": "Expansion-only pruning 10%",
       "phase": "historical_pilot",
       "status": "completed",
       "accuracy_pct": 51.0,
@@ -362,6 +373,7 @@
     },
     {
       "name": "expansion05_ce",
+      "label": "Expansion 5% + short CE recovery",
       "phase": "historical_pilot",
       "status": "completed",
       "accuracy_pct": 95.6,
@@ -408,6 +420,7 @@
     },
     {
       "name": "expansion05_kd",
+      "label": "Expansion 5% + short teacher KD recovery",
       "phase": "historical_pilot",
       "status": "completed",
       "accuracy_pct": 96.0,
@@ -454,6 +467,7 @@
     },
     {
       "name": "baseline",
+      "label": "Unchanged FP32 student",
       "phase": "current_all_data",
       "status": "completed",
       "accuracy_pct": 99.16296296296296,
@@ -479,6 +493,7 @@
     },
     {
       "name": "qdq_pointwise",
+      "label": "Selective INT8 / MinMax 256",
       "phase": "current_all_data",
       "status": "completed",
       "accuracy_pct": 98.41111111111111,
@@ -535,6 +550,7 @@
     },
     {
       "name": "qdq_percentile512",
+      "label": "Selective INT8 / Percentile 512",
       "phase": "current_all_data",
       "status": "completed",
       "accuracy_pct": 98.8037037037037,
@@ -602,6 +618,12 @@
         15159296,
         23509216
       ],
+      "deployment_assets": {
+        "target.onnx.onnx.zip": {
+          "download_bytes": 8282000,
+          "uncompressed_payload_bytes": 8924849
+        }
+      },
       "actual_layer_compute_counts": {
         "CPU": 55
       },
@@ -661,6 +683,12 @@
       "precision": "none",
       "hub_estimated_latency_ms": null,
       "inference_memory_peak_range_bytes": null,
+      "deployment_assets": {
+        "target.onnx.onnx.zip": {
+          "download_bytes": 8282000,
+          "uncompressed_payload_bytes": 8924849
+        }
+      },
       "actual_layer_compute_counts": {},
       "top1_agreement_pct": null,
       "numerical_samples": null,
@@ -738,6 +766,12 @@
         0,
         50178640
       ],
+      "deployment_assets": {
+        "target.onnx.onnx.zip": {
+          "download_bytes": 8282000,
+          "uncompressed_payload_bytes": 8924849
+        }
+      },
       "actual_layer_compute_counts": {
         "NPU": 104
       },
@@ -809,12 +843,21 @@
       "precision": "w8a8",
       "hub_estimated_latency_ms": null,
       "inference_memory_peak_range_bytes": null,
+      "deployment_assets": {
+        "target.dlc": {
+          "download_bytes": 3370592
+        }
+      },
       "actual_layer_compute_counts": {},
       "top1_agreement_pct": null,
       "numerical_samples": null,
       "accuracy_pct": null,
       "energy_j": null,
       "failure_details": [
+        {
+          "code": "FAILED",
+          "message": "Failed to profile the model: Failed to call QnnModel_composeGraphsFromDlc: MODEL_GRAPH_ERROR."
+        },
         {
           "code": "FAILED",
           "message": "Failed to profile the model: Failed to call QnnModel_composeGraphsFromDlc: MODEL_GRAPH_ERROR."
@@ -861,8 +904,8 @@
           "message": "Failed to profile the model: Failed to call QnnModel_composeGraphsFromDlc: MODEL_GRAPH_ERROR."
         },
         "jpy8m3r7g_status": {
-          "code": "RUNNING_INFERENCE",
-          "message": ""
+          "code": "FAILED",
+          "message": "Failed to profile the model: Failed to call QnnModel_composeGraphsFromDlc: MODEL_GRAPH_ERROR."
         }
       },
       "evidence": "results/hub/rb3_npu_w8a8",
@@ -879,9 +922,21 @@
       "runtime": "onnx",
       "requested_compute": "npu",
       "precision": "w8a8",
-      "hub_estimated_latency_ms": null,
-      "inference_memory_peak_range_bytes": null,
-      "actual_layer_compute_counts": {},
+      "hub_estimated_latency_ms": 0.614,
+      "inference_memory_peak_range_bytes": [
+        372736,
+        3023712
+      ],
+      "deployment_assets": {
+        "target.onnx.onnx.zip": {
+          "download_bytes": 5268448,
+          "uncompressed_payload_bytes": 9223965
+        }
+      },
+      "actual_layer_compute_counts": {
+        "CPU": 2,
+        "NPU": 104
+      },
       "top1_agreement_pct": null,
       "numerical_samples": null,
       "accuracy_pct": null,
@@ -929,7 +984,16 @@
           "code": "SUCCESS",
           "message": ""
         },
-        "profile_inference": "jgk68x725"
+        "profile_inference": "jgk68x725",
+        "jgk68x725_status": {
+          "code": "SUCCESS",
+          "message": ""
+        },
+        "validation_inference": "jgd621qep",
+        "jgd621qep_status": {
+          "code": "RUNNING_INFERENCE",
+          "message": ""
+        }
       },
       "evidence": "results/hub/rb3_onnx_npu_w8a8",
       "implementation": [

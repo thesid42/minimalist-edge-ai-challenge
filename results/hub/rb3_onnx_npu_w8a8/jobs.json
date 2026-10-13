@@ -17,5 +17,9 @@
     "code": "SUCCESS",
     "message": ""
   },
-  "validation_inference": "jgd621qep"
+  "validation_inference": "jgd621qep",
+  "jgd621qep_status": {
+    "code": "RUNNING_INFERENCE",
+    "message": ""
+  }
 }

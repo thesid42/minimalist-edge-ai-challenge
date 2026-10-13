@@ -1,6 +1,7 @@
 [
   {
     "name": "qdq_pointwise",
+    "label": "Selective INT8 / MinMax 256",
     "phase": "current_all_data",
     "status": "completed",
     "accuracy_pct": 98.41111111111111,

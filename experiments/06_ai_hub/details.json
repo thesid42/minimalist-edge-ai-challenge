@@ -12,6 +12,12 @@
       15159296,
       23509216
     ],
+    "deployment_assets": {
+      "target.onnx.onnx.zip": {
+        "download_bytes": 8282000,
+        "uncompressed_payload_bytes": 8924849
+      }
+    },
     "actual_layer_compute_counts": {
       "CPU": 55
     },
@@ -71,6 +77,12 @@
     "precision": "none",
     "hub_estimated_latency_ms": null,
     "inference_memory_peak_range_bytes": null,
+    "deployment_assets": {
+      "target.onnx.onnx.zip": {
+        "download_bytes": 8282000,
+        "uncompressed_payload_bytes": 8924849
+      }
+    },
     "actual_layer_compute_counts": {},
     "top1_agreement_pct": null,
     "numerical_samples": null,
@@ -148,6 +160,12 @@
       0,
       50178640
     ],
+    "deployment_assets": {
+      "target.onnx.onnx.zip": {
+        "download_bytes": 8282000,
+        "uncompressed_payload_bytes": 8924849
+      }
+    },
     "actual_layer_compute_counts": {
       "NPU": 104
     },
@@ -219,12 +237,21 @@
     "precision": "w8a8",
     "hub_estimated_latency_ms": null,
     "inference_memory_peak_range_bytes": null,
+    "deployment_assets": {
+      "target.dlc": {
+        "download_bytes": 3370592
+      }
+    },
     "actual_layer_compute_counts": {},
     "top1_agreement_pct": null,
     "numerical_samples": null,
     "accuracy_pct": null,
     "energy_j": null,
     "failure_details": [
+      {
+        "code": "FAILED",
+        "message": "Failed to profile the model: Failed to call QnnModel_composeGraphsFromDlc: MODEL_GRAPH_ERROR."
+      },
       {
         "code": "FAILED",
         "message": "Failed to profile the model: Failed to call QnnModel_composeGraphsFromDlc: MODEL_GRAPH_ERROR."
@@ -271,8 +298,8 @@
         "message": "Failed to profile the model: Failed to call QnnModel_composeGraphsFromDlc: MODEL_GRAPH_ERROR."
       },
       "jpy8m3r7g_status": {
-        "code": "RUNNING_INFERENCE",
-        "message": ""
+        "code": "FAILED",
+        "message": "Failed to profile the model: Failed to call QnnModel_composeGraphsFromDlc: MODEL_GRAPH_ERROR."
       }
     },
     "evidence": "results/hub/rb3_npu_w8a8",
@@ -289,9 +316,21 @@
     "runtime": "onnx",
     "requested_compute": "npu",
     "precision": "w8a8",
-    "hub_estimated_latency_ms": null,
-    "inference_memory_peak_range_bytes": null,
-    "actual_layer_compute_counts": {},
+    "hub_estimated_latency_ms": 0.614,
+    "inference_memory_peak_range_bytes": [
+      372736,
+      3023712
+    ],
+    "deployment_assets": {
+      "target.onnx.onnx.zip": {
+        "download_bytes": 5268448,
+        "uncompressed_payload_bytes": 9223965
+      }
+    },
+    "actual_layer_compute_counts": {
+      "CPU": 2,
+      "NPU": 104
+    },
     "top1_agreement_pct": null,
     "numerical_samples": null,
     "accuracy_pct": null,
@@ -339,7 +378,16 @@
         "code": "SUCCESS",
         "message": ""
       },
-      "profile_inference": "jgk68x725"
+      "profile_inference": "jgk68x725",
+      "jgk68x725_status": {
+        "code": "SUCCESS",
+        "message": ""
+      },
+      "validation_inference": "jgd621qep",
+      "jgd621qep_status": {
+        "code": "RUNNING_INFERENCE",
+        "message": ""
+      }
     },
     "evidence": "results/hub/rb3_onnx_npu_w8a8",
     "implementation": [

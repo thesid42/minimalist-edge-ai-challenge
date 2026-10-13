@@ -2,6 +2,8 @@
 
 Read the numbered folders in order. Each README explains **what changed, implementation, results and interpretation**, with links to the original evidence. `Experiment_Log.ipynb` presents the same tables with saved outputs; no rerunning training is required to read it. `runs.json` is the machine-readable registry.
 
+Quantization reduces numerical precision and weight storage. Channel pruning physically removes parts of the network. Recovery trains a compressed model to restore accuracy. Device compilation prepares it for a particular runtime.
+
 Two accuracy protocols exist: the historical 500-image pilot and the current 27,000-image training-set evaluation. They are separate tables. Remote device inference has a 32-image numerical check, not a new full-dataset accuracy score. All model changes still start from the supplied student.
 
 | Step | Experiment | Read |
@@ -19,7 +21,7 @@ Current CPU results:
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th>name</th>
+      <th>label</th>
       <th>accuracy_pct</th>
       <th>worst_recall_pct</th>
       <th>size_mib</th>
@@ -29,7 +31,7 @@ Current CPU results:
   </thead>
   <tbody>
     <tr>
-      <td>baseline</td>
+      <td>Unchanged FP32 student</td>
       <td>99.1630</td>
       <td>95.8400</td>
       <td>8.5063</td>
@@ -37,7 +39,7 @@ Current CPU results:
       <td>27000</td>
     </tr>
     <tr>
-      <td>qdq_pointwise</td>
+      <td>Selective INT8 / MinMax 256</td>
       <td>98.4111</td>
       <td>95.4333</td>
       <td>3.7720</td>
@@ -45,7 +47,7 @@ Current CPU results:
       <td>27000</td>
     </tr>
     <tr>
-      <td>qdq_percentile512</td>
+      <td>Selective INT8 / Percentile 512</td>
       <td>98.8037</td>
       <td>95.3600</td>
       <td>3.7719</td>

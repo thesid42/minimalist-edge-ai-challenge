@@ -8,17 +8,19 @@ Authenticated using the ignored .env key. Retrieved 78 catalogue entries. S24 CP
 | s24_npu_float | failed | Samsung Galaxy S24 (Family) | none | pending / n/a | pending / n/a |
 | s24_npu_float_retry | completed | Samsung Galaxy S24 (Family) | none | 0.366 | 100.0 |
 | rb3_npu_w8a8 | failed | Dragonwing RB3 Gen 2 Vision Kit | w8a8 | pending / n/a | pending / n/a |
-| rb3_onnx_npu_w8a8 | pending | Dragonwing RB3 Gen 2 Vision Kit | w8a8 | pending / n/a | pending / n/a |
+| rb3_onnx_npu_w8a8 | pending | Dragonwing RB3 Gen 2 Vision Kit | w8a8 | 0.614 | pending / n/a |
+
+All latency values in this table are Hub estimates. S24 CPU/NPU comparisons use the same source; numerical agreement is only 32 images. Actual placement, memory ranges, failure reasons and job IDs are in details.json.
 
 ## Implementation and exact settings
 
 Open [details.json](details.json) for model hashes, pruning/quantization/recovery settings and evidence paths.
 
-- **s24_cpu_fp32**: [results/hub/s24_cpu_fp32](../../results/hub/s24_cpu_fp32); [edgeprep/hub_profile.py](../../edgeprep/hub_profile.py), [edgeprep/hub_auth.py](../../edgeprep/hub_auth.py).
-- **s24_npu_float**: [results/hub/s24_npu_float](../../results/hub/s24_npu_float); [edgeprep/hub_profile.py](../../edgeprep/hub_profile.py), [edgeprep/hub_auth.py](../../edgeprep/hub_auth.py).
-- **s24_npu_float_retry**: [results/hub/s24_npu_float_retry](../../results/hub/s24_npu_float_retry); [edgeprep/hub_profile.py](../../edgeprep/hub_profile.py), [edgeprep/hub_auth.py](../../edgeprep/hub_auth.py).
-- **rb3_npu_w8a8**: [results/hub/rb3_npu_w8a8](../../results/hub/rb3_npu_w8a8); [edgeprep/hub_profile.py](../../edgeprep/hub_profile.py), [edgeprep/hub_auth.py](../../edgeprep/hub_auth.py).
-- **rb3_onnx_npu_w8a8**: [results/hub/rb3_onnx_npu_w8a8](../../results/hub/rb3_onnx_npu_w8a8); [edgeprep/hub_profile.py](../../edgeprep/hub_profile.py), [edgeprep/hub_auth.py](../../edgeprep/hub_auth.py).
+- **s24_cpu_fp32** (`s24_cpu_fp32`): [results/hub/s24_cpu_fp32](../../results/hub/s24_cpu_fp32); [edgeprep/hub_profile.py](../../edgeprep/hub_profile.py), [edgeprep/hub_auth.py](../../edgeprep/hub_auth.py).
+- **s24_npu_float** (`s24_npu_float`): [results/hub/s24_npu_float](../../results/hub/s24_npu_float); [edgeprep/hub_profile.py](../../edgeprep/hub_profile.py), [edgeprep/hub_auth.py](../../edgeprep/hub_auth.py).
+- **s24_npu_float_retry** (`s24_npu_float_retry`): [results/hub/s24_npu_float_retry](../../results/hub/s24_npu_float_retry); [edgeprep/hub_profile.py](../../edgeprep/hub_profile.py), [edgeprep/hub_auth.py](../../edgeprep/hub_auth.py).
+- **rb3_npu_w8a8** (`rb3_npu_w8a8`): [results/hub/rb3_npu_w8a8](../../results/hub/rb3_npu_w8a8); [edgeprep/hub_profile.py](../../edgeprep/hub_profile.py), [edgeprep/hub_auth.py](../../edgeprep/hub_auth.py).
+- **rb3_onnx_npu_w8a8** (`rb3_onnx_npu_w8a8`): [results/hub/rb3_onnx_npu_w8a8](../../results/hub/rb3_onnx_npu_w8a8); [edgeprep/hub_profile.py](../../edgeprep/hub_profile.py), [edgeprep/hub_auth.py](../../edgeprep/hub_auth.py).
 
 ## Supporting evidence
 

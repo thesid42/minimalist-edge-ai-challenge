@@ -31,6 +31,11 @@ class HubTests(unittest.TestCase):
             args = argparse.Namespace(model=str(path), threads=4, lite_mp=0, runtime="onnx", compute="cpu", direct_onnx=False,
                   precision="none", calibration=None, device="offline-test", performance="burst", range_scheme="mse_minimizer",calibration_count=512,compiled_job=None,quantized_job=None)
             self.assertIn("--compute_unit cpu", build_plan(args)["inference_options"])
+            args.compute="npu"
+            inference=build_plan(args)["inference_options"]
+            self.assertNotIn("--compute_unit",inference)
+            self.assertIn("--onnx_execution_providers qnn",inference)
+            args.compute="cpu"
             args.precision="w8a8"
             with self.assertRaises(ValueError):build_plan(args)
             args.calibration=str(path);args.runtime="tflite";args.precision="w8a16"

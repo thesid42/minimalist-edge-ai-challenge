@@ -1,6 +1,7 @@
 [
   {
     "name": "qdq_percentile512",
+    "label": "Selective INT8 / Percentile 512",
     "phase": "current_all_data",
     "status": "completed",
     "accuracy_pct": 98.8037037037037,

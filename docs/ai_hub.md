@@ -1,6 +1,6 @@
 # AI Hub deployment and edge experiments
 
-The tested Python 3.11 CPU environment already includes qai-hub 0.56.0. python-dotenv 1.2.4 is now pinned too. No local Qualcomm SDK or GPU environment is needed for hosted jobs. The credential lives in `.env` at the project root, under `QAI_HUB_API_TOKEN=`. The scripts read it automatically; `.env` and `.qai_hub/` are excluded from Git. `.env.example` is safe to share. Never paste credentials into source or reports.
+The tested Python 3.11 CPU environment already includes qai-hub 0.56.0. python-dotenv 1.2.4 is now pinned too. No local Qualcomm SDK or GPU environment is needed for hosted jobs. The credential lives in `.env` at the project root, under `QAI_HUB_API_TOKEN=`. The project scripts read it automatically. The stock qai-hub CLI uses its separate home-directory configuration; `.env` and `.qai_hub/` are excluded from Git. `.env.example` is safe to share. Never paste credentials into source or reports.
 
 ```powershell
 # Verify the key and save the live catalogue, without printing credentials.
@@ -70,3 +70,5 @@ S24 CPU and corrected ONNX/QNN NPU profiling completed. CPU reports 5.533 ms; NP
 RB3 W8A8 QNN DLC compiled but profiling failed with `QnnModel_composeGraphsFromDlc: MODEL_GRAPH_ERROR`. Keep this failure in the experiment log; compilation alone is not successful deployment. A second route reuses the saved quantize job through `--quantized-job` and compiles ONNX/QNN instead of recalibrating.
 
 Hub latency values are converted from microseconds; memory ranges are bytes. [Metric definitions](https://workbench.aihub.qualcomm.com/docs/hub/howitworks-inference.html). The notebook/log reads the latest evidence and exposes actual compute counts and whether numerical checking completed.
+
+RB3 ONNX/QNN profiling succeeded at 0.614 ms: 104 NPU operations plus CPU input QuantizeLinear/output DequantizeLinear. The downloaded ONNX directory contains 8,992,256 bytes of external weights and a 231,709-byte graph: **8.797 MiB uncompressed payload**. It retains floating-point weight initializers and is not an on-disk compression win over our 8.506 MiB portable FP32 baseline. Downloaded ZIP size is a transfer size, not the model-size denominator. The failed DLC was smaller but cannot be selected as a working deployment. Numerical validation status is read from saved evidence in the log.

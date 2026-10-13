@@ -3,6 +3,7 @@ import base64
 from collections import Counter
 from datetime import datetime, timezone
 import json
+import zipfile
 from pathlib import Path
 import pandas as pd
 
@@ -45,7 +46,10 @@ def local_records(folder, names, phase):
 
 def hub_records():
     rows=[]
-    for name in ["s24_cpu_fp32","s24_npu_float","s24_npu_float_retry","rb3_npu_w8a8","rb3_onnx_npu_w8a8"]:
+    names = ["s24_cpu_fp32","s24_npu_float","s24_npu_float_retry","rb3_npu_w8a8","rb3_onnx_npu_w8a8"]
+    discovered = sorted((ROOT/"results/hub").glob("*/request.json"), key=lambda p:p.stat().st_mtime)
+    names += [p.parent.name for p in discovered if p.parent.name not in names]
+    for name in names:
         folder=f"results/hub/{name}"
         request=read(folder+"/request.json")
         if not request:continue
@@ -56,12 +60,18 @@ def hub_records():
         status="failed" if failures else "completed" if profile and check else "pending"
         summary=profile.get("execution_summary",{}) if profile else {}
         layers=profile.get("execution_detail",[]) if profile else []
+        asset_sizes = {}
+        for asset in (ROOT/folder).glob("target.*"):
+            asset_sizes[asset.name] = {"download_bytes":asset.stat().st_size}
+            if asset.suffix == ".zip":
+                with zipfile.ZipFile(asset) as archive:
+                    asset_sizes[asset.name]["uncompressed_payload_bytes"] = sum(i.file_size for i in archive.infolist())
         rows.append({"name":name,"phase":"remote_exploration","status":status,
                      "device":request["device"],"runtime":request["runtime"],
                      "requested_compute":request["compute_unit_requested"],"precision":request["precision"],
                      "hub_estimated_latency_ms":summary.get("estimated_inference_time",0)/1000 if profile else None,
                      "inference_memory_peak_range_bytes":summary.get("inference_memory_peak_range"),
-                     "actual_layer_compute_counts":dict(Counter(x.get("compute_unit","unknown") for x in layers)),
+                     "deployment_assets":asset_sizes, "actual_layer_compute_counts":dict(Counter(x.get("compute_unit","unknown") for x in layers)),
                      "top1_agreement_pct":check["top1_agreement_with_source"]*100 if check else None,
                      "numerical_samples":check.get("examples") if check else None,
                      "accuracy_pct":None,"energy_j":None,"failure_details":failures,
@@ -81,7 +91,10 @@ def table(rows, remote=False):
 def main():
     OUT.mkdir(exist_ok=True)
     historical=local_records("results/challenge", ["baseline","qdq_s8","qdq_u8","qdq_s8_256","qdq_percentile","qdq_protected","qdq_pointwise","prune05","prune10","expansion05","expansion10","expansion05_ce","expansion05_kd"], "historical_pilot")
-    current=local_records("results/all_data",["baseline","qdq_pointwise","qdq_percentile512"],"current_all_data")
+    names=["baseline","qdq_pointwise","qdq_percentile512"]
+    discovered=sorted((ROOT/"results/all_data").glob("*_accuracy.json"),key=lambda p:p.stat().st_mtime)
+    names += [p.name.removesuffix("_accuracy.json") for p in discovered if p.name.removesuffix("_accuracy.json") not in names]
+    current=local_records("results/all_data",names,"current_all_data")
     remote=hub_records()
     stages=[
       ("01_original_models", "Original models and dataset", "Verified supplied MobileNetV2 and optional ResNet50, exact safe checkpoint loading, fixed 224 input, all 27,000 EuroSAT files and preprocessing. MobileNetV2 has 2,236,682 parameters; ResNet50 is the teacher, never the denominator.", ["results/checkpoint_audit.json","results/dataset_audit.json","edgeprep/challenge_data.py"], []),
@@ -97,6 +110,8 @@ def main():
     introduction="""# Experiment log â€” start here
 
 Read the numbered folders in order. Each README explains **what changed, implementation, results and interpretation**, with links to the original evidence. `Experiment_Log.ipynb` presents the same tables with saved outputs; no rerunning training is required to read it. `runs.json` is the machine-readable registry.
+
+Quantization reduces numerical precision and weight storage. Channel pruning physically removes parts of the network. Recovery trains a compressed model to restore accuracy. Device compilation prepares it for a particular runtime.
 
 Two accuracy protocols exist: the historical 500-image pilot and the current 27,000-image training-set evaluation. They are separate tables. Remote device inference has a 32-image numerical check, not a new full-dataset accuracy score. All model changes still start from the supplied student.
 
