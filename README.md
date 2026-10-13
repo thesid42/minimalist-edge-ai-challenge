@@ -29,7 +29,7 @@ Torchvision checks the archive MD5 against `c8fa014336c82ac7804f0398fcb19387`. E
 
 Python 3.11; CPU PyTorch 2.8.0 / torchvision 0.23.0 / torchaudio 2.8.0, ONNX Runtime 1.31.0, torch-pruning 1.6.1. These tested versions are pinned, rather than automatically upgrading during the event.
 
-On this prepared laptop, run `.venv\Scripts\python.exe` directly; activation is optional. CPU dependencies are installed and `pip check` passes. The older GPU environment is retained locally pending cleanup approval, but this pipeline uses CPU only.
+On this prepared laptop, run `.venv\Scripts\python.exe` directly; activation is optional. CPU dependencies are installed and `pip check` passes. The obsolete GPU environment, uv installation cache and old CIFAR data/generated models were removed after approval, recovering 8.15 GiB. The CPU pipeline still passes dependency and export/pruning tests.
 
 Fresh install, Windows PowerShell:
 

@@ -1,0 +1,11 @@
+{
+  "approved_targets": [
+    ".venv-gpu",
+    ".cache\\uv",
+    "archive\\prior_preparation\\artifacts",
+    "archive\\prior_preparation\\data"
+  ],
+  "deleted": true,
+  "completed_utc": "2026-10-13T16:34:57.3823092Z",
+  "recovered_bytes": 8746078208
+}

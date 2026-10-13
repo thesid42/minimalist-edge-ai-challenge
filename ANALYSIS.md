@@ -113,7 +113,7 @@ The brief requires one compressed model (preferably quantized ONNX), complete me
 
 AI Hub authentication / common target are pending. The installed SDK helper records requests, job IDs and outputs; its live path is untested. Laptop fallback is explicitly allowed. Configure credentials locally; no secrets are stored in the repository.
 
-Earlier CIFAR code, results and generated practice models are preserved under the local archive. The GPU environment, uv download cache and CIFAR dataset remain on disk because automatic approval review rejected their broad permanent deletion. They are excluded from the public repository and not used by the active challenge pipeline.
+Earlier CIFAR source, compact results and reports are preserved in the local archive. After explicit approval of the exact scope, the obsolete GPU environment, uv install cache, archived generated practice models and CIFAR dataset were permanently removed. Cleanup recovered 8.15 GiB; the retained CPU environment, original checkpoints and current EuroSAT pipeline passed post-cleanup dependency and functional checks. Current model artifacts remain local and are reproducible from the published source.
 
 ## Primary technical references
 
