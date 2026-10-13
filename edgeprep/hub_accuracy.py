@@ -12,7 +12,8 @@ def write(path, obj):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(obj, indent=2), encoding='utf-8')
 
-def prepare(count=1000, shard_size=250):
+def prepare(count=1000, shard_size=250, model=None, sample_dir=None):
+    sample=Path(sample_dir) if sample_dir else SAMPLE
     from .challenge_data import dataset, balanced_ids, digest
     import onnxruntime as ort
     if count < 10 or count % 10 or shard_size < 1:
@@ -24,39 +25,44 @@ def prepare(count=1000, shard_size=250):
     if count > len(available): raise ValueError('Too many diagnostic samples')
     ids = balanced_ids(available, ds.targets, count, seed=20261013)
     labels = np.array([ds.targets[i] for i in ids], dtype=np.int64)
-    SAMPLE.mkdir(parents=True, exist_ok=True)
+    sample.mkdir(parents=True, exist_ok=True)
     options=ort.SessionOptions();options.intra_op_num_threads=4;options.inter_op_num_threads=1
-    model=ROOT/'artifacts/baseline/model_fp32.onnx'
+    model=Path(model) if model else ROOT/'artifacts/baseline/model_fp32.onnx'
+    if (sample/'manifest.json').exists():
+        existing=json.loads((sample/'manifest.json').read_text())
+        if existing['examples']!=count or existing['source_sha256']!=digest(model):
+            raise ValueError('Existing sample belongs to another count/model; choose a new --sample-dir')
     session=ort.InferenceSession(str(model),options,providers=['CPUExecutionProvider'])
     logits=[];shards=[]
     for start in range(0,count,shard_size):
         arrays=np.stack([ds[i][0].numpy() for i in ids[start:start+shard_size]])
-        name=f'inputs_{start:04d}.npy';np.save(SAMPLE/name,arrays)
+        name=f'inputs_{start:04d}.npy';np.save(sample/name,arrays)
         logits.extend(session.run(None,{'images':a[None]})[0][0] for a in arrays)
-        shards.append({'start':start,'count':len(arrays),'file':name,'sha256':digest(SAMPLE/name)})
+        shards.append({'start':start,'count':len(arrays),'file':name,'sha256':digest(sample/name)})
         print(f'Prepared {start+len(arrays)}/{count}',flush=True)
-    np.save(SAMPLE/'reference_logits.npy',np.array(logits));np.save(SAMPLE/'labels.npy',labels)
+    np.save(sample/'reference_logits.npy',np.array(logits));np.save(sample/'labels.npy',labels)
     manifest={'examples':count,'seed':20261013,'classes':ds.classes,'class_support':np.bincount(labels,minlength=10).tolist(),
        'indices':ids,'indices_sha256':hashlib.sha256(np.array(ids,dtype='<i8').tobytes()).hexdigest(),
        'calibration_disjoint':True,'calibration_manifest':'results/all_data/calibration512/manifest.json',
-       'source_sha256':digest(model),'sample_order_sha256':calibration['sample_order_sha256'],
+       'source_model':str(model.resolve()),'source_sha256':digest(model),'sample_order_sha256':calibration['sample_order_sha256'],
        'preprocessing':calibration['preprocessing'],'shards':shards,
        'scope':'training_set_subset','caveat':'Balanced diagnostic sample from organizer all-data pool; not held-out generalization. Excludes these 512 quantization calibration images.'}
-    write(SAMPLE/'manifest.json',manifest)
+    write(sample/'manifest.json',manifest)
 
-def submit(folder):
+def submit(folder, sample_dir=None):
+    sample=Path(sample_dir) if sample_dir else SAMPLE
     from .hub_auth import get_client
     import qai_hub as hub
     client=get_client();folder=Path(folder)
-    manifest=json.loads((SAMPLE/'manifest.json').read_text())
+    manifest=json.loads((sample/'manifest.json').read_text())
     request=json.loads((folder/'request.json').read_text());jobs=json.loads((folder/'jobs.json').read_text())
     if request['source_sha256'] != manifest['source_sha256']: raise ValueError('Reference source mismatch')
     compiled=client.get_job(jobs['compile']).get_target_model()
     if compiled is None: raise RuntimeError('No compiled target available')
     statefile=folder/'labelled_jobs.json'
-    state=json.loads(statefile.read_text()) if statefile.exists() else {'manifest':'results/hub/labelled1000/manifest.json','indices_sha256':manifest['indices_sha256'],'jobs':[]}
+    state=json.loads(statefile.read_text()) if statefile.exists() else {'manifest':str((sample/'manifest.json').resolve().relative_to(ROOT)).replace('\\','/'),'indices_sha256':manifest['indices_sha256'],'jobs':[]}
     if state['indices_sha256'] != manifest['indices_sha256']:raise ValueError('Subset changed; choose a fresh run folder')
-    cachefile=SAMPLE/'uploaded_datasets.json'
+    cachefile=sample/'uploaded_datasets.json'
     cache=json.loads(cachefile.read_text()) if cachefile.exists() else {}
     for shard in manifest['shards']:
         key=str(shard['start'])
@@ -65,7 +71,7 @@ def submit(folder):
             if cache[key]['sha256'] != shard['sha256']:raise ValueError('Dataset cache mismatch')
             data=client.get_dataset(cache[key]['id'])
         else:
-            values=np.load(SAMPLE/shard['file'],allow_pickle=False)
+            values=np.load(sample/shard['file'],allow_pickle=False)
             data=client.upload_dataset({'images':[a[None] for a in values]},name=f'EuroSAT labelled {key}-{shard["count"]}')
             cache[key]={'id':data.dataset_id,'sha256':shard['sha256']};write(cachefile,cache)
         job=client.submit_inference_job(model=compiled,device=hub.Device(request['device']),inputs=data,
@@ -80,12 +86,16 @@ def metrics(pred,truth,classes):
       'worst_class_accuracy':float(recall.min()),'per_class_recall':dict(zip(classes,recall.tolist())),
       'class_support':matrix.sum(1).tolist(),'confusion_matrix':matrix.tolist()}
 
-def collect(folder):
+def collect(folder, sample_dir=None):
     from .hub_auth import get_client
     client=get_client();folder=Path(folder);statefile=folder/'labelled_jobs.json'
-    state=json.loads(statefile.read_text());manifest=json.loads((SAMPLE/'manifest.json').read_text())
+    state=json.loads(statefile.read_text())
+    sample=Path(sample_dir) if sample_dir else (ROOT/state['manifest']).parent
+    manifest=json.loads((sample/'manifest.json').read_text())
+    request=json.loads((folder/'request.json').read_text())
+    if request['source_sha256'] != manifest['source_sha256']:raise ValueError('Reference source mismatch')
     if state['indices_sha256']!=manifest['indices_sha256']:raise ValueError('Subset changed')
-    reference=np.load(SAMPLE/'reference_logits.npy');truth=np.load(SAMPLE/'labels.npy')
+    reference=np.load(sample/'reference_logits.npy');truth=np.load(sample/'labels.npy')
     outputs=[];complete=True
     for item in sorted(state['jobs'],key=lambda x:x['start']):
         path=folder/f'labelled_{item["start"]:04d}.npy'
@@ -119,10 +129,13 @@ def collect(folder):
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('command',choices=['prepare','submit','collect'])
     p.add_argument('--folder',action='append',default=[]);p.add_argument('--count',type=int,default=1000)
-    p.add_argument('--shard-size',type=int,default=250);a=p.parse_args()
-    if a.command=='prepare':prepare(a.count,a.shard_size)
+    p.add_argument('--shard-size',type=int,default=250)
+    p.add_argument('--sample-dir',help='Separate subset/reference directory; preserves older samples')
+    p.add_argument('--model',help='Source model for local reference; default is the original student')
+    a=p.parse_args()
+    if a.command=='prepare':prepare(a.count,a.shard_size,a.model,a.sample_dir)
     else:
         if not a.folder:p.error('--folder is required')
         for folder in a.folder:
-            (submit if a.command=='submit' else collect)(folder)
+            (submit if a.command=='submit' else collect)(folder,a.sample_dir)
 if __name__=='__main__':main()

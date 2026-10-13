@@ -10,7 +10,7 @@ Current evidence is under [results/all_data](results/all_data). [baseline_metric
 
 ## Latest completed results
 
-Refreshed from saved evidence at 2026-10-13 18:58 UTC. [Full results](docs/next_priority_results.md) and [numbered experiment log](experiments/README.md) are regenerated together.
+Refreshed from saved evidence at 2026-10-13 19:51 UTC. [Full results](docs/next_priority_results.md) and [numbered experiment log](experiments/README.md) are regenerated together.
 
 The measured 192 candidate uses **internal 192 + one full-data classifier recovery epoch + FP16 weight storage / FP32 CPU compute**. External input remains `(1,3,224,224)`.
 
@@ -45,9 +45,19 @@ The range shows substantial Windows timing variability. This separate sequence i
 | RB3 Gen 2 Vision Kit / NPU W8A8 | 0.614 ms | 98.3% |
 | RB3 Gen 2 Vision Kit / NPU W8A16 | 1.056 ms | 98.5% |
 
-Hub rows use the original 224 model, not the recovered 192 candidate. Actual NPU placement is recorded per operation. These are training-pool diagnostic accuracies (100/class), disjoint from 512 calibration images; they are not all-data scores or held-out results. W8A16 gains two correct predictions over W8A8 on this sample at higher latency; its worst class is 88% vs W8A8's 89%, so it is not a uniform accuracy improvement. Hub power modes expose latency, not measured joules.
+**Saved 192 model on Samsung Galaxy S24 — separate 500-image test:**
 
-New training uses `.venv-train-gpu` / RTX 3070 / CUDA; laptop export, evaluation and inference use `.venv` / CPU. AI Hub can use CPU or NPU. A real 100-image, five-step GPU recovery, CPU export and CPU inference verification passed; it is a pipeline check, not a new competition result. **11 functional tests and dependency checks pass.**
+| Execution | Hub profile latency | Accuracy / 500 labelled images |
+|---|---:|---:|
+| CPU / four threads | 4.183 ms | 99.40% (497/500) |
+| NPU / burst | 0.435 ms | pending |
+
+The exact saved FP16-storage source is uploaded without extra quantization. Hub compilation expands its target payload to 8.523 MiB; the portable source stays 4.288 MiB. The 500-image sample has 50/class and excludes calibration data; accuracy is diagnostic training-pool accuracy. [Full device report and job evidence](docs/saved192_ai_hub.md).
+
+
+The first Hub table above uses the original 224 model, not the recovered 192 candidate. Actual NPU placement is recorded per operation. These are training-pool diagnostic accuracies (100/class), disjoint from 512 calibration images; they are not all-data scores or held-out results. W8A16 gains two correct predictions over W8A8 on this sample at higher latency; its worst class is 88% vs W8A8's 89%, so it is not a uniform accuracy improvement. Hub power modes expose latency, not measured joules.
+
+New training uses `.venv-train-gpu` / RTX 3070 / CUDA; laptop export, evaluation and inference use `.venv` / CPU. AI Hub can use CPU or NPU. A real 100-image, five-step GPU recovery, CPU export and CPU inference verification passed; it is a pipeline check, not a new competition result. **12 functional tests and dependency checks pass.**
 
 See [GPU setup](docs/gpu_training.md). Refresh the README, log and saved notebook tables after each completed result: `.venv\Scripts\python.exe scripts/refresh_results.py`. This reads evidence only and submits no jobs or training.
 
@@ -140,7 +150,7 @@ powershell -ExecutionPolicy Bypass -File scripts/notebook.ps1
 
 For a fresh clone, install `requirements-notebook.lock.txt` after CPU setup. The launcher installs a project kernel under .venv, uses local runtime/cache directories, and opens the summary notebook. Its cells only read saved results and plots; executing it does not train models or submit cloud jobs.
 
-Latest work: [device accuracy, latency and energy results](docs/next_priority_results.md), [CodeCarbon measurement guide](docs/energy_measurement.md), and numbered experiment steps 08-12 in the log.
+Latest work: [device accuracy, latency and energy results](docs/next_priority_results.md), [CodeCarbon measurement guide](docs/energy_measurement.md), and numbered experiment steps 08-13 in the log.
 
 ## GPU training, CPU laptop inference
 

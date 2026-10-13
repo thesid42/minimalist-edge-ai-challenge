@@ -76,3 +76,10 @@ RB3 ONNX/QNN profiling succeeded at 0.614 ms: 104 NPU operations plus CPU input 
 ## Expanded diagnostic evaluation and runtime modes
 
 New labelled 1,000-image evaluations replace reliance on 32-image smoke checks for shortlisting; see [next priority results](next_priority_results.md). The subset has 100 images per class and excludes the exact 512 calibration images. It remains training-pool diagnostic accuracy. `dataset_accuracy.json` and saved job IDs distinguish complete from pending results. `hub_modes.py --collect --folder results/hub/s24_npu_float_retry --folder results/hub/rb3_onnx_npu_w8a8` retrieves successful balanced/power-saver profiles without blocking. These profiles reuse the compiled artifacts; any linked accuracy evidence was measured under burst mode, not remeasured under each power mode.
+
+
+## Saved 192 winner: exact-phone 500-image test
+
+The recovered192 / FP16-storage winner is now tested separately on exact named Samsung Galaxy S24, CPU and NPU. Accuracy uses 500 labelled images (50/class), a separate immutable sample/reference directory, and the saved model hash. No extra Hub quantization is applied. [Current results, compiled storage behavior and reproduction](saved192_ai_hub.md), also recorded as experiment step 13.
+
+`hub_accuracy.py` now accepts `--model` and `--sample-dir` for preparation, and `--sample-dir` for submission. Collection automatically uses the manifest recorded in each run's labelled_jobs.json. The old original224 / 1,000-image reference remains intact.

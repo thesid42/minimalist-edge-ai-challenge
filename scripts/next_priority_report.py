@@ -49,8 +49,8 @@ def main():
     gpu=read('results/gpu_training/verification.json')
     if gpu:
         sections.append(f'### GPU training verification\n\nSeparate `.venv-train-gpu` / {gpu["training"]["execution"]["device_name"]} / PyTorch {gpu["training"]["execution"]["torch_version"]}. CUDA AMP full-backbone training: {gpu["training_examples"]} real images, {gpu["optimizer_steps"]} steps, {gpu["training"]["seconds"]:.2f} seconds. CPU export and CPU inference passed. This is a pipeline smoke test; it does not replace the selected all-data result. Future training defaults to CUDA without silent CPU fallback. AI Hub CPU/NPU remains independent of the laptop inference rule. [Setup and recipe](gpu_training.md).\n')
-    sections+=['### Labelled device accuracy\n','1,000 balanced diagnostic images (100/class), disjoint from 512 calibration images. Older profiles are reused with the exact compiled artifacts. The sample is training-pool accuracy, not full-data accuracy.\n',
-      '| Run | Device | Mode | Hub latency | Labelled accuracy | Worst recall |\n|---|---|---|---:|---:|---:|']
+    sections+=['### Labelled device accuracy\n','Original224 runs use 1,000 balanced images (100/class); saved192 runs use a separate 500-image sample (50/class). Both exclude the 512 calibration images and remain diagnostic training-pool accuracy. Compare source hashes and sample counts; do not rank accuracy across different samples.\n',
+      '| Run | Device | Mode | Internal size | Images | Hub latency | Labelled accuracy | Worst recall |\n|---|---|---|---:|---:|---:|---:|---:|']
     for folder in sorted((ROOT/'results/hub').glob('*/request.json')):
         name=folder.parent.name
         if name=='labelled1000':continue
@@ -59,12 +59,12 @@ def main():
         inherited=False
         if not acc and request.get('accuracy_evidence'):
             acc=read(request['accuracy_evidence']);inherited=bool(acc)
-        if not acc and name not in ['rb3_onnx_npu_w8a16']:continue
+        if not acc and name not in ['rb3_onnx_npu_w8a16','resize192_s24_cpu','resize192_s24_npu']:continue
         time=f'{profile["execution_summary"]["estimated_inference_time"]/1000:.3f} ms' if profile else 'pending'
         score=f'{acc["accuracy"]*100:.2f}%' if acc else 'pending';worst=f'{acc["worst_class_accuracy"]*100:.1f}%' if acc else 'pending'
         mode=request.get('performance_mode','burst')
         if inherited:score+=' (same artifact; burst accuracy)'
-        sections.append(f'| {name} | {request["device"]} | {mode} | {time} | {score} | {worst} |')
+        sections.append(f'| {name} | {request["device"]} | {mode} | {request.get("internal_resolution",224)} | {acc["examples"] if acc else "pending"} | {time} | {score} | {worst} |')
     sections.append('\nRemote power modes report latency/memory, not joules. S24 family routing may use different physical units. RB3 W8A8/W8A16 are a same-target precision comparison. Inspect actual operation placement and retain failed DLC jobs.\n')
     path=ROOT/'docs/next_priority_results.md';text=path.read_text(encoding='utf-8-sig').split('\n## Completed measurements')[0]
     path.write_text(text+'\n'.join(sections),encoding='utf-8')

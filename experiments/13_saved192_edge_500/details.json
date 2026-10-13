@@ -1,0 +1,182 @@
+[
+  {
+    "name": "resize192_s24_cpu",
+    "phase": "remote_exploration",
+    "status": "completed",
+    "device": "Samsung Galaxy S24",
+    "runtime": "onnx",
+    "requested_compute": "cpu",
+    "precision": "none",
+    "hub_estimated_latency_ms": 4.183,
+    "inference_memory_peak_range_bytes": [
+      14163968,
+      23200736
+    ],
+    "deployment_assets": {
+      "target.onnx.onnx.zip": {
+        "download_bytes": 5578187,
+        "uncompressed_payload_bytes": 8937126
+      }
+    },
+    "actual_layer_compute_counts": {
+      "CPU": 56
+    },
+    "top1_agreement_pct": null,
+    "numerical_samples": null,
+    "accuracy_pct": 99.4,
+    "labelled_samples": 500,
+    "worst_recall_pct": 96.0,
+    "labelled_accuracy_scope": "training_set_subset",
+    "labelled_top1_agreement_pct": 100.0,
+    "performance_mode": "burst",
+    "energy_j": null,
+    "accuracy_inherited_from": null,
+    "failure_details": [],
+    "settings": {
+      "model": "E:\\Projects\\Minimilist challenge\\best_models\\resize192_head_ce_w16_e391533162d7\\model_weight16.onnx",
+      "source_sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+      "device": "Samsung Galaxy S24",
+      "runtime": "onnx",
+      "compute_unit_requested": "cpu",
+      "precision": "none",
+      "input_specs": {
+        "images": [
+          1,
+          3,
+          224,
+          224
+        ]
+      },
+      "compile_options": "--target_runtime onnx --compute_unit cpu",
+      "inference_options": "--compute_unit cpu --max_profiler_iterations 100 --onnx_options intra_op_num_threads=4;inter_op_num_threads=1;execution_mode=SEQUENTIAL;enable_memory_pattern=true;enable_cpu_memory_arena=true",
+      "quantize_options": null,
+      "calibration_count_requested": 512,
+      "calibration_sha256": null,
+      "direct_onnx": false,
+      "compiled_job": null,
+      "quantized_job": null,
+      "local_qdq": false,
+      "validation_note": "Separate representative-input numerical smoke check; not full-dataset accuracy",
+      "target_reference": "Exploration only unless organizers designate this device; preserve laptop CPU baseline",
+      "energy": "Inspect returned fields; never convert latency into energy",
+      "source_weight_storage": "FP16 initializers / explicit FP32 restores",
+      "internal_resolution": 192,
+      "labelled_sample_manifest": "results/hub/resize192_labelled500/manifest.json",
+      "performance_mode": "burst",
+      "additional_quantization": "none",
+      "experiment_group": "saved192_500"
+    },
+    "jobs": {
+      "device": "Samsung Galaxy S24",
+      "runtime": "onnx",
+      "sdk_version": "0.56.0",
+      "compile": "jglwlv4lp",
+      "jglwlv4lp_status": {
+        "code": "SUCCESS",
+        "message": ""
+      },
+      "profile_inference": "jp3o6jnzp",
+      "jp3o6jnzp_status": {
+        "code": "SUCCESS",
+        "message": ""
+      }
+    },
+    "evidence": "results/hub/resize192_s24_cpu",
+    "implementation": [
+      "edgeprep/hub_profile.py",
+      "edgeprep/hub_auth.py",
+      "edgeprep/hub_accuracy.py",
+      "edgeprep/hub_modes.py"
+    ]
+  },
+  {
+    "name": "resize192_s24_npu",
+    "phase": "remote_exploration",
+    "status": "pending",
+    "device": "Samsung Galaxy S24",
+    "runtime": "onnx",
+    "requested_compute": "npu",
+    "precision": "none",
+    "hub_estimated_latency_ms": 0.435,
+    "inference_memory_peak_range_bytes": [
+      0,
+      50697408
+    ],
+    "deployment_assets": {
+      "target.onnx.onnx.zip": {
+        "download_bytes": 5578187,
+        "uncompressed_payload_bytes": 8937126
+      }
+    },
+    "actual_layer_compute_counts": {
+      "NPU": 105
+    },
+    "top1_agreement_pct": null,
+    "numerical_samples": null,
+    "accuracy_pct": null,
+    "labelled_samples": null,
+    "worst_recall_pct": null,
+    "labelled_accuracy_scope": null,
+    "labelled_top1_agreement_pct": null,
+    "performance_mode": "burst",
+    "energy_j": null,
+    "accuracy_inherited_from": null,
+    "failure_details": [],
+    "settings": {
+      "model": "E:\\Projects\\Minimilist challenge\\best_models\\resize192_head_ce_w16_e391533162d7\\model_weight16.onnx",
+      "source_sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+      "device": "Samsung Galaxy S24",
+      "runtime": "onnx",
+      "compute_unit_requested": "npu",
+      "precision": "none",
+      "input_specs": {
+        "images": [
+          1,
+          3,
+          224,
+          224
+        ]
+      },
+      "compile_options": "--target_runtime onnx --compute_unit npu",
+      "inference_options": "--max_profiler_iterations 100 --onnx_options intra_op_num_threads=4;inter_op_num_threads=1;execution_mode=SEQUENTIAL;enable_memory_pattern=true;enable_cpu_memory_arena=true;qnn_htp_performance_mode=burst --onnx_execution_providers qnn",
+      "quantize_options": null,
+      "calibration_count_requested": 512,
+      "calibration_sha256": null,
+      "direct_onnx": false,
+      "compiled_job": null,
+      "quantized_job": null,
+      "local_qdq": false,
+      "validation_note": "Separate representative-input numerical smoke check; not full-dataset accuracy",
+      "target_reference": "Exploration only unless organizers designate this device; preserve laptop CPU baseline",
+      "energy": "Inspect returned fields; never convert latency into energy",
+      "source_weight_storage": "FP16 initializers / explicit FP32 restores",
+      "internal_resolution": 192,
+      "labelled_sample_manifest": "results/hub/resize192_labelled500/manifest.json",
+      "performance_mode": "burst",
+      "additional_quantization": "none",
+      "experiment_group": "saved192_500"
+    },
+    "jobs": {
+      "device": "Samsung Galaxy S24",
+      "runtime": "onnx",
+      "sdk_version": "0.56.0",
+      "compile": "j56owy275",
+      "j56owy275_status": {
+        "code": "SUCCESS",
+        "message": ""
+      },
+      "profile_inference": "jgod82zd5",
+      "jgod82zd5_status": {
+        "code": "SUCCESS",
+        "message": ""
+      }
+    },
+    "evidence": "results/hub/resize192_s24_npu",
+    "implementation": [
+      "edgeprep/hub_profile.py",
+      "edgeprep/hub_auth.py",
+      "edgeprep/hub_accuracy.py",
+      "edgeprep/hub_modes.py"
+    ]
+  }
+]

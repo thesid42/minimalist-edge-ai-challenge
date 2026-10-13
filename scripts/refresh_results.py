@@ -7,13 +7,14 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from scripts.next_priority_report import main as report
 from edgeprep.experiment_log import main as log
+from scripts.saved192_hub_report import main as saved_report
 
 def read(path):
     p=ROOT/path
     return json.loads(p.read_text(encoding='utf-8')) if p.exists() else None
 
 def main():
-    report();log()
+    report();saved_report();log()
     baseline=read('results/all_data/baseline_accuracy.json')
     candidate=read('results/all_data/resize192_head_ce_w16_accuracy.json')
     energy=read('results/energy/runtime/summary.json')
@@ -45,8 +46,18 @@ def main():
     for folder,label in [('s24_cpu_fp32','S24 family / CPU FP32'),('s24_npu_float_retry','S24 family / NPU float'),('rb3_onnx_npu_w8a8','RB3 Gen 2 Vision Kit / NPU W8A8'),('rb3_onnx_npu_w8a16','RB3 Gen 2 Vision Kit / NPU W8A16')]:
         profile=read(f'results/hub/{folder}/profile.json');score=read(f'results/hub/{folder}/dataset_accuracy.json')
         if profile and score:parts.append(f'| {label} | {profile["execution_summary"]["estimated_inference_time"]/1000:.3f} ms | {score["accuracy"]*100:.1f}% |')
-    parts+=['\nHub rows use the original 224 model, not the recovered 192 candidate. Actual NPU placement is recorded per operation. These are training-pool diagnostic accuracies (100/class), disjoint from 512 calibration images; they are not all-data scores or held-out results. W8A16 gains two correct predictions over W8A8 on this sample at higher latency; its worst class is 88% vs W8A8\'s 89%, so it is not a uniform accuracy improvement. Hub power modes expose latency, not measured joules.\n',
-        'New training uses `.venv-train-gpu` / RTX 3070 / CUDA; laptop export, evaluation and inference use `.venv` / CPU. AI Hub can use CPU or NPU. A real 100-image, five-step GPU recovery, CPU export and CPU inference verification passed; it is a pipeline check, not a new competition result. **11 functional tests and dependency checks pass.**\n',
+    sample=read('results/hub/resize192_labelled500/manifest.json')
+    if sample:
+        parts+=['\n**Saved 192 model on Samsung Galaxy S24 — separate 500-image test:**\n',
+            '| Execution | Hub profile latency | Accuracy / 500 labelled images |\n|---|---:|---:|']
+        for name,label in [('resize192_s24_cpu','CPU / four threads'),('resize192_s24_npu','NPU / burst')]:
+            profile=read(f'results/hub/{name}/profile.json');score=read(f'results/hub/{name}/dataset_accuracy.json')
+            timing=f'{profile["execution_summary"]["estimated_inference_time"]/1000:.3f} ms' if profile else 'pending'
+            acc=f'{score["accuracy"]*100:.2f}% ({score["correct"]}/500)' if score else 'pending'
+            parts.append(f'| {label} | {timing} | {acc} |')
+        parts.append('\nThe exact saved FP16-storage source is uploaded without extra quantization. Hub compilation expands its target payload to 8.523 MiB; the portable source stays 4.288 MiB. The 500-image sample has 50/class and excludes calibration data; accuracy is diagnostic training-pool accuracy. [Full device report and job evidence](docs/saved192_ai_hub.md).\n')
+    parts+=['\nThe first Hub table above uses the original 224 model, not the recovered 192 candidate. Actual NPU placement is recorded per operation. These are training-pool diagnostic accuracies (100/class), disjoint from 512 calibration images; they are not all-data scores or held-out results. W8A16 gains two correct predictions over W8A8 on this sample at higher latency; its worst class is 88% vs W8A8\'s 89%, so it is not a uniform accuracy improvement. Hub power modes expose latency, not measured joules.\n',
+        'New training uses `.venv-train-gpu` / RTX 3070 / CUDA; laptop export, evaluation and inference use `.venv` / CPU. AI Hub can use CPU or NPU. A real 100-image, five-step GPU recovery, CPU export and CPU inference verification passed; it is a pipeline check, not a new competition result. **12 functional tests and dependency checks pass.**\n',
         'See [GPU setup](docs/gpu_training.md). Refresh the README, log and saved notebook tables after each completed result: `.venv\\Scripts\\python.exe scripts/refresh_results.py`. This reads evidence only and submits no jobs or training.\n']
     path=ROOT/'README.md';text=path.read_text(encoding='utf-8')
     start=text.index('## Latest completed results');end=text.index('## Models and data',start)

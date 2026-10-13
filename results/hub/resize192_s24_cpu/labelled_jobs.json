@@ -1,0 +1,20 @@
+{
+  "manifest": "results/hub/resize192_labelled500/manifest.json",
+  "indices_sha256": "0c4a3891606ccc31b8c641e244b4320a0006d6264c934e44b12b2fd12a08c689",
+  "jobs": [
+    {
+      "start": 0,
+      "count": 250,
+      "id": "jpe6ydo0g",
+      "status": "SUCCESS",
+      "message": ""
+    },
+    {
+      "start": 250,
+      "count": 250,
+      "id": "jgzzn326g",
+      "status": "SUCCESS",
+      "message": ""
+    }
+  ]
+}

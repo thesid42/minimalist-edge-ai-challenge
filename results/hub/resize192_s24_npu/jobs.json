@@ -1,0 +1,15 @@
+{
+  "device": "Samsung Galaxy S24",
+  "runtime": "onnx",
+  "sdk_version": "0.56.0",
+  "compile": "j56owy275",
+  "j56owy275_status": {
+    "code": "SUCCESS",
+    "message": ""
+  },
+  "profile_inference": "jgod82zd5",
+  "jgod82zd5_status": {
+    "code": "SUCCESS",
+    "message": ""
+  }
+}

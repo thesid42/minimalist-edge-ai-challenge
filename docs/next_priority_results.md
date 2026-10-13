@@ -104,17 +104,19 @@ Separate `.venv-train-gpu` / NVIDIA GeForce RTX 3070 Laptop GPU / PyTorch 2.8.0+
 
 ### Labelled device accuracy
 
-1,000 balanced diagnostic images (100/class), disjoint from 512 calibration images. Older profiles are reused with the exact compiled artifacts. The sample is training-pool accuracy, not full-data accuracy.
+Original224 runs use 1,000 balanced images (100/class); saved192 runs use a separate 500-image sample (50/class). Both exclude the 512 calibration images and remain diagnostic training-pool accuracy. Compare source hashes and sample counts; do not rank accuracy across different samples.
 
-| Run | Device | Mode | Hub latency | Labelled accuracy | Worst recall |
-|---|---|---|---:|---:|---:|
-| rb3_onnx_npu_w8a16 | Dragonwing RB3 Gen 2 Vision Kit | burst | 1.056 ms | 98.50% | 88.0% |
-| rb3_onnx_npu_w8a8 | Dragonwing RB3 Gen 2 Vision Kit | burst | 0.614 ms | 98.30% | 89.0% |
-| rb3_onnx_npu_w8a8_balanced | Dragonwing RB3 Gen 2 Vision Kit | balanced | 0.648 ms | 98.30% (same artifact; burst accuracy) | 89.0% |
-| rb3_onnx_npu_w8a8_power_saver | Dragonwing RB3 Gen 2 Vision Kit | power_saver | 0.680 ms | 98.30% (same artifact; burst accuracy) | 89.0% |
-| s24_cpu_fp32 | Samsung Galaxy S24 (Family) | burst | 5.533 ms | 98.80% | 90.0% |
-| s24_npu_float_retry | Samsung Galaxy S24 (Family) | burst | 0.366 ms | 98.80% | 90.0% |
-| s24_npu_float_retry_balanced | Samsung Galaxy S24 (Family) | balanced | 0.778 ms | 98.80% (same artifact; burst accuracy) | 90.0% |
-| s24_npu_float_retry_power_saver | Samsung Galaxy S24 (Family) | power_saver | 1.192 ms | 98.80% (same artifact; burst accuracy) | 90.0% |
+| Run | Device | Mode | Internal size | Images | Hub latency | Labelled accuracy | Worst recall |
+|---|---|---|---:|---:|---:|---:|---:|
+| rb3_onnx_npu_w8a16 | Dragonwing RB3 Gen 2 Vision Kit | burst | 224 | 1000 | 1.056 ms | 98.50% | 88.0% |
+| rb3_onnx_npu_w8a8 | Dragonwing RB3 Gen 2 Vision Kit | burst | 224 | 1000 | 0.614 ms | 98.30% | 89.0% |
+| rb3_onnx_npu_w8a8_balanced | Dragonwing RB3 Gen 2 Vision Kit | balanced | 224 | 1000 | 0.648 ms | 98.30% (same artifact; burst accuracy) | 89.0% |
+| rb3_onnx_npu_w8a8_power_saver | Dragonwing RB3 Gen 2 Vision Kit | power_saver | 224 | 1000 | 0.680 ms | 98.30% (same artifact; burst accuracy) | 89.0% |
+| resize192_s24_cpu | Samsung Galaxy S24 | burst | 192 | 500 | 4.183 ms | 99.40% | 96.0% |
+| resize192_s24_npu | Samsung Galaxy S24 | burst | 192 | pending | 0.435 ms | pending | pending |
+| s24_cpu_fp32 | Samsung Galaxy S24 (Family) | burst | 224 | 1000 | 5.533 ms | 98.80% | 90.0% |
+| s24_npu_float_retry | Samsung Galaxy S24 (Family) | burst | 224 | 1000 | 0.366 ms | 98.80% | 90.0% |
+| s24_npu_float_retry_balanced | Samsung Galaxy S24 (Family) | balanced | 224 | 1000 | 0.778 ms | 98.80% (same artifact; burst accuracy) | 90.0% |
+| s24_npu_float_retry_power_saver | Samsung Galaxy S24 (Family) | power_saver | 224 | 1000 | 1.192 ms | 98.80% (same artifact; burst accuracy) | 90.0% |
 
 Remote power modes report latency/memory, not joules. S24 family routing may use different physical units. RB3 W8A8/W8A16 are a same-target precision comparison. Inspect actual operation placement and retain failed DLC jobs.

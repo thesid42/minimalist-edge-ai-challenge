@@ -8042,78 +8042,90 @@ a.anchor-link {
 </tr>
 <tr>
 <th>30</th>
+<td>resize192_s24_cpu</td>
+<td>remote_exploration</td>
+<td>completed</td>
+</tr>
+<tr>
+<th>31</th>
+<td>resize192_s24_npu</td>
+<td>remote_exploration</td>
+<td>pending</td>
+</tr>
+<tr>
+<th>32</th>
 <td>cpu_threads_1</td>
 <td>runtime_energy</td>
 <td>completed</td>
 </tr>
 <tr>
-<th>31</th>
+<th>33</th>
 <td>cpu_threads_2</td>
 <td>runtime_energy</td>
 <td>completed</td>
 </tr>
 <tr>
-<th>32</th>
+<th>34</th>
 <td>cpu_threads_4</td>
 <td>runtime_energy</td>
 <td>completed</td>
 </tr>
 <tr>
-<th>33</th>
+<th>35</th>
 <td>cpu_threads_8</td>
 <td>runtime_energy</td>
 <td>completed</td>
 </tr>
 <tr>
-<th>34</th>
+<th>36</th>
 <td>baseline_spin</td>
 <td>runtime_energy</td>
 <td>completed</td>
 </tr>
 <tr>
-<th>35</th>
+<th>37</th>
 <td>baseline_sleep</td>
 <td>runtime_energy</td>
 <td>completed</td>
 </tr>
 <tr>
-<th>36</th>
+<th>38</th>
 <td>resize192_head_ce_w16_spin</td>
 <td>runtime_energy</td>
 <td>completed</td>
 </tr>
 <tr>
-<th>37</th>
+<th>39</th>
 <td>resize192_head_ce_w16_sleep</td>
 <td>runtime_energy</td>
 <td>completed</td>
 </tr>
 <tr>
-<th>38</th>
+<th>40</th>
 <td>gpu_training_pipeline</td>
 <td>training_environment</td>
 <td>completed</td>
 </tr>
 <tr>
-<th>39</th>
+<th>41</th>
 <td>latency_baseline</td>
 <td>matched_192_latency</td>
 <td>completed</td>
 </tr>
 <tr>
-<th>40</th>
+<th>42</th>
 <td>latency_resize192</td>
 <td>matched_192_latency</td>
 <td>completed</td>
 </tr>
 <tr>
-<th>41</th>
+<th>43</th>
 <td>latency_resize192_head_ce</td>
 <td>matched_192_latency</td>
 <td>completed</td>
 </tr>
 <tr>
-<th>42</th>
+<th>44</th>
 <td>latency_resize192_head_ce_w16</td>
 <td>matched_192_latency</td>
 <td>completed</td>
@@ -9294,6 +9306,103 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="13.-Saved-192-FP16-storage-model-on-an-edge-phone">13. Saved 192 FP16-storage model on an edge phone<a class="anchor-link" href="#13.-Saved-192-FP16-storage-model-on-an-edge-phone">¶</a></h1><p>Test the exact saved winner on Samsung Galaxy S24 (Snapdragon 8 Gen 3), separately on CPU and QNN NPU, without additional quantization. Compile from the saved FP16-storage source; inspect compiler output size and actual operation placement. Accuracy uses 500 balanced real images (50/class), disjoint from 512 calibration images, with a local reference from this exact model. Separate microbenchmark profiles give steady inference latency, excluding upload/preprocessing. This is a training-pool diagnostic sample, not 27000-image or held-out accuracy. Jobs can route to separate units of the same named phone.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=cell-25">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">registry</span><span class="p">[</span><span class="s2">"records"</span><span class="p">]</span> <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="s2">"phase"</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'remote_exploration'</span> <span class="ow">and</span> <span class="n">r</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'resize192_s24_cpu'</span><span class="p">,</span> <span class="s1">'resize192_s24_npu'</span><span class="p">]]</span>
+<span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([{</span><span class="n">k</span><span class="p">:</span><span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'name'</span><span class="p">,</span> <span class="s1">'status'</span><span class="p">,</span> <span class="s1">'device'</span><span class="p">,</span> <span class="s1">'precision'</span><span class="p">,</span> <span class="s1">'performance_mode'</span><span class="p">,</span> <span class="s1">'hub_estimated_latency_ms'</span><span class="p">,</span> <span class="s1">'accuracy_pct'</span><span class="p">,</span> <span class="s1">'worst_recall_pct'</span><span class="p">,</span> <span class="s1">'labelled_samples'</span><span class="p">,</span> <span class="s1">'labelled_top1_agreement_pct'</span><span class="p">]}</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>name</th>
+<th>status</th>
+<th>device</th>
+<th>precision</th>
+<th>performance_mode</th>
+<th>hub_estimated_latency_ms</th>
+<th>accuracy_pct</th>
+<th>worst_recall_pct</th>
+<th>labelled_samples</th>
+<th>labelled_top1_agreement_pct</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>resize192_s24_cpu</td>
+<td>completed</td>
+<td>Samsung Galaxy S24</td>
+<td>none</td>
+<td>burst</td>
+<td>4.183</td>
+<td>99.4</td>
+<td>96.0</td>
+<td>500.0</td>
+<td>100.0</td>
+</tr>
+<tr>
+<th>1</th>
+<td>resize192_s24_npu</td>
+<td>pending</td>
+<td>Samsung Galaxy S24</td>
+<td>none</td>
+<td>burst</td>
+<td>0.435</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cell-26">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Latest-matched-runtime-and-estimated-energy">Latest matched runtime and estimated energy<a class="anchor-link" href="#Latest-matched-runtime-and-estimated-energy">¶</a></h2><p>Same laptop, four CPU threads and three repetitions. Accuracy is separately measured on all 27,000 images. Remote device results stay separate.</p>
 </div>
 </div>
@@ -9303,7 +9412,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>

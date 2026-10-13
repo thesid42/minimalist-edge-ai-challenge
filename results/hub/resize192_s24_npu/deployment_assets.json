@@ -1,0 +1,38 @@
+{
+  "source_file_bytes": 4496556,
+  "assets": [
+    {
+      "file": "target.onnx.onnx.zip",
+      "download_bytes": 5578187,
+      "uncompressed_payload_bytes": 8937126,
+      "files": [
+        {
+          "name": "job_j56owy275_optimized_onnx/",
+          "bytes": 0
+        },
+        {
+          "name": "job_j56owy275_optimized_onnx/model.data",
+          "bytes": 8865792
+        },
+        {
+          "name": "job_j56owy275_optimized_onnx/model.onnx",
+          "bytes": 71334
+        }
+      ],
+      "initializer_dtype_counts": {
+        "FLOAT": 108,
+        "INT64": 2
+      },
+      "operation_counts": {
+        "Resize": 1,
+        "Conv": 52,
+        "Clip": 35,
+        "Add": 10,
+        "GlobalAveragePool": 1,
+        "Reshape": 1,
+        "Gemm": 1
+      }
+    }
+  ],
+  "note": "Compiled target assets can expand/transform the source FP16-storage model. Deployment payload size is separate from source ONNX disk size."
+}
