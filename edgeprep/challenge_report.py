@@ -62,9 +62,9 @@ def main():
                          (axes[1],row.get('latency_t4_ms',np.nan),'CPU latency, batch 1 / four threads (ms)')]):
             handle=ax.scatter(x,row['accuracy']*100,s=75,color=colors[i],edgecolors='white',linewidth=.7,label=row['candidate'])
             if panel==0:handles.append(handle)
-            ax.set_xlabel(key);ax.set_ylabel('Diagnostic accuracy (%)');ax.grid(alpha=.2)
+            ax.set_xlabel(key);ax.set_ylabel('Training-set accuracy (%)' if baseline.get('evaluation_scope')=='training_set' else 'Diagnostic accuracy (%)');ax.grid(alpha=.2)
             ax.set_ylim(max(0,min(r['accuracy'] for r in rows)*100-2),min(100,max(r['accuracy'] for r in rows)*100+1));ax.margins(x=.1)
-    scope=baseline.get('evaluation_scope','legacy provisional sample')
+    scope=baseline.get('evaluation_scope','legacy provisional sample').replace('_',' ')
     fig.suptitle(f"EuroSAT: {len(rows)} variants / {baseline['examples']:,} images / {scope}")
     fig.legend(handles,[r['candidate'] for r in rows],loc='lower center',bbox_to_anchor=(.5,.035),ncol=4,frameon=False,fontsize=9)
     fig.text(.5,.01,'All-data accuracy is training-set performance. Ratios use the supplied student measured on the same laptop.',ha='center',fontsize=8)
