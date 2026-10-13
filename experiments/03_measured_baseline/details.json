@@ -1,0 +1,27 @@
+[
+  {
+    "name": "baseline",
+    "phase": "current_all_data",
+    "status": "completed",
+    "accuracy_pct": 99.16296296296296,
+    "worst_recall_pct": 95.84,
+    "examples": 27000,
+    "scope": "training_set",
+    "parameters": 2236682,
+    "size_mib": 8.506295204162598,
+    "median_cpu_4t_ms": 2.1035500000000003,
+    "estimated_cpu_4t_j": 0.049584945817464754,
+    "model_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+    "settings": {
+      "pruning_ratio": 0,
+      "round_to": 8,
+      "quantization": null
+    },
+    "evidence": "results/all_data/baseline_accuracy.json",
+    "implementation": [
+      "edgeprep/challenge.py",
+      "edgeprep/export.py",
+      "edgeprep/benchmark.py"
+    ]
+  }
+]

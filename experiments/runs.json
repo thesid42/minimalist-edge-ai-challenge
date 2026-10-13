@@ -1,0 +1,941 @@
+{
+  "updated_utc": "2026-10-13T17:21:45.135561+00:00",
+  "ordering": "Numbered phases and logical experimental progression; original wall-clock timestamps are not reconstructed",
+  "records": [
+    {
+      "name": "baseline",
+      "phase": "historical_pilot",
+      "status": "completed",
+      "accuracy_pct": 99.2,
+      "worst_recall_pct": 96.0,
+      "examples": 500,
+      "scope": "historical_split_subset",
+      "parameters": 2236682,
+      "size_mib": 8.506295204162598,
+      "median_cpu_4t_ms": 2.1668000000000003,
+      "estimated_cpu_4t_j": null,
+      "model_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "settings": {
+        "pruning_ratio": 0,
+        "round_to": 8,
+        "quantization": null
+      },
+      "evidence": "results/challenge/baseline_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "qdq_s8",
+      "phase": "historical_pilot",
+      "status": "completed",
+      "accuracy_pct": 92.60000000000001,
+      "worst_recall_pct": 66.0,
+      "examples": 500,
+      "scope": "historical_split_subset",
+      "parameters": 2236682,
+      "size_mib": 2.525644302368164,
+      "median_cpu_4t_ms": 5.66225,
+      "estimated_cpu_4t_j": null,
+      "model_sha256": "dcc5763ef90e02ab614f62e301fbbad7559c2e28f6b1fe7837ed9a08122889f2",
+      "settings": {
+        "pruning_ratio": 0,
+        "round_to": 8,
+        "quantization": {
+          "format": "static QDQ",
+          "method": "MinMax",
+          "types": "S8S8",
+          "activation_symmetric": false,
+          "per_channel": true,
+          "calibration_count": 128,
+          "excluded_nodes": [],
+          "calibration_sha256": "ec700fc3d1fb07150a727e55f526f271d6f1db376db4f2be52b5454b615162c6"
+        }
+      },
+      "evidence": "results/challenge/qdq_s8_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "qdq_u8",
+      "phase": "historical_pilot",
+      "status": "completed",
+      "accuracy_pct": 91.4,
+      "worst_recall_pct": 57.99999999999999,
+      "examples": 500,
+      "scope": "historical_split_subset",
+      "parameters": 2236682,
+      "size_mib": 2.5413684844970703,
+      "median_cpu_4t_ms": 4.37955,
+      "estimated_cpu_4t_j": null,
+      "model_sha256": "9354e0d37e239ee8c52832ecf04f6c2cec136422790b5f4d561415ae453565ea",
+      "settings": {
+        "pruning_ratio": 0,
+        "round_to": 8,
+        "quantization": {
+          "format": "static QDQ",
+          "method": "MinMax",
+          "types": "U8U8",
+          "activation_symmetric": false,
+          "per_channel": true,
+          "calibration_count": 128,
+          "excluded_nodes": [],
+          "calibration_sha256": "ec700fc3d1fb07150a727e55f526f271d6f1db376db4f2be52b5454b615162c6"
+        }
+      },
+      "evidence": "results/challenge/qdq_u8_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "qdq_s8_256",
+      "phase": "historical_pilot",
+      "status": "completed",
+      "accuracy_pct": 91.0,
+      "worst_recall_pct": 66.0,
+      "examples": 500,
+      "scope": "historical_split_subset",
+      "parameters": 2236682,
+      "size_mib": 2.525670051574707,
+      "median_cpu_4t_ms": 5.25095,
+      "estimated_cpu_4t_j": null,
+      "model_sha256": "4238be6c91d5f3f94a8b66cb32693de5a09d110aa34583aa764c9e4dcac01b51",
+      "settings": {
+        "pruning_ratio": 0,
+        "round_to": 8,
+        "pruning_scope": "expansion",
+        "quantization": {
+          "format": "static QDQ",
+          "method": "MinMax",
+          "types": "S8S8",
+          "activation_symmetric": false,
+          "per_channel": true,
+          "calibration_count": 256,
+          "excluded_nodes": [],
+          "calibration_sha256": "ec700fc3d1fb07150a727e55f526f271d6f1db376db4f2be52b5454b615162c6"
+        }
+      },
+      "evidence": "results/challenge/qdq_s8_256_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "qdq_percentile",
+      "phase": "historical_pilot",
+      "status": "completed",
+      "accuracy_pct": 96.2,
+      "worst_recall_pct": 80.0,
+      "examples": 500,
+      "scope": "historical_split_subset",
+      "parameters": 2236682,
+      "size_mib": 2.525515556335449,
+      "median_cpu_4t_ms": 5.788449999999999,
+      "estimated_cpu_4t_j": null,
+      "model_sha256": "32f5d6e68c27a0c7197239c82402c0f3b52e67f237625bc4c0813598cedd14bc",
+      "settings": {
+        "pruning_ratio": 0,
+        "round_to": 8,
+        "quantization": {
+          "format": "static QDQ",
+          "method": "Percentile",
+          "types": "S8S8",
+          "activation_symmetric": false,
+          "per_channel": true,
+          "calibration_count": 256,
+          "excluded_nodes": [],
+          "calibration_sha256": "ec700fc3d1fb07150a727e55f526f271d6f1db376db4f2be52b5454b615162c6"
+        }
+      },
+      "evidence": "results/challenge/qdq_percentile_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "qdq_protected",
+      "phase": "historical_pilot",
+      "status": "completed",
+      "accuracy_pct": 96.0,
+      "worst_recall_pct": 90.0,
+      "examples": 500,
+      "scope": "historical_split_subset",
+      "parameters": 2236682,
+      "size_mib": 3.715916633605957,
+      "median_cpu_4t_ms": 6.06225,
+      "estimated_cpu_4t_j": null,
+      "model_sha256": "218c6ccd270c97ee99d9b2ec4fc651908fa36c2dd184c80cbbf8c1a48db5517f",
+      "settings": {
+        "pruning_ratio": 0,
+        "round_to": 8,
+        "quantization": {
+          "format": "static QDQ",
+          "method": "MinMax",
+          "types": "S8S8",
+          "activation_symmetric": false,
+          "per_channel": true,
+          "calibration_count": 256,
+          "excluded_nodes": [
+            "/features/features.0/features.0.0/Conv",
+            "/features/features.18/features.18.0/Conv",
+            "/classifier/classifier.1/Gemm"
+          ],
+          "calibration_sha256": "ec700fc3d1fb07150a727e55f526f271d6f1db376db4f2be52b5454b615162c6"
+        }
+      },
+      "evidence": "results/challenge/qdq_protected_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "qdq_pointwise",
+      "phase": "historical_pilot",
+      "status": "completed",
+      "accuracy_pct": 98.4,
+      "worst_recall_pct": 94.0,
+      "examples": 500,
+      "scope": "historical_split_subset",
+      "parameters": 2236682,
+      "size_mib": 3.772030830383301,
+      "median_cpu_4t_ms": 5.3334,
+      "estimated_cpu_4t_j": null,
+      "model_sha256": "9716717c1b9310d7dcd465b6cbf2d576cfc542f5d798b4119ca68ba1419c4c58",
+      "settings": {
+        "pruning_ratio": 0,
+        "round_to": 8,
+        "pruning_scope": "expansion",
+        "quantization": {
+          "format": "static QDQ",
+          "method": "MinMax",
+          "types": "S8S8",
+          "activation_symmetric": false,
+          "per_channel": true,
+          "calibration_count": 256,
+          "excluded_nodes": [
+            "/features/features.0/features.0.0/Conv",
+            "/features/features.18/features.18.0/Conv",
+            "/classifier/classifier.1/Gemm",
+            "/features/features.1/conv/conv.0/conv.0.0/Conv",
+            "/features/features.2/conv/conv.1/conv.1.0/Conv",
+            "/features/features.3/conv/conv.1/conv.1.0/Conv",
+            "/features/features.4/conv/conv.1/conv.1.0/Conv",
+            "/features/features.5/conv/conv.1/conv.1.0/Conv",
+            "/features/features.6/conv/conv.1/conv.1.0/Conv",
+            "/features/features.7/conv/conv.1/conv.1.0/Conv",
+            "/features/features.8/conv/conv.1/conv.1.0/Conv",
+            "/features/features.9/conv/conv.1/conv.1.0/Conv",
+            "/features/features.10/conv/conv.1/conv.1.0/Conv",
+            "/features/features.11/conv/conv.1/conv.1.0/Conv",
+            "/features/features.12/conv/conv.1/conv.1.0/Conv",
+            "/features/features.13/conv/conv.1/conv.1.0/Conv",
+            "/features/features.14/conv/conv.1/conv.1.0/Conv",
+            "/features/features.15/conv/conv.1/conv.1.0/Conv",
+            "/features/features.16/conv/conv.1/conv.1.0/Conv",
+            "/features/features.17/conv/conv.1/conv.1.0/Conv"
+          ],
+          "calibration_sha256": "ec700fc3d1fb07150a727e55f526f271d6f1db376db4f2be52b5454b615162c6"
+        }
+      },
+      "evidence": "results/challenge/qdq_pointwise_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "prune05",
+      "phase": "historical_pilot",
+      "status": "completed",
+      "accuracy_pct": 16.0,
+      "worst_recall_pct": 0.0,
+      "examples": 500,
+      "scope": "historical_split_subset",
+      "parameters": 2003890,
+      "size_mib": 7.621918678283691,
+      "median_cpu_4t_ms": 1.83995,
+      "estimated_cpu_4t_j": null,
+      "model_sha256": "43154b32de291de6c636c33066b603bfd7195a12edd070d1525fcaef9ee803bb",
+      "settings": {
+        "pruning_ratio": 0.05,
+        "round_to": 8,
+        "quantization": null
+      },
+      "evidence": "results/challenge/prune05_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "prune10",
+      "phase": "historical_pilot",
+      "status": "completed",
+      "accuracy_pct": 17.2,
+      "worst_recall_pct": 0.0,
+      "examples": 500,
+      "scope": "historical_split_subset",
+      "parameters": 1823122,
+      "size_mib": 6.935263633728027,
+      "median_cpu_4t_ms": 1.6971500000000002,
+      "estimated_cpu_4t_j": null,
+      "model_sha256": "b93ab50cadc3a770d28e4ea6681148c909f46ff68dac4f85ec7f601b06eb7dae",
+      "settings": {
+        "pruning_ratio": 0.1,
+        "round_to": 8,
+        "quantization": null
+      },
+      "evidence": "results/challenge/prune10_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "expansion05",
+      "phase": "historical_pilot",
+      "status": "completed",
+      "accuracy_pct": 83.2,
+      "worst_recall_pct": 46.0,
+      "examples": 500,
+      "scope": "historical_split_subset",
+      "parameters": 2139346,
+      "size_mib": 8.138100624084473,
+      "median_cpu_4t_ms": 2.63295,
+      "estimated_cpu_4t_j": null,
+      "model_sha256": "fa89129efb0d55a8fff135277ed04d81bc955d869abb163019e64fd9235db0ed",
+      "settings": {
+        "pruning_ratio": 0.05,
+        "round_to": 8,
+        "pruning_scope": "expansion",
+        "quantization": null
+      },
+      "evidence": "results/challenge/expansion05_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "expansion10",
+      "phase": "historical_pilot",
+      "status": "completed",
+      "accuracy_pct": 51.0,
+      "worst_recall_pct": 0.0,
+      "examples": 500,
+      "scope": "historical_split_subset",
+      "parameters": 2048882,
+      "size_mib": 7.795693397521973,
+      "median_cpu_4t_ms": 2.75515,
+      "estimated_cpu_4t_j": null,
+      "model_sha256": "cb1f69728c0847e711cad22f5dc9372fd56e23833e0ccc4ba1ad6106e4e5eaff",
+      "settings": {
+        "pruning_ratio": 0.1,
+        "round_to": 8,
+        "pruning_scope": "expansion",
+        "quantization": null
+      },
+      "evidence": "results/challenge/expansion10_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "expansion05_ce",
+      "phase": "historical_pilot",
+      "status": "completed",
+      "accuracy_pct": 95.6,
+      "worst_recall_pct": 76.0,
+      "examples": 500,
+      "scope": "historical_split_subset",
+      "parameters": 2139346,
+      "size_mib": 8.138100624084473,
+      "median_cpu_4t_ms": 2.1636499999999996,
+      "estimated_cpu_4t_j": null,
+      "model_sha256": "bf786f76b3a78aa5d2ecae5b1b1a5492cfb49ce5ff7594cf265c23731844efcf",
+      "settings": {
+        "pruning_ratio": 0.05,
+        "round_to": 8,
+        "pruning_scope": "expansion",
+        "quantization": null,
+        "recovery": {
+          "epochs": 1,
+          "train_limit": 500,
+          "teacher": null,
+          "teacher_sha256": null,
+          "alpha": 0.5,
+          "temperature": 4,
+          "lr": 0.0001,
+          "seed": 42,
+          "batch_size": 8,
+          "bn_running_stats": "frozen",
+          "split_sha256": "978a507fc8cc2abfef99616e78ae70262ca4b0f59dc4da1a29e90f83e3130f62",
+          "history": [
+            {
+              "epoch": 1,
+              "loss": 0.3071266071535647
+            }
+          ],
+          "seconds": 71.73918039997807
+        }
+      },
+      "evidence": "results/challenge/expansion05_ce_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "expansion05_kd",
+      "phase": "historical_pilot",
+      "status": "completed",
+      "accuracy_pct": 96.0,
+      "worst_recall_pct": 82.0,
+      "examples": 500,
+      "scope": "historical_split_subset",
+      "parameters": 2139346,
+      "size_mib": 8.138100624084473,
+      "median_cpu_4t_ms": 2.0575,
+      "estimated_cpu_4t_j": null,
+      "model_sha256": "4f5726d1d7b6dbe902a7fb570a51e44547aee6f80334d259d7d6cb4c18bba38b",
+      "settings": {
+        "pruning_ratio": 0.05,
+        "round_to": 8,
+        "pruning_scope": "expansion",
+        "quantization": null,
+        "recovery": {
+          "epochs": 1,
+          "train_limit": 500,
+          "teacher": "E:\\Projects\\Minimilist challenge\\Models\\teacher_resnet50_eurosat.pt",
+          "teacher_sha256": "5ba4d8e8105f0cada0f703b681be18314f9a5aa4b3d0f6951ebf6c51909f5b30",
+          "alpha": 0.5,
+          "temperature": 4,
+          "lr": 0.0001,
+          "seed": 42,
+          "batch_size": 8,
+          "bn_running_stats": "frozen",
+          "split_sha256": "978a507fc8cc2abfef99616e78ae70262ca4b0f59dc4da1a29e90f83e3130f62",
+          "history": [
+            {
+              "epoch": 1,
+              "loss": 1.030230313539505
+            }
+          ],
+          "seconds": 101.55781040000147
+        }
+      },
+      "evidence": "results/challenge/expansion05_kd_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "baseline",
+      "phase": "current_all_data",
+      "status": "completed",
+      "accuracy_pct": 99.16296296296296,
+      "worst_recall_pct": 95.84,
+      "examples": 27000,
+      "scope": "training_set",
+      "parameters": 2236682,
+      "size_mib": 8.506295204162598,
+      "median_cpu_4t_ms": 2.1035500000000003,
+      "estimated_cpu_4t_j": 0.049584945817464754,
+      "model_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "settings": {
+        "pruning_ratio": 0,
+        "round_to": 8,
+        "quantization": null
+      },
+      "evidence": "results/all_data/baseline_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "qdq_pointwise",
+      "phase": "current_all_data",
+      "status": "completed",
+      "accuracy_pct": 98.41111111111111,
+      "worst_recall_pct": 95.43333333333334,
+      "examples": 27000,
+      "scope": "training_set",
+      "parameters": 2236682,
+      "size_mib": 3.77199649810791,
+      "median_cpu_4t_ms": 5.184200000000001,
+      "estimated_cpu_4t_j": 0.11915866185072288,
+      "model_sha256": "ab32fdbdf01fbcbb30bd750cb15879c9af880a64f7a44d37b4ce4860e65f524f",
+      "settings": {
+        "pruning_ratio": 0,
+        "round_to": 8,
+        "pruning_scope": "expansion",
+        "quantization": {
+          "format": "static QDQ",
+          "method": "MinMax",
+          "types": "S8S8",
+          "activation_symmetric": false,
+          "per_channel": true,
+          "calibration_count": 256,
+          "excluded_nodes": [
+            "/features/features.0/features.0.0/Conv",
+            "/features/features.18/features.18.0/Conv",
+            "/classifier/classifier.1/Gemm",
+            "/features/features.1/conv/conv.0/conv.0.0/Conv",
+            "/features/features.2/conv/conv.1/conv.1.0/Conv",
+            "/features/features.3/conv/conv.1/conv.1.0/Conv",
+            "/features/features.4/conv/conv.1/conv.1.0/Conv",
+            "/features/features.5/conv/conv.1/conv.1.0/Conv",
+            "/features/features.6/conv/conv.1/conv.1.0/Conv",
+            "/features/features.7/conv/conv.1/conv.1.0/Conv",
+            "/features/features.8/conv/conv.1/conv.1.0/Conv",
+            "/features/features.9/conv/conv.1/conv.1.0/Conv",
+            "/features/features.10/conv/conv.1/conv.1.0/Conv",
+            "/features/features.11/conv/conv.1/conv.1.0/Conv",
+            "/features/features.12/conv/conv.1/conv.1.0/Conv",
+            "/features/features.13/conv/conv.1/conv.1.0/Conv",
+            "/features/features.14/conv/conv.1/conv.1.0/Conv",
+            "/features/features.15/conv/conv.1/conv.1.0/Conv",
+            "/features/features.16/conv/conv.1/conv.1.0/Conv",
+            "/features/features.17/conv/conv.1/conv.1.0/Conv"
+          ],
+          "calibration_sha256": "e1ce22116b97c0fddc876dddb81b2ad758412cca73b89ec421a7d19171274e02"
+        }
+      },
+      "evidence": "results/all_data/qdq_pointwise_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "qdq_percentile512",
+      "phase": "current_all_data",
+      "status": "completed",
+      "accuracy_pct": 98.8037037037037,
+      "worst_recall_pct": 95.36,
+      "examples": 27000,
+      "scope": "training_set",
+      "parameters": 2236682,
+      "size_mib": 3.771927833557129,
+      "median_cpu_4t_ms": 5.52065,
+      "estimated_cpu_4t_j": 0.13219140392896084,
+      "model_sha256": "e18134cf9b8eef6e81d9cb521fe9234515831d111533eeebe72740bc82319d92",
+      "settings": {
+        "pruning_ratio": 0,
+        "round_to": 8,
+        "pruning_scope": "expansion",
+        "quantization": {
+          "format": "static QDQ",
+          "method": "Percentile",
+          "types": "S8S8",
+          "activation_symmetric": false,
+          "per_channel": true,
+          "calibration_count": 512,
+          "excluded_nodes": [
+            "/features/features.0/features.0.0/Conv",
+            "/features/features.18/features.18.0/Conv",
+            "/classifier/classifier.1/Gemm",
+            "/features/features.1/conv/conv.0/conv.0.0/Conv",
+            "/features/features.2/conv/conv.1/conv.1.0/Conv",
+            "/features/features.3/conv/conv.1/conv.1.0/Conv",
+            "/features/features.4/conv/conv.1/conv.1.0/Conv",
+            "/features/features.5/conv/conv.1/conv.1.0/Conv",
+            "/features/features.6/conv/conv.1/conv.1.0/Conv",
+            "/features/features.7/conv/conv.1/conv.1.0/Conv",
+            "/features/features.8/conv/conv.1/conv.1.0/Conv",
+            "/features/features.9/conv/conv.1/conv.1.0/Conv",
+            "/features/features.10/conv/conv.1/conv.1.0/Conv",
+            "/features/features.11/conv/conv.1/conv.1.0/Conv",
+            "/features/features.12/conv/conv.1/conv.1.0/Conv",
+            "/features/features.13/conv/conv.1/conv.1.0/Conv",
+            "/features/features.14/conv/conv.1/conv.1.0/Conv",
+            "/features/features.15/conv/conv.1/conv.1.0/Conv",
+            "/features/features.16/conv/conv.1/conv.1.0/Conv",
+            "/features/features.17/conv/conv.1/conv.1.0/Conv"
+          ],
+          "calibration_sha256": "2c75a98417368a573b598ed6010def4165e65016731ec04e3bef53ff3673569c"
+        }
+      },
+      "evidence": "results/all_data/qdq_percentile512_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "s24_cpu_fp32",
+      "phase": "remote_exploration",
+      "status": "completed",
+      "device": "Samsung Galaxy S24 (Family)",
+      "runtime": "onnx",
+      "requested_compute": "cpu",
+      "precision": "none",
+      "hub_estimated_latency_ms": 5.533,
+      "inference_memory_peak_range_bytes": [
+        15159296,
+        23509216
+      ],
+      "actual_layer_compute_counts": {
+        "CPU": 55
+      },
+      "top1_agreement_pct": 100.0,
+      "numerical_samples": 32,
+      "accuracy_pct": null,
+      "energy_j": null,
+      "failure_details": [],
+      "settings": {
+        "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
+        "source_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+        "device": "Samsung Galaxy S24 (Family)",
+        "runtime": "onnx",
+        "compute_unit_requested": "cpu",
+        "precision": "none",
+        "input_specs": {
+          "images": [
+            1,
+            3,
+            224,
+            224
+          ]
+        },
+        "compile_options": "--target_runtime onnx --compute_unit cpu",
+        "inference_options": "--compute_unit cpu --max_profiler_iterations 100 --onnx_options intra_op_num_threads=4;inter_op_num_threads=1;execution_mode=SEQUENTIAL;enable_memory_pattern=true;enable_cpu_memory_arena=true",
+        "quantize_options": null,
+        "calibration_count_requested": 512,
+        "calibration_sha256": null,
+        "direct_onnx": false,
+        "compiled_job": "j5m98xxqg",
+        "local_qdq": false,
+        "validation_note": "Separate representative-input numerical smoke check; not full-dataset accuracy",
+        "target_reference": "Exploration only unless organizers designate this device; preserve laptop CPU baseline",
+        "energy": "Inspect returned fields; never convert latency into energy"
+      },
+      "jobs": {
+        "device": "Samsung Galaxy S24 (Family)",
+        "runtime": "onnx",
+        "sdk_version": "0.56.0",
+        "compile": "j5m98xxqg",
+        "profile_inference": "jpy8m334g",
+        "validation_inference": "jgzzndd6g"
+      },
+      "evidence": "results/hub/s24_cpu_fp32",
+      "implementation": [
+        "edgeprep/hub_profile.py",
+        "edgeprep/hub_auth.py"
+      ]
+    },
+    {
+      "name": "s24_npu_float",
+      "phase": "remote_exploration",
+      "status": "failed",
+      "device": "Samsung Galaxy S24 (Family)",
+      "runtime": "onnx",
+      "requested_compute": "npu",
+      "precision": "none",
+      "hub_estimated_latency_ms": null,
+      "inference_memory_peak_range_bytes": null,
+      "actual_layer_compute_counts": {},
+      "top1_agreement_pct": null,
+      "numerical_samples": null,
+      "accuracy_pct": null,
+      "energy_j": null,
+      "failure_details": [
+        {
+          "code": "FAILED",
+          "message": "Must specify only one of --compute_unit and --onnx_execution_providers. They set the same options, with the latter giving more control."
+        },
+        {
+          "code": "FAILED",
+          "message": "Must specify only one of --compute_unit and --onnx_execution_providers. They set the same options, with the latter giving more control."
+        }
+      ],
+      "settings": {
+        "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
+        "source_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+        "device": "Samsung Galaxy S24 (Family)",
+        "runtime": "onnx",
+        "compute_unit_requested": "npu",
+        "precision": "none",
+        "input_specs": {
+          "images": [
+            1,
+            3,
+            224,
+            224
+          ]
+        },
+        "compile_options": "--target_runtime onnx --compute_unit npu",
+        "inference_options": "--compute_unit npu --max_profiler_iterations 100 --onnx_options intra_op_num_threads=4;inter_op_num_threads=1;execution_mode=SEQUENTIAL;enable_memory_pattern=true;enable_cpu_memory_arena=true;qnn_htp_performance_mode=burst --onnx_execution_providers qnn",
+        "quantize_options": null,
+        "calibration_count_requested": 512,
+        "calibration_sha256": null,
+        "direct_onnx": false,
+        "compiled_job": null,
+        "local_qdq": false,
+        "validation_note": "Separate representative-input numerical smoke check; not full-dataset accuracy",
+        "target_reference": "Exploration only unless organizers designate this device; preserve laptop CPU baseline",
+        "energy": "Inspect returned fields; never convert latency into energy"
+      },
+      "jobs": {
+        "device": "Samsung Galaxy S24 (Family)",
+        "runtime": "onnx",
+        "sdk_version": "0.56.0",
+        "compile": "jp0o600ep",
+        "profile_inference": "jgk68xxo5",
+        "validation_inference": "jp3o600zp",
+        "jgk68xxo5_status": {
+          "code": "FAILED",
+          "message": "Must specify only one of --compute_unit and --onnx_execution_providers. They set the same options, with the latter giving more control."
+        },
+        "jp3o600zp_status": {
+          "code": "FAILED",
+          "message": "Must specify only one of --compute_unit and --onnx_execution_providers. They set the same options, with the latter giving more control."
+        }
+      },
+      "evidence": "results/hub/s24_npu_float",
+      "implementation": [
+        "edgeprep/hub_profile.py",
+        "edgeprep/hub_auth.py"
+      ]
+    },
+    {
+      "name": "s24_npu_float_retry",
+      "phase": "remote_exploration",
+      "status": "completed",
+      "device": "Samsung Galaxy S24 (Family)",
+      "runtime": "onnx",
+      "requested_compute": "npu",
+      "precision": "none",
+      "hub_estimated_latency_ms": 0.366,
+      "inference_memory_peak_range_bytes": [
+        0,
+        50178640
+      ],
+      "actual_layer_compute_counts": {
+        "NPU": 104
+      },
+      "top1_agreement_pct": 100.0,
+      "numerical_samples": 32,
+      "accuracy_pct": null,
+      "energy_j": null,
+      "failure_details": [],
+      "settings": {
+        "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
+        "source_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+        "device": "Samsung Galaxy S24 (Family)",
+        "runtime": "onnx",
+        "compute_unit_requested": "npu",
+        "precision": "none",
+        "input_specs": {
+          "images": [
+            1,
+            3,
+            224,
+            224
+          ]
+        },
+        "compile_options": "--target_runtime onnx --compute_unit npu",
+        "inference_options": "--max_profiler_iterations 100 --onnx_options intra_op_num_threads=4;inter_op_num_threads=1;execution_mode=SEQUENTIAL;enable_memory_pattern=true;enable_cpu_memory_arena=true;qnn_htp_performance_mode=burst --onnx_execution_providers qnn",
+        "quantize_options": null,
+        "calibration_count_requested": 512,
+        "calibration_sha256": null,
+        "direct_onnx": false,
+        "compiled_job": "jp0o600ep",
+        "local_qdq": false,
+        "validation_note": "Separate representative-input numerical smoke check; not full-dataset accuracy",
+        "target_reference": "Exploration only unless organizers designate this device; preserve laptop CPU baseline",
+        "energy": "Inspect returned fields; never convert latency into energy"
+      },
+      "jobs": {
+        "device": "Samsung Galaxy S24 (Family)",
+        "runtime": "onnx",
+        "sdk_version": "0.56.0",
+        "compile": "jp0o600ep",
+        "jp0o600ep_status": {
+          "code": "SUCCESS",
+          "message": ""
+        },
+        "profile_inference": "jgzznd26g",
+        "jgzznd26g_status": {
+          "code": "SUCCESS",
+          "message": ""
+        },
+        "validation_inference": "jprxw389p",
+        "jprxw389p_status": {
+          "code": "SUCCESS",
+          "message": ""
+        }
+      },
+      "evidence": "results/hub/s24_npu_float_retry",
+      "implementation": [
+        "edgeprep/hub_profile.py",
+        "edgeprep/hub_auth.py"
+      ]
+    },
+    {
+      "name": "rb3_npu_w8a8",
+      "phase": "remote_exploration",
+      "status": "failed",
+      "device": "Dragonwing RB3 Gen 2 Vision Kit",
+      "runtime": "qnn_dlc",
+      "requested_compute": "npu",
+      "precision": "w8a8",
+      "hub_estimated_latency_ms": null,
+      "inference_memory_peak_range_bytes": null,
+      "actual_layer_compute_counts": {},
+      "top1_agreement_pct": null,
+      "numerical_samples": null,
+      "accuracy_pct": null,
+      "energy_j": null,
+      "failure_details": [
+        {
+          "code": "FAILED",
+          "message": "Failed to profile the model: Failed to call QnnModel_composeGraphsFromDlc: MODEL_GRAPH_ERROR."
+        }
+      ],
+      "settings": {
+        "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
+        "source_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+        "device": "Dragonwing RB3 Gen 2 Vision Kit",
+        "runtime": "qnn_dlc",
+        "compute_unit_requested": "npu",
+        "precision": "w8a8",
+        "input_specs": {
+          "images": [
+            1,
+            3,
+            224,
+            224
+          ]
+        },
+        "compile_options": "--target_runtime qnn_dlc --compute_unit npu",
+        "inference_options": "--compute_unit npu --max_profiler_iterations 100 --qnn_options context_htp_performance_mode=BURST",
+        "quantize_options": "--range_scheme mse_minimizer",
+        "calibration_count_requested": 512,
+        "calibration_sha256": "2c75a98417368a573b598ed6010def4165e65016731ec04e3bef53ff3673569c",
+        "direct_onnx": false,
+        "compiled_job": null,
+        "local_qdq": false,
+        "validation_note": "Separate representative-input numerical smoke check; not full-dataset accuracy",
+        "target_reference": "Exploration only unless organizers designate this device; preserve laptop CPU baseline",
+        "energy": "Inspect returned fields; never convert latency into energy"
+      },
+      "jobs": {
+        "device": "Dragonwing RB3 Gen 2 Vision Kit",
+        "runtime": "qnn_dlc",
+        "sdk_version": "0.56.0",
+        "prepare_onnx": "j5q4vqqmg",
+        "quantize": "j56ow4475",
+        "compile": "jg9odnnvg",
+        "profile_inference": "jgj3qnd8p",
+        "validation_inference": "jpy8m3r7g",
+        "jgj3qnd8p_status": {
+          "code": "FAILED",
+          "message": "Failed to profile the model: Failed to call QnnModel_composeGraphsFromDlc: MODEL_GRAPH_ERROR."
+        },
+        "jpy8m3r7g_status": {
+          "code": "RUNNING_INFERENCE",
+          "message": ""
+        }
+      },
+      "evidence": "results/hub/rb3_npu_w8a8",
+      "implementation": [
+        "edgeprep/hub_profile.py",
+        "edgeprep/hub_auth.py"
+      ]
+    },
+    {
+      "name": "rb3_onnx_npu_w8a8",
+      "phase": "remote_exploration",
+      "status": "pending",
+      "device": "Dragonwing RB3 Gen 2 Vision Kit",
+      "runtime": "onnx",
+      "requested_compute": "npu",
+      "precision": "w8a8",
+      "hub_estimated_latency_ms": null,
+      "inference_memory_peak_range_bytes": null,
+      "actual_layer_compute_counts": {},
+      "top1_agreement_pct": null,
+      "numerical_samples": null,
+      "accuracy_pct": null,
+      "energy_j": null,
+      "failure_details": [],
+      "settings": {
+        "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
+        "source_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+        "device": "Dragonwing RB3 Gen 2 Vision Kit",
+        "runtime": "onnx",
+        "compute_unit_requested": "npu",
+        "precision": "w8a8",
+        "input_specs": {
+          "images": [
+            1,
+            3,
+            224,
+            224
+          ]
+        },
+        "compile_options": "--target_runtime onnx --compute_unit npu",
+        "inference_options": "--max_profiler_iterations 100 --onnx_options intra_op_num_threads=4;inter_op_num_threads=1;execution_mode=SEQUENTIAL;enable_memory_pattern=true;enable_cpu_memory_arena=true;qnn_htp_performance_mode=burst --onnx_execution_providers qnn",
+        "quantize_options": "--range_scheme mse_minimizer",
+        "calibration_count_requested": 512,
+        "calibration_sha256": "2c75a98417368a573b598ed6010def4165e65016731ec04e3bef53ff3673569c",
+        "direct_onnx": false,
+        "compiled_job": null,
+        "quantized_job": "j56ow4475",
+        "local_qdq": false,
+        "validation_note": "Separate representative-input numerical smoke check; not full-dataset accuracy",
+        "target_reference": "Exploration only unless organizers designate this device; preserve laptop CPU baseline",
+        "energy": "Inspect returned fields; never convert latency into energy"
+      },
+      "jobs": {
+        "device": "Dragonwing RB3 Gen 2 Vision Kit",
+        "runtime": "onnx",
+        "sdk_version": "0.56.0",
+        "quantize": "j56ow4475",
+        "j56ow4475_status": {
+          "code": "SUCCESS",
+          "message": ""
+        },
+        "compile": "jp8j1y0x5",
+        "jp8j1y0x5_status": {
+          "code": "SUCCESS",
+          "message": ""
+        },
+        "profile_inference": "jgk68x725"
+      },
+      "evidence": "results/hub/rb3_onnx_npu_w8a8",
+      "implementation": [
+        "edgeprep/hub_profile.py",
+        "edgeprep/hub_auth.py"
+      ]
+    }
+  ]
+}

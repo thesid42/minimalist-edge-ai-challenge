@@ -1,0 +1,350 @@
+[
+  {
+    "name": "s24_cpu_fp32",
+    "phase": "remote_exploration",
+    "status": "completed",
+    "device": "Samsung Galaxy S24 (Family)",
+    "runtime": "onnx",
+    "requested_compute": "cpu",
+    "precision": "none",
+    "hub_estimated_latency_ms": 5.533,
+    "inference_memory_peak_range_bytes": [
+      15159296,
+      23509216
+    ],
+    "actual_layer_compute_counts": {
+      "CPU": 55
+    },
+    "top1_agreement_pct": 100.0,
+    "numerical_samples": 32,
+    "accuracy_pct": null,
+    "energy_j": null,
+    "failure_details": [],
+    "settings": {
+      "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
+      "source_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "device": "Samsung Galaxy S24 (Family)",
+      "runtime": "onnx",
+      "compute_unit_requested": "cpu",
+      "precision": "none",
+      "input_specs": {
+        "images": [
+          1,
+          3,
+          224,
+          224
+        ]
+      },
+      "compile_options": "--target_runtime onnx --compute_unit cpu",
+      "inference_options": "--compute_unit cpu --max_profiler_iterations 100 --onnx_options intra_op_num_threads=4;inter_op_num_threads=1;execution_mode=SEQUENTIAL;enable_memory_pattern=true;enable_cpu_memory_arena=true",
+      "quantize_options": null,
+      "calibration_count_requested": 512,
+      "calibration_sha256": null,
+      "direct_onnx": false,
+      "compiled_job": "j5m98xxqg",
+      "local_qdq": false,
+      "validation_note": "Separate representative-input numerical smoke check; not full-dataset accuracy",
+      "target_reference": "Exploration only unless organizers designate this device; preserve laptop CPU baseline",
+      "energy": "Inspect returned fields; never convert latency into energy"
+    },
+    "jobs": {
+      "device": "Samsung Galaxy S24 (Family)",
+      "runtime": "onnx",
+      "sdk_version": "0.56.0",
+      "compile": "j5m98xxqg",
+      "profile_inference": "jpy8m334g",
+      "validation_inference": "jgzzndd6g"
+    },
+    "evidence": "results/hub/s24_cpu_fp32",
+    "implementation": [
+      "edgeprep/hub_profile.py",
+      "edgeprep/hub_auth.py"
+    ]
+  },
+  {
+    "name": "s24_npu_float",
+    "phase": "remote_exploration",
+    "status": "failed",
+    "device": "Samsung Galaxy S24 (Family)",
+    "runtime": "onnx",
+    "requested_compute": "npu",
+    "precision": "none",
+    "hub_estimated_latency_ms": null,
+    "inference_memory_peak_range_bytes": null,
+    "actual_layer_compute_counts": {},
+    "top1_agreement_pct": null,
+    "numerical_samples": null,
+    "accuracy_pct": null,
+    "energy_j": null,
+    "failure_details": [
+      {
+        "code": "FAILED",
+        "message": "Must specify only one of --compute_unit and --onnx_execution_providers. They set the same options, with the latter giving more control."
+      },
+      {
+        "code": "FAILED",
+        "message": "Must specify only one of --compute_unit and --onnx_execution_providers. They set the same options, with the latter giving more control."
+      }
+    ],
+    "settings": {
+      "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
+      "source_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "device": "Samsung Galaxy S24 (Family)",
+      "runtime": "onnx",
+      "compute_unit_requested": "npu",
+      "precision": "none",
+      "input_specs": {
+        "images": [
+          1,
+          3,
+          224,
+          224
+        ]
+      },
+      "compile_options": "--target_runtime onnx --compute_unit npu",
+      "inference_options": "--compute_unit npu --max_profiler_iterations 100 --onnx_options intra_op_num_threads=4;inter_op_num_threads=1;execution_mode=SEQUENTIAL;enable_memory_pattern=true;enable_cpu_memory_arena=true;qnn_htp_performance_mode=burst --onnx_execution_providers qnn",
+      "quantize_options": null,
+      "calibration_count_requested": 512,
+      "calibration_sha256": null,
+      "direct_onnx": false,
+      "compiled_job": null,
+      "local_qdq": false,
+      "validation_note": "Separate representative-input numerical smoke check; not full-dataset accuracy",
+      "target_reference": "Exploration only unless organizers designate this device; preserve laptop CPU baseline",
+      "energy": "Inspect returned fields; never convert latency into energy"
+    },
+    "jobs": {
+      "device": "Samsung Galaxy S24 (Family)",
+      "runtime": "onnx",
+      "sdk_version": "0.56.0",
+      "compile": "jp0o600ep",
+      "profile_inference": "jgk68xxo5",
+      "validation_inference": "jp3o600zp",
+      "jgk68xxo5_status": {
+        "code": "FAILED",
+        "message": "Must specify only one of --compute_unit and --onnx_execution_providers. They set the same options, with the latter giving more control."
+      },
+      "jp3o600zp_status": {
+        "code": "FAILED",
+        "message": "Must specify only one of --compute_unit and --onnx_execution_providers. They set the same options, with the latter giving more control."
+      }
+    },
+    "evidence": "results/hub/s24_npu_float",
+    "implementation": [
+      "edgeprep/hub_profile.py",
+      "edgeprep/hub_auth.py"
+    ]
+  },
+  {
+    "name": "s24_npu_float_retry",
+    "phase": "remote_exploration",
+    "status": "completed",
+    "device": "Samsung Galaxy S24 (Family)",
+    "runtime": "onnx",
+    "requested_compute": "npu",
+    "precision": "none",
+    "hub_estimated_latency_ms": 0.366,
+    "inference_memory_peak_range_bytes": [
+      0,
+      50178640
+    ],
+    "actual_layer_compute_counts": {
+      "NPU": 104
+    },
+    "top1_agreement_pct": 100.0,
+    "numerical_samples": 32,
+    "accuracy_pct": null,
+    "energy_j": null,
+    "failure_details": [],
+    "settings": {
+      "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
+      "source_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "device": "Samsung Galaxy S24 (Family)",
+      "runtime": "onnx",
+      "compute_unit_requested": "npu",
+      "precision": "none",
+      "input_specs": {
+        "images": [
+          1,
+          3,
+          224,
+          224
+        ]
+      },
+      "compile_options": "--target_runtime onnx --compute_unit npu",
+      "inference_options": "--max_profiler_iterations 100 --onnx_options intra_op_num_threads=4;inter_op_num_threads=1;execution_mode=SEQUENTIAL;enable_memory_pattern=true;enable_cpu_memory_arena=true;qnn_htp_performance_mode=burst --onnx_execution_providers qnn",
+      "quantize_options": null,
+      "calibration_count_requested": 512,
+      "calibration_sha256": null,
+      "direct_onnx": false,
+      "compiled_job": "jp0o600ep",
+      "local_qdq": false,
+      "validation_note": "Separate representative-input numerical smoke check; not full-dataset accuracy",
+      "target_reference": "Exploration only unless organizers designate this device; preserve laptop CPU baseline",
+      "energy": "Inspect returned fields; never convert latency into energy"
+    },
+    "jobs": {
+      "device": "Samsung Galaxy S24 (Family)",
+      "runtime": "onnx",
+      "sdk_version": "0.56.0",
+      "compile": "jp0o600ep",
+      "jp0o600ep_status": {
+        "code": "SUCCESS",
+        "message": ""
+      },
+      "profile_inference": "jgzznd26g",
+      "jgzznd26g_status": {
+        "code": "SUCCESS",
+        "message": ""
+      },
+      "validation_inference": "jprxw389p",
+      "jprxw389p_status": {
+        "code": "SUCCESS",
+        "message": ""
+      }
+    },
+    "evidence": "results/hub/s24_npu_float_retry",
+    "implementation": [
+      "edgeprep/hub_profile.py",
+      "edgeprep/hub_auth.py"
+    ]
+  },
+  {
+    "name": "rb3_npu_w8a8",
+    "phase": "remote_exploration",
+    "status": "failed",
+    "device": "Dragonwing RB3 Gen 2 Vision Kit",
+    "runtime": "qnn_dlc",
+    "requested_compute": "npu",
+    "precision": "w8a8",
+    "hub_estimated_latency_ms": null,
+    "inference_memory_peak_range_bytes": null,
+    "actual_layer_compute_counts": {},
+    "top1_agreement_pct": null,
+    "numerical_samples": null,
+    "accuracy_pct": null,
+    "energy_j": null,
+    "failure_details": [
+      {
+        "code": "FAILED",
+        "message": "Failed to profile the model: Failed to call QnnModel_composeGraphsFromDlc: MODEL_GRAPH_ERROR."
+      }
+    ],
+    "settings": {
+      "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
+      "source_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "device": "Dragonwing RB3 Gen 2 Vision Kit",
+      "runtime": "qnn_dlc",
+      "compute_unit_requested": "npu",
+      "precision": "w8a8",
+      "input_specs": {
+        "images": [
+          1,
+          3,
+          224,
+          224
+        ]
+      },
+      "compile_options": "--target_runtime qnn_dlc --compute_unit npu",
+      "inference_options": "--compute_unit npu --max_profiler_iterations 100 --qnn_options context_htp_performance_mode=BURST",
+      "quantize_options": "--range_scheme mse_minimizer",
+      "calibration_count_requested": 512,
+      "calibration_sha256": "2c75a98417368a573b598ed6010def4165e65016731ec04e3bef53ff3673569c",
+      "direct_onnx": false,
+      "compiled_job": null,
+      "local_qdq": false,
+      "validation_note": "Separate representative-input numerical smoke check; not full-dataset accuracy",
+      "target_reference": "Exploration only unless organizers designate this device; preserve laptop CPU baseline",
+      "energy": "Inspect returned fields; never convert latency into energy"
+    },
+    "jobs": {
+      "device": "Dragonwing RB3 Gen 2 Vision Kit",
+      "runtime": "qnn_dlc",
+      "sdk_version": "0.56.0",
+      "prepare_onnx": "j5q4vqqmg",
+      "quantize": "j56ow4475",
+      "compile": "jg9odnnvg",
+      "profile_inference": "jgj3qnd8p",
+      "validation_inference": "jpy8m3r7g",
+      "jgj3qnd8p_status": {
+        "code": "FAILED",
+        "message": "Failed to profile the model: Failed to call QnnModel_composeGraphsFromDlc: MODEL_GRAPH_ERROR."
+      },
+      "jpy8m3r7g_status": {
+        "code": "RUNNING_INFERENCE",
+        "message": ""
+      }
+    },
+    "evidence": "results/hub/rb3_npu_w8a8",
+    "implementation": [
+      "edgeprep/hub_profile.py",
+      "edgeprep/hub_auth.py"
+    ]
+  },
+  {
+    "name": "rb3_onnx_npu_w8a8",
+    "phase": "remote_exploration",
+    "status": "pending",
+    "device": "Dragonwing RB3 Gen 2 Vision Kit",
+    "runtime": "onnx",
+    "requested_compute": "npu",
+    "precision": "w8a8",
+    "hub_estimated_latency_ms": null,
+    "inference_memory_peak_range_bytes": null,
+    "actual_layer_compute_counts": {},
+    "top1_agreement_pct": null,
+    "numerical_samples": null,
+    "accuracy_pct": null,
+    "energy_j": null,
+    "failure_details": [],
+    "settings": {
+      "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
+      "source_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "device": "Dragonwing RB3 Gen 2 Vision Kit",
+      "runtime": "onnx",
+      "compute_unit_requested": "npu",
+      "precision": "w8a8",
+      "input_specs": {
+        "images": [
+          1,
+          3,
+          224,
+          224
+        ]
+      },
+      "compile_options": "--target_runtime onnx --compute_unit npu",
+      "inference_options": "--max_profiler_iterations 100 --onnx_options intra_op_num_threads=4;inter_op_num_threads=1;execution_mode=SEQUENTIAL;enable_memory_pattern=true;enable_cpu_memory_arena=true;qnn_htp_performance_mode=burst --onnx_execution_providers qnn",
+      "quantize_options": "--range_scheme mse_minimizer",
+      "calibration_count_requested": 512,
+      "calibration_sha256": "2c75a98417368a573b598ed6010def4165e65016731ec04e3bef53ff3673569c",
+      "direct_onnx": false,
+      "compiled_job": null,
+      "quantized_job": "j56ow4475",
+      "local_qdq": false,
+      "validation_note": "Separate representative-input numerical smoke check; not full-dataset accuracy",
+      "target_reference": "Exploration only unless organizers designate this device; preserve laptop CPU baseline",
+      "energy": "Inspect returned fields; never convert latency into energy"
+    },
+    "jobs": {
+      "device": "Dragonwing RB3 Gen 2 Vision Kit",
+      "runtime": "onnx",
+      "sdk_version": "0.56.0",
+      "quantize": "j56ow4475",
+      "j56ow4475_status": {
+        "code": "SUCCESS",
+        "message": ""
+      },
+      "compile": "jp8j1y0x5",
+      "jp8j1y0x5_status": {
+        "code": "SUCCESS",
+        "message": ""
+      },
+      "profile_inference": "jgk68x725"
+    },
+    "evidence": "results/hub/rb3_onnx_npu_w8a8",
+    "implementation": [
+      "edgeprep/hub_profile.py",
+      "edgeprep/hub_auth.py"
+    ]
+  }
+]

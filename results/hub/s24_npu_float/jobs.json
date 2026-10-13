@@ -1,0 +1,16 @@
+{
+  "device": "Samsung Galaxy S24 (Family)",
+  "runtime": "onnx",
+  "sdk_version": "0.56.0",
+  "compile": "jp0o600ep",
+  "profile_inference": "jgk68xxo5",
+  "validation_inference": "jp3o600zp",
+  "jgk68xxo5_status": {
+    "code": "FAILED",
+    "message": "Must specify only one of --compute_unit and --onnx_execution_providers. They set the same options, with the latter giving more control."
+  },
+  "jp3o600zp_status": {
+    "code": "FAILED",
+    "message": "Must specify only one of --compute_unit and --onnx_execution_providers. They set the same options, with the latter giving more control."
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "model": "E:\\Projects\\Minimilist challenge\\artifacts\\all_data\\qdq_percentile512\\model_int8.onnx",
+  "sha256": "e18134cf9b8eef6e81d9cb521fe9234515831d111533eeebe72740bc82319d92",
+  "input_shape": [
+    1,
+    3,
+    224,
+    224
+  ],
+  "threads": 4,
+  "runs": 300,
+  "warmup": 20,
+  "provider": "CPUExecutionProvider",
+  "load_ms": 76.79329998791218,
+  "median_ms": 5.52065,
+  "p95_ms": 7.47176,
+  "mean_ms": 5.760631,
+  "file_bytes": 3955153,
+  "peak_rss_mib": 87.94140625,
+  "rss_before_session_mib": 46.31640625,
+  "session_rss_delta_mib": 41.625,
+  "process_cpu_seconds": 6.921875,
+  "process_cpu_percent_one_core_basis": 400.2503199844348,
+  "platform": "Windows-10-10.0.19045-SP0",
+  "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+  "onnxruntime": "1.31.0",
+  "accuracy": 0.0,
+  "per_class_accuracy": {
+    "0": 0.0
+  },
+  "timing_input": "first provided preprocessed sample",
+  "energy_j_per_inference": 0.13219140392896084,
+  "energy_kind": "codecarbon_estimate_not_device_meter",
+  "validation_examples": 1,
+  "energy_runs": 3188,
+  "energy_duration_s": 20.044642299995758,
+  "energy_gpu_ids": [],
+  "energy_scope": "CPU and RAM attributed by CodeCarbon process mode",
+  "energy_note": "Windows AMD CPU may use TDP estimation; inspect startup logs and compare both models on the same machine."
+}

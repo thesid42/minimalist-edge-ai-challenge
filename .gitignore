@@ -15,3 +15,10 @@ results/**/*.npy
 results/**/*.npz
 .qai_hub/
 submission/
+
+# Downloaded AI Hub deployment binaries remain local.
+results/hub/**/*.zip
+results/hub/**/*.onnx
+results/hub/**/*.data
+results/hub/**/*.dlc
+results/hub/**/*.tflite

@@ -1,0 +1,20 @@
+{
+  "device": "Samsung Galaxy S24 (Family)",
+  "runtime": "onnx",
+  "sdk_version": "0.56.0",
+  "compile": "jp0o600ep",
+  "jp0o600ep_status": {
+    "code": "SUCCESS",
+    "message": ""
+  },
+  "profile_inference": "jgzznd26g",
+  "jgzznd26g_status": {
+    "code": "SUCCESS",
+    "message": ""
+  },
+  "validation_inference": "jprxw389p",
+  "jprxw389p_status": {
+    "code": "SUCCESS",
+    "message": ""
+  }
+}

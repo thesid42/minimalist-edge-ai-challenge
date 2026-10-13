@@ -1,0 +1,18 @@
+{
+  "device": "Dragonwing RB3 Gen 2 Vision Kit",
+  "runtime": "qnn_dlc",
+  "sdk_version": "0.56.0",
+  "prepare_onnx": "j5q4vqqmg",
+  "quantize": "j56ow4475",
+  "compile": "jg9odnnvg",
+  "profile_inference": "jgj3qnd8p",
+  "validation_inference": "jpy8m3r7g",
+  "jgj3qnd8p_status": {
+    "code": "FAILED",
+    "message": "Failed to profile the model: Failed to call QnnModel_composeGraphsFromDlc: MODEL_GRAPH_ERROR."
+  },
+  "jpy8m3r7g_status": {
+    "code": "FAILED",
+    "message": "Failed to profile the model: Failed to call QnnModel_composeGraphsFromDlc: MODEL_GRAPH_ERROR."
+  }
+}

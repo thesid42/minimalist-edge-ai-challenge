@@ -1,0 +1,58 @@
+[
+  {
+    "name": "qdq_pointwise",
+    "phase": "current_all_data",
+    "status": "completed",
+    "accuracy_pct": 98.41111111111111,
+    "worst_recall_pct": 95.43333333333334,
+    "examples": 27000,
+    "scope": "training_set",
+    "parameters": 2236682,
+    "size_mib": 3.77199649810791,
+    "median_cpu_4t_ms": 5.184200000000001,
+    "estimated_cpu_4t_j": 0.11915866185072288,
+    "model_sha256": "ab32fdbdf01fbcbb30bd750cb15879c9af880a64f7a44d37b4ce4860e65f524f",
+    "settings": {
+      "pruning_ratio": 0,
+      "round_to": 8,
+      "pruning_scope": "expansion",
+      "quantization": {
+        "format": "static QDQ",
+        "method": "MinMax",
+        "types": "S8S8",
+        "activation_symmetric": false,
+        "per_channel": true,
+        "calibration_count": 256,
+        "excluded_nodes": [
+          "/features/features.0/features.0.0/Conv",
+          "/features/features.18/features.18.0/Conv",
+          "/classifier/classifier.1/Gemm",
+          "/features/features.1/conv/conv.0/conv.0.0/Conv",
+          "/features/features.2/conv/conv.1/conv.1.0/Conv",
+          "/features/features.3/conv/conv.1/conv.1.0/Conv",
+          "/features/features.4/conv/conv.1/conv.1.0/Conv",
+          "/features/features.5/conv/conv.1/conv.1.0/Conv",
+          "/features/features.6/conv/conv.1/conv.1.0/Conv",
+          "/features/features.7/conv/conv.1/conv.1.0/Conv",
+          "/features/features.8/conv/conv.1/conv.1.0/Conv",
+          "/features/features.9/conv/conv.1/conv.1.0/Conv",
+          "/features/features.10/conv/conv.1/conv.1.0/Conv",
+          "/features/features.11/conv/conv.1/conv.1.0/Conv",
+          "/features/features.12/conv/conv.1/conv.1.0/Conv",
+          "/features/features.13/conv/conv.1/conv.1.0/Conv",
+          "/features/features.14/conv/conv.1/conv.1.0/Conv",
+          "/features/features.15/conv/conv.1/conv.1.0/Conv",
+          "/features/features.16/conv/conv.1/conv.1.0/Conv",
+          "/features/features.17/conv/conv.1/conv.1.0/Conv"
+        ],
+        "calibration_sha256": "e1ce22116b97c0fddc876dddb81b2ad758412cca73b89ec421a7d19171274e02"
+      }
+    },
+    "evidence": "results/all_data/qdq_pointwise_accuracy.json",
+    "implementation": [
+      "edgeprep/challenge.py",
+      "edgeprep/export.py",
+      "edgeprep/benchmark.py"
+    ]
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "device": "Samsung Galaxy S24 (Family)",
+  "runtime": "onnx",
+  "sdk_version": "0.56.0",
+  "compile": "j5m98xxqg",
+  "profile_inference": "jpy8m334g",
+  "validation_inference": "jgzzndd6g"
+}

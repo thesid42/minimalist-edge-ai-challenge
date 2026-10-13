@@ -6,7 +6,7 @@ Compress the supplied, already-distilled MobileNetV2 for ten-class EuroSAT RGB l
 
 Current evidence is under [results/all_data](results/all_data). [baseline_metrics.json](baseline_metrics.json) contains the measured laptop reference once the measurement script completes. The old PDF figures are preserved in [configs/pdf_baseline_reference.json](configs/pdf_baseline_reference.json). Earlier 500-image pilot results are historical under [results/challenge](results/challenge); they must not be mixed with current ratios.
 
-Read [ANALYSIS.md](ANALYSIS.md) for the exploration plan and measured tradeoffs.
+**Start with [the sequential experiment log](experiments/README.md)** for what was tried, how each run differs, and its results. [Experiment_Log.ipynb](experiments/Experiment_Log.ipynb) has readable tables with saved outputs. Read [ANALYSIS.md](ANALYSIS.md) for the exploration plan and measured tradeoffs.
 
 ## Models and data
 
@@ -83,6 +83,6 @@ powershell -ExecutionPolicy Bypass -File scripts/pilot.ps1 -Limit 0 -Energy
 
 Measurements run serially. Current results have explicit evaluation scope and sample counts; do not report subset accuracy as a full-data result. Regenerate the local reference with `python -m edgeprep.local_baseline` after matching baseline accuracy / runtime / energy measurements.
 
-AI Hub is optional if no common target/account is available. Configure your token locally and use `edgeprep.hub_profile --plan` before submitting to the organizer's device. No credentials are committed. The live Hub path is untested.
+AI Hub credentials are read automatically from the ignored project-root `.env` (`QAI_HUB_API_TOKEN=`). Access was verified and the live catalogue saved with 78 entries. Run `.venv\Scripts\python.exe -m edgeprep.hub_auth --check` after editing the key. See [AI Hub device and experiment guide](docs/ai_hub.md) for CPU/NPU, real calibration, reproduction commands and live results.
 
 Deliver one selected model, complete metrics.json, a 1-2-page report with tradeoff curve, and source that recreates it from the checkpoint. `configs/metrics.template.json` is a scaffold, not a completed submission. Report overall training-set accuracy, all class recalls, worst class, parameters, file size, MACs, CPU latency, RAM and estimated/measured energy against our own laptop reference.

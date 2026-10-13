@@ -1,0 +1,21 @@
+{
+  "device": "Dragonwing RB3 Gen 2 Vision Kit",
+  "runtime": "onnx",
+  "sdk_version": "0.56.0",
+  "quantize": "j56ow4475",
+  "j56ow4475_status": {
+    "code": "SUCCESS",
+    "message": ""
+  },
+  "compile": "jp8j1y0x5",
+  "jp8j1y0x5_status": {
+    "code": "SUCCESS",
+    "message": ""
+  },
+  "profile_inference": "jgk68x725",
+  "jgk68x725_status": {
+    "code": "SUCCESS",
+    "message": ""
+  },
+  "validation_inference": "jgd621qep"
+}
