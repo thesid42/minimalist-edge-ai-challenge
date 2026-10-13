@@ -1,4 +1,4 @@
-# Experiment log â€” start here
+# Experiment log - start here
 
 Read the numbered folders in order. Each README explains **what changed, implementation, results and interpretation**, with links to the original evidence. `Experiment_Log.ipynb` presents the same tables with saved outputs; no rerunning training is required to read it. `runs.json` is the machine-readable registry.
 

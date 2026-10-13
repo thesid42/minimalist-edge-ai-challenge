@@ -10,7 +10,7 @@ Current evidence is under [results/all_data](results/all_data). [baseline_metric
 
 ## Latest completed results
 
-Refreshed from saved evidence at 2026-10-13 18:44 UTC. [Full results](docs/next_priority_results.md) and [numbered experiment log](experiments/README.md) are regenerated together.
+Refreshed from saved evidence at 2026-10-13 18:46 UTC. [Full results](docs/next_priority_results.md) and [numbered experiment log](experiments/README.md) are regenerated together.
 
 The strongest measured laptop candidate is **internal 192 + one full-data classifier recovery epoch + FP16 weight storage / FP32 CPU compute**. External input remains `(1,3,224,224)`.
 

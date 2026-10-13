@@ -128,7 +128,7 @@ def main():
         r.update(training_device=r["training"]["execution"]["device_name"],amp=r["training"]["execution"]["amp"],seconds=r["training"]["seconds"],inference_provider="CPUExecutionProvider")
     registry={"updated_utc":datetime.now(timezone.utc).isoformat(),"ordering":"Numbered phases and logical experimental progression; original wall-clock timestamps are not reconstructed", "records":historical+current+remote+energy_rows+runtime_rows+gpu_rows+latency_rows}
     (OUT/"runs.json").write_text(json.dumps(registry,indent=2),encoding="utf-8")
-    introduction="""# Experiment log â€” start here
+    introduction="""# Experiment log - start here
 
 Read the numbered folders in order. Each README explains **what changed, implementation, results and interpretation**, with links to the original evidence. `Experiment_Log.ipynb` presents the same tables with saved outputs; no rerunning training is required to read it. `runs.json` is the machine-readable registry.
 
@@ -143,7 +143,7 @@ Two accuracy protocols exist: the historical 500-image pilot and the current 27,
         notebook_cells.append({"cell_type":"markdown","id":f"cell-{len(notebook_cells)}","metadata":{},"source":text})
     def code(source, html):
         notebook_cells.append({"cell_type":"code","id":f"cell-{len(notebook_cells)}","metadata":{},"source":source,"execution_count":len([c for c in notebook_cells if c["cell_type"]=="code"])+1,"outputs":[{"output_type":"display_data","data":{"text/html":html},"metadata":{}}]})
-    markdown(introduction.replace("# Experiment log — start here", "# Sequential experiment notebook"))
+    markdown(introduction.replace("# Experiment log - start here", "# Sequential experiment notebook"))
     code('from pathlib import Path\nimport json, pandas as pd\nfrom IPython.display import display\nproject = Path.cwd()\nif not (project / "edgeprep").exists(): project = project.parent\nregistry = json.loads((project / "experiments/runs.json").read_text())\ndisplay(pd.DataFrame([{k:r.get(k) for k in ["name","phase","status"]} for r in registry["records"]]))',pd.DataFrame([{k:r.get(k) for k in ["name","phase","status"]} for r in registry["records"]]).to_html(index=False))
     for n,(slug,title,explanation,evidence,rows) in enumerate(stages,1):
         folder=OUT/slug;folder.mkdir(exist_ok=True)
