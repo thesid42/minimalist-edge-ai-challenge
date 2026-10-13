@@ -1,0 +1,7 @@
+[codecarbon INFO @ 10:53:28] offline tracker init
+[codecarbon WARNING @ 10:53:28] Multiple instances of codecarbon are allowed to run at the same time.
+[codecarbon WARNING @ 10:53:29] You have 1 GPUs but we will monitor only 0 ([]) of them.
+[codecarbon WARNING @ 10:53:31] No CPU tracking mode found. Falling back on estimation based on TDP for CPU. 
+ Windows OS detected: CPU power reading via the Energy Meter Interface requires Windows 11 on bare metal (not a VM)
+
+[codecarbon WARNING @ 10:53:31] No CPU tracking mode found. Falling back on CPU load mode.

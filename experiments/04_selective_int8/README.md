@@ -2,9 +2,9 @@
 
 Quantized pointwise convolutions while preserving first/last layers, classifier and depthwise convolutions in FP32. Same learned parameters; smaller weight storage. Calibrated 256 balanced samples and evaluated all 27,000. Smaller does not mean faster: this graph regressed on our laptop CPU.
 
-| label | accuracy_pct | worst_recall_pct | size_mib | median_cpu_4t_ms | examples |
-|---|---|---|---|---|---|
-| Selective INT8 / MinMax 256 | 98.4111 | 95.4333 | 3.772 | 5.1842 | 27000 |
+| label | accuracy_pct | worst_recall_pct | size_mib | median_cpu_4t_ms | estimated_cpu_4t_j | examples |
+|---|---|---|---|---|---|---|
+| Selective INT8 / MinMax 256 | 98.4111 | 95.4333 | 3.772 | 5.1842 | 0.1192 | 27000 |
 
 ## Implementation and exact settings
 

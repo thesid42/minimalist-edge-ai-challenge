@@ -1,0 +1,9 @@
+{
+  "platform": "Windows-10-10.0.19045-SP0",
+  "logical_cpu_count": 16,
+  "physical_core_count": 8,
+  "ram_gib": 27.855533599853516,
+  "battery_power_plugged": true,
+  "battery_percent": 98,
+  "note": "Read during experiment; power plan not changed. Normal OS workloads and thermal state may vary."
+}

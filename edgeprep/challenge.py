@@ -81,6 +81,9 @@ def restore_recipe(path):
     if digest(source) != recipe["source_sha256"]:
         raise ValueError("Checkpoint differs from the recipe's original source")
     model = prune_model(load_model(source), recipe["pruning_ratio"], recipe["round_to"],recipe.get("pruning_scope","uniform"))
+    if recipe.get("internal_resolution"):
+        from .resolution import InternalResize
+        model = InternalResize(model, recipe["internal_resolution"]).eval()
     if recipe.get("recovered_checkpoint"):
         recovered = Path(recipe["recovered_checkpoint"])
         if not recovered.exists(): recovered = Path(path).parent / "recovered_state.pt"
@@ -133,7 +136,11 @@ def export_candidate(args):
             "per_channel": True, "calibration_count": count, "excluded_nodes": excluded,
             "calibration_sha256": digest(args.calibration)}
     (out / "recipe.json").write_text(json.dumps(recipe, indent=2), encoding="utf-8")
-    print(json.dumps(recipe, indent=2))
+    summary=copy.deepcopy(recipe)
+    if summary.get("recovery"):
+        ids=summary["recovery"].pop("train_indices",None)
+        summary["recovery"]["training_examples"]=len(ids) if ids is not None else None
+    print(json.dumps(summary,indent=2))
 
 
 def evaluate(args):
@@ -175,46 +182,95 @@ def evaluate(args):
     print(json.dumps({k:v for k,v in result.items() if k not in ("evaluation_indices","confusion_matrix")},indent=2))
 
 
+def training_device(requested):
+    """Never silently fall back to CPU when GPU training was requested."""
+    if requested == "cuda" and not torch.cuda.is_available():
+        raise RuntimeError("CUDA training requires .venv-train-gpu. Run scripts/setup_gpu_training.ps1, then use .venv-train-gpu/Scripts/python.exe. Explicit --device cpu is for historical reproduction only.")
+    return torch.device(requested)
+
+
 def recover(args):
+    if args.epochs < 1 or args.batch_size < 1 or args.lr <= 0 or args.train_limit < 0 or args.temperature <= 0 or not 0 <= args.alpha <= 1 or args.workers < 0:
+        raise ValueError("Invalid recovery epochs, batch size, rate, limit, temperature, alpha or workers")
+    device = training_device(args.device)
+    amp = args.amp and device.type == "cuda"
+    torch.manual_seed(42)
+    if device.type == "cuda":
+        torch.cuda.manual_seed_all(42)
+        torch.backends.cudnn.benchmark = False
+        torch.backends.cudnn.allow_tf32 = False
+        torch.backends.cuda.matmul.allow_tf32 = False
+    execution = {"device":str(device), "device_name":torch.cuda.get_device_name(device) if device.type == "cuda" else "CPU",
+                 "torch_version":torch.__version__, "cuda_version":torch.version.cuda, "amp":amp,
+                 "amp_dtype":"float16" if amp else None, "workers":args.workers,
+                 "tf32":False, "cudnn_benchmark":False, "checkpoint_tensor_device":"cpu"}
+    print(json.dumps({"training_execution":execution}),flush=True)
     model, recipe = restore_recipe(args.recipe)
+    model = model.to(device)
+    if args.head_only:
+        model.requires_grad_(False)
+        backbone = model.student if hasattr(model, "student") else model
+        backbone.classifier.requires_grad_(True)
+    out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
     ds = dataset(args.root)
     protocol = data_protocol(len(ds), args.split)
     train_ids = balanced_ids(protocol["train"],ds.targets,args.train_limit)
-    teacher = load_model(args.teacher,teacher=True).requires_grad_(False) if args.teacher else None
-    torch.manual_seed(42)
+    teacher = load_model(args.teacher,teacher=True).to(device).requires_grad_(False) if args.teacher else None
     loader = torch.utils.data.DataLoader(torch.utils.data.Subset(ds,train_ids),
-                                        batch_size=args.batch_size,shuffle=True,num_workers=0,
+                                        batch_size=args.batch_size,shuffle=True,num_workers=args.workers,
+                                        pin_memory=device.type == "cuda", persistent_workers=args.workers > 0,
                                         generator=torch.Generator().manual_seed(42))
-    optimizer = torch.optim.AdamW(model.parameters(),lr=args.lr,weight_decay=1e-5)
+    optimizer = torch.optim.AdamW([p for p in model.parameters() if p.requires_grad],lr=args.lr,weight_decay=1e-5)
+    scaler = torch.amp.GradScaler("cuda",enabled=amp)
+    if device.type == "cuda": torch.cuda.synchronize()
     started = time.perf_counter();history=[]
     for epoch in range(args.epochs):
         model.train();total_loss=0.;count=0
         # Freeze BN running statistics for short, small-batch recovery.
         for layer in model.modules():
             if isinstance(layer, nn.BatchNorm2d): layer.eval()
+        last_report=0
         for x,y in loader:
-            optimizer.zero_grad();logits=model(x);loss=nn.functional.cross_entropy(logits,y)
-            if teacher is not None:
-                with torch.no_grad(): target=teacher(x)
-                soft=nn.functional.kl_div(nn.functional.log_softmax(logits/args.temperature,dim=1),
-                    nn.functional.softmax(target/args.temperature,dim=1),reduction="batchmean")*args.temperature**2
-                loss=(1-args.alpha)*loss+args.alpha*soft
-            loss.backward();optimizer.step();total_loss+=loss.item()*len(y);count+=len(y)
+            x,y=x.to(device,non_blocking=True),y.to(device,non_blocking=True)
+            optimizer.zero_grad(set_to_none=True)
+            with torch.autocast(device_type=device.type,dtype=torch.float16,enabled=amp):
+                logits=model(x);loss=nn.functional.cross_entropy(logits,y)
+                if teacher is not None:
+                    with torch.no_grad(): target=teacher(x)
+                    # Distillation probabilities use FP32 even with mixed-precision convolution.
+                    soft=nn.functional.kl_div(nn.functional.log_softmax(logits.float()/args.temperature,dim=1),
+                        nn.functional.softmax(target.float()/args.temperature,dim=1),reduction="batchmean")*args.temperature**2
+                    loss=(1-args.alpha)*loss+args.alpha*soft
+            if not torch.isfinite(loss): raise RuntimeError("Nonfinite recovery loss")
+            scaler.scale(loss).backward();scaler.step(optimizer);scaler.update()
+            total_loss+=loss.item()*len(y);count+=len(y)
+            if count-last_report >= 1000 or count==len(train_ids):
+                progress={"status":"running","epoch":epoch+1,"epochs":args.epochs,"samples_this_epoch":count,
+                    "training_examples":len(train_ids),"elapsed_s":time.perf_counter()-started,"loss":total_loss/count,
+                    "head_only":args.head_only,"scope":protocol["protocol"],"execution":execution}
+                (out/"training_progress.json").write_text(json.dumps(progress,indent=2),encoding="utf-8")
+                print(f"Recovery epoch {epoch+1}: {count}/{len(train_ids)} samples, loss={total_loss/count:.4f}",flush=True)
+                last_report=count
         history.append({"epoch":epoch+1,"loss":total_loss/count})
         print(history[-1],flush=True)
-    out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
-    torch.save(model.eval().state_dict(),out/"recovered_state.pt")
-    recipe.update(recovered_checkpoint=str((out/"recovered_state.pt").resolve()),
+    if device.type == "cuda": torch.cuda.synchronize()
+    seconds=time.perf_counter()-started
+    # GPU training artifacts remain loadable and exportable in the CPU environment.
+    torch.save({k:v.detach().cpu() for k,v in model.eval().state_dict().items()},out/"recovered_state.pt")
+    recipe.update(training="Classifier-only recovery; backbone frozen" if args.head_only else "Full-backbone recovery", recovered_checkpoint=str((out/"recovered_state.pt").resolve()),
                   recovered_sha256=digest(out/"recovered_state.pt"),
                   recovery={"epochs":args.epochs,"train_limit":args.train_limit,"train_indices":train_ids,
                             "teacher":str(Path(args.teacher).resolve()) if args.teacher else None,
                             "teacher_sha256":digest(args.teacher) if args.teacher else None,
                             "alpha":args.alpha,"temperature":args.temperature,"lr":args.lr,
-                            "seed":42,"batch_size":args.batch_size,"bn_running_stats":"frozen",
+                            "seed":42,"batch_size":args.batch_size,"bn_running_stats":"frozen","head_only":args.head_only,
+                            "trained_parameter_count":sum(p.numel() for p in model.parameters() if p.requires_grad),
                             "split_sha256":protocol["split_sha256"], "protocol":protocol["protocol"],
                             "available_train_count":len(protocol["train"]), "history":history,
-                            "seconds":time.perf_counter()-started})
+                            "seconds":seconds,"execution":execution})
     (out/"recipe.json").write_text(json.dumps(recipe,indent=2),encoding="utf-8")
+    progress.update(status="completed",elapsed_s=seconds)
+    (out/"training_progress.json").write_text(json.dumps(progress,indent=2),encoding="utf-8")
 
 
 def main():
@@ -236,6 +292,10 @@ def main():
     f=sub.add_parser("recover");f.add_argument("--recipe",required=True);f.add_argument("--split",help="Optional legacy split; omitted trains on all data")
     f.add_argument("--root",default="data");f.add_argument("--teacher");f.add_argument("--output",required=True)
     f.add_argument("--epochs",type=int,default=1);f.add_argument("--train-limit",type=int,default=0,help="0 uses all 27000 images; nonzero is a short diagnostic run")
+    f.add_argument("--device",choices=["cuda","cpu"],default="cuda",help="CUDA by default; CPU only for explicit historical reproduction")
+    f.add_argument("--workers",type=int,default=0)
+    f.add_argument("--amp",action=argparse.BooleanOptionalAction,default=True,help="CUDA mixed precision; disabled on CPU")
+    f.add_argument("--head-only",action="store_true",help="Freeze backbone; only adapt the ten-class classifier")
     f.add_argument("--batch-size",type=int,default=8);f.add_argument("--lr",type=float,default=1e-4)
     f.add_argument("--temperature",type=float,default=4);f.add_argument("--alpha",type=float,default=.5)
     args=p.parse_args()

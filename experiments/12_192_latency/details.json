@@ -1,0 +1,146 @@
+[
+  {
+    "name": "latency_baseline",
+    "median_ms": 4.893050000000001,
+    "run_medians_ms": [
+      4.893050000000001,
+      5.2014499999999995,
+      2.6362,
+      5.3629999999999995,
+      3.35915
+    ],
+    "median_min_ms": 2.6362,
+    "median_max_ms": 5.3629999999999995,
+    "p95_ms": 8.211164999999998,
+    "replicates": 5,
+    "model_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+    "threads": 4,
+    "warmup": 100,
+    "runs_per_rep": 1000,
+    "provider": "CPUExecutionProvider",
+    "spinning_enabled": true,
+    "evidence": [
+      "results/latency/resize192/baseline_rep1.json",
+      "results/latency/resize192/baseline_rep2.json",
+      "results/latency/resize192/baseline_rep3.json",
+      "results/latency/resize192/baseline_rep4.json",
+      "results/latency/resize192/baseline_rep5.json"
+    ],
+    "latency_ratio_to_matched_baseline": 1.0,
+    "label": "baseline",
+    "phase": "matched_192_latency",
+    "status": "completed",
+    "implementation": [
+      "scripts/compare_192_latency.py",
+      "edgeprep/benchmark.py"
+    ]
+  },
+  {
+    "name": "latency_resize192",
+    "median_ms": 2.22175,
+    "run_medians_ms": [
+      1.96465,
+      3.61175,
+      2.22175,
+      3.13075,
+      2.1301
+    ],
+    "median_min_ms": 1.96465,
+    "median_max_ms": 3.61175,
+    "p95_ms": 5.581004999999998,
+    "replicates": 5,
+    "model_sha256": "95faed83d1e2200034483c561fbee269dbf954dddb12f1b31833006ed0ed137f",
+    "threads": 4,
+    "warmup": 100,
+    "runs_per_rep": 1000,
+    "provider": "CPUExecutionProvider",
+    "spinning_enabled": true,
+    "evidence": [
+      "results/latency/resize192/resize192_rep1.json",
+      "results/latency/resize192/resize192_rep2.json",
+      "results/latency/resize192/resize192_rep3.json",
+      "results/latency/resize192/resize192_rep4.json",
+      "results/latency/resize192/resize192_rep5.json"
+    ],
+    "latency_ratio_to_matched_baseline": 0.45406239462094194,
+    "label": "resize192",
+    "phase": "matched_192_latency",
+    "status": "completed",
+    "implementation": [
+      "scripts/compare_192_latency.py",
+      "edgeprep/benchmark.py"
+    ]
+  },
+  {
+    "name": "latency_resize192_head_ce",
+    "median_ms": 2.10755,
+    "run_medians_ms": [
+      2.0347999999999997,
+      4.0626,
+      2.10755,
+      4.2736,
+      1.8651499999999999
+    ],
+    "median_min_ms": 1.8651499999999999,
+    "median_max_ms": 4.2736,
+    "p95_ms": 4.743264999999999,
+    "replicates": 5,
+    "model_sha256": "ce00f44eaff23ca7ab07b4512b5a0fb989796e2a532725032dd29d7657c9ab1f",
+    "threads": 4,
+    "warmup": 100,
+    "runs_per_rep": 1000,
+    "provider": "CPUExecutionProvider",
+    "spinning_enabled": true,
+    "evidence": [
+      "results/latency/resize192/resize192_head_ce_rep1.json",
+      "results/latency/resize192/resize192_head_ce_rep2.json",
+      "results/latency/resize192/resize192_head_ce_rep3.json",
+      "results/latency/resize192/resize192_head_ce_rep4.json",
+      "results/latency/resize192/resize192_head_ce_rep5.json"
+    ],
+    "latency_ratio_to_matched_baseline": 0.4307231685758371,
+    "label": "resize192_head_ce",
+    "phase": "matched_192_latency",
+    "status": "completed",
+    "implementation": [
+      "scripts/compare_192_latency.py",
+      "edgeprep/benchmark.py"
+    ]
+  },
+  {
+    "name": "latency_resize192_head_ce_w16",
+    "median_ms": 2.1788,
+    "run_medians_ms": [
+      2.1788,
+      3.8339,
+      2.02435,
+      2.7014500000000004,
+      1.8374
+    ],
+    "median_min_ms": 1.8374,
+    "median_max_ms": 3.8339,
+    "p95_ms": 4.858795,
+    "replicates": 5,
+    "model_sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+    "threads": 4,
+    "warmup": 100,
+    "runs_per_rep": 1000,
+    "provider": "CPUExecutionProvider",
+    "spinning_enabled": true,
+    "evidence": [
+      "results/latency/resize192/resize192_head_ce_w16_rep1.json",
+      "results/latency/resize192/resize192_head_ce_w16_rep2.json",
+      "results/latency/resize192/resize192_head_ce_w16_rep3.json",
+      "results/latency/resize192/resize192_head_ce_w16_rep4.json",
+      "results/latency/resize192/resize192_head_ce_w16_rep5.json"
+    ],
+    "latency_ratio_to_matched_baseline": 0.445284638415712,
+    "label": "resize192_head_ce_w16",
+    "phase": "matched_192_latency",
+    "status": "completed",
+    "implementation": [
+      "scripts/compare_192_latency.py",
+      "edgeprep/benchmark.py"
+    ]
+  }
+]

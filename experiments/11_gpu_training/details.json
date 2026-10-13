@@ -1,0 +1,67 @@
+[
+  {
+    "status": "completed",
+    "purpose": "GPU training / CPU export and inference pipeline verification, not a competition candidate",
+    "training_examples": 100,
+    "optimizer_steps": 5,
+    "training": {
+      "epochs": 1,
+      "train_limit": 100,
+      "teacher": null,
+      "teacher_sha256": null,
+      "alpha": 0.5,
+      "temperature": 4,
+      "lr": 1e-05,
+      "seed": 42,
+      "batch_size": 20,
+      "bn_running_stats": "frozen",
+      "head_only": false,
+      "trained_parameter_count": 2236682,
+      "split_sha256": null,
+      "protocol": "organizer_all_data",
+      "available_train_count": 27000,
+      "history": [
+        {
+          "epoch": 1,
+          "loss": 0.044976741261780265
+        }
+      ],
+      "seconds": 8.18067269999301,
+      "execution": {
+        "device": "cuda",
+        "device_name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "torch_version": "2.8.0+cu128",
+        "cuda_version": "12.8",
+        "amp": true,
+        "amp_dtype": "float16",
+        "workers": 0,
+        "tf32": false,
+        "cudnn_benchmark": false,
+        "checkpoint_tensor_device": "cpu"
+      }
+    },
+    "checkpoint_sha256": "35b00fce89f79295ef62ad8589d012444c73e79f0c5dd3eae9904f6d67082ba2",
+    "cpu_export_recipe": "artifacts/gpu_smoke/export/recipe.json",
+    "accuracy_evidence": "results/gpu_training/smoke_accuracy.json",
+    "selected_candidate_changed": false,
+    "checkpoint_validation": {
+      "changed_tensor_count": 158,
+      "all_checkpoint_tensors_finite": true,
+      "bn_buffers_unchanged": true,
+      "checkpoint_tensors_cpu": true
+    },
+    "name": "gpu_training_pipeline",
+    "label": "RTX 3070 training / CPU inference verification",
+    "phase": "training_environment",
+    "evidence": "results/gpu_training/verification.json",
+    "implementation": [
+      "scripts/setup_gpu_training.ps1",
+      "scripts/verify_gpu_training.py",
+      "edgeprep/challenge.py"
+    ],
+    "training_device": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "amp": true,
+    "seconds": 8.18067269999301,
+    "inference_provider": "CPUExecutionProvider"
+  }
+]

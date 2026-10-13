@@ -12,6 +12,8 @@
     "size_mib": 3.771927833557129,
     "median_cpu_4t_ms": 5.52065,
     "estimated_cpu_4t_j": 0.13219140392896084,
+    "timing_replicates": 1,
+    "timing_evidence": "results/all_data/qdq_percentile512_t4.json",
     "model_sha256": "e18134cf9b8eef6e81d9cb521fe9234515831d111533eeebe72740bc82319d92",
     "settings": {
       "pruning_ratio": 0,

@@ -1,0 +1,21 @@
+{
+  "source_model_bytes": 4496556,
+  "source_model_mib": 4.288249969482422,
+  "cpu_optimized_cast_nodes": 0,
+  "cpu_optimized_initializer_types": {
+    "FLOAT": 106,
+    "INT64": 1
+  },
+  "input_shape": [
+    1,
+    3,
+    224,
+    224
+  ],
+  "input_type": "tensor(float)",
+  "output_shape": [
+    1,
+    10
+  ],
+  "interpretation": "FP16 weights are restored and folded to FP32 on CPU loading; storage gain, no implied FP16 convolution or RAM saving"
+}

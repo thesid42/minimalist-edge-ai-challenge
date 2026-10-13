@@ -24,3 +24,4 @@ results/hub/**/*.dlc
 results/hub/**/*.tflite
 
 .ipynb_checkpoints/
+.venv-train-gpu/

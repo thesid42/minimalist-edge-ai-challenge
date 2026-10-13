@@ -1,0 +1,53 @@
+"""Refresh README, detailed results, sequential log and notebook saved outputs."""
+from datetime import datetime, timezone
+import json
+from pathlib import Path
+import sys
+ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT))
+from scripts.next_priority_report import main as report
+from edgeprep.experiment_log import main as log
+
+def read(path):
+    p=ROOT/path
+    return json.loads(p.read_text(encoding='utf-8')) if p.exists() else None
+
+def main():
+    report();log()
+    baseline=read('results/all_data/baseline_accuracy.json')
+    candidate=read('results/all_data/resize192_head_ce_w16_accuracy.json')
+    energy=read('results/energy/runtime/summary.json')
+    parts=['## Latest completed results\n',f'Refreshed from saved evidence at {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}. [Full results](docs/next_priority_results.md) and [numbered experiment log](experiments/README.md) are regenerated together.\n']
+    if baseline and candidate and energy:
+        original=next(r for r in energy['records'] if r['name']=='baseline_spin')
+        final=next(r for r in energy['records'] if r['name']=='resize192_head_ce_w16_spin')
+        bsize=Path(baseline['model']).stat().st_size/2**20
+        csize=Path(candidate['model']).stat().st_size/2**20
+        parts += ['The strongest measured laptop candidate is **internal 192 + one full-data classifier recovery epoch + FP16 weight storage / FP32 CPU compute**. External input remains `(1,3,224,224)`.\n',
+            '| Matched laptop measurement | Original student | Recovered 192 / weight16 |\n|---|---:|---:|',
+            f'| Accuracy on all 27,000 images | {baseline["accuracy"]*100:.4f}% | **{candidate["accuracy"]*100:.4f}%** |',
+            f'| Worst class recall | {baseline["worst_class_accuracy"]*100:.2f}% | **{candidate["worst_class_accuracy"]*100:.2f}%** |',
+            f'| ONNX size | {bsize:.3f} MiB | **{csize:.3f} MiB** |',
+            f'| Four-thread median latency, 3 repetitions | {original["median_ms"]:.3f} ms | **{final["median_ms"]:.3f} ms** |',
+            f'| Estimated J/inference, mean of 3 windows | {original["energy_j_per_inference"]:.6f} | **{final["energy_j_per_inference"]:.6f}** |',
+            f'\nAccuracy decreases {(baseline["accuracy"]-candidate["accuracy"])*100:.4f} percentage points; the candidate is {(1-final["latency_ratio_to_matched_baseline"])*100:.1f}% faster and uses {(1-final["estimated_energy_ratio_to_matched_baseline"])*100:.1f}% less estimated energy in this matched sequence. CodeCarbon uses CPU TDP/load plus a RAM heuristic on this Windows 10 laptop, with GPU excluded; these are not meter readings. FP16 storage halves file size while ORT folds weights to FP32 for CPU compute; it does not prove a RAM saving. Four threads outperformed 1/2/8 in the measured latency/energy tradeoff. Sleeping workers regressed latency here; the unrecovered 160 model loses too much accuracy (93.00%).\n']
+    direct=read('results/latency/resize192/summary.json')
+    if direct:
+        parts+=['A separate direct latency comparison of all 192 variants is now complete (five repetitions, four CPU threads, default spinning):\n',
+            '| Model | Median latency | Range of run medians |\n|---|---:|---:|']
+        for r in direct['records']:
+            parts.append(f'| {r["name"]} | {r["median_ms"]:.3f} ms | {r["median_min_ms"]:.3f}–{r["median_max_ms"]:.3f} ms |')
+        parts.append('\nThe range shows substantial Windows timing variability. This separate sequence is not the denominator of the energy comparison above. Small FP32/weight16 differences do not establish compute acceleration.\n')
+    parts+=['| AI Hub target / execution | Burst latency | Accuracy on the same 1,000 labelled images |\n|---|---:|---:|']
+    for folder,label in [('s24_cpu_fp32','S24 family / CPU FP32'),('s24_npu_float_retry','S24 family / NPU float'),('rb3_onnx_npu_w8a8','RB3 Gen 2 Vision Kit / NPU W8A8'),('rb3_onnx_npu_w8a16','RB3 Gen 2 Vision Kit / NPU W8A16')]:
+        profile=read(f'results/hub/{folder}/profile.json');score=read(f'results/hub/{folder}/dataset_accuracy.json')
+        if profile and score:parts.append(f'| {label} | {profile["execution_summary"]["estimated_inference_time"]/1000:.3f} ms | {score["accuracy"]*100:.1f}% |')
+    parts+=['\nHub rows use the original 224 model, not the recovered 192 candidate. Actual NPU placement is recorded per operation. These are training-pool diagnostic accuracies (100/class), disjoint from 512 calibration images; they are not all-data scores or held-out results. W8A16 gains two correct predictions over W8A8 on this sample at higher latency; its worst class is 88% vs W8A8\'s 89%, so it is not a uniform accuracy improvement. Hub power modes expose latency, not measured joules.\n',
+        'New training uses `.venv-train-gpu` / RTX 3070 / CUDA; laptop export, evaluation and inference use `.venv` / CPU. AI Hub can use CPU or NPU. A real 100-image, five-step GPU recovery, CPU export and CPU inference verification passed; it is a pipeline check, not a new competition result. **11 functional tests and dependency checks pass.**\n',
+        'See [GPU setup](docs/gpu_training.md). Refresh the README, log and saved notebook tables after each completed result: `.venv\\Scripts\\python.exe scripts/refresh_results.py`. This reads evidence only and submits no jobs or training.\n']
+    path=ROOT/'README.md';text=path.read_text(encoding='utf-8')
+    start=text.index('## Latest completed results');end=text.index('## Models and data',start)
+    path.write_text(text[:start]+'\n'.join(parts)+'\n'+text[end:],encoding='utf-8')
+    print('Refreshed README, result report, numbered folders, registry and notebook')
+
+if __name__=='__main__':main()

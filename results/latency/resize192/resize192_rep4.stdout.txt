@@ -1,0 +1,36 @@
+{
+  "model": "E:\\Projects\\Minimilist challenge\\artifacts\\all_data\\resize192\\model_fp32.onnx",
+  "sha256": "95faed83d1e2200034483c561fbee269dbf954dddb12f1b31833006ed0ed137f",
+  "input_shape": [
+    1,
+    3,
+    224,
+    224
+  ],
+  "threads": 4,
+  "runs": 1000,
+  "warmup": 100,
+  "spinning_enabled": true,
+  "provider": "CPUExecutionProvider",
+  "load_ms": 45.56120000779629,
+  "median_ms": 3.13075,
+  "p95_ms": 7.537744999999999,
+  "mean_ms": 3.8576157,
+  "file_bytes": 8924421,
+  "peak_rss_mib": 87.10546875,
+  "rss_before_session_mib": 46.61328125,
+  "session_rss_delta_mib": 40.4921875,
+  "process_cpu_seconds": 14.6875,
+  "process_cpu_percent_one_core_basis": 380.217575318616,
+  "platform": "Windows-10-10.0.19045-SP0",
+  "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+  "onnxruntime": "1.31.0",
+  "accuracy": 0.0,
+  "per_class_accuracy": {
+    "0": 0.0
+  },
+  "timing_input": "first provided preprocessed sample",
+  "energy_j_per_inference": null,
+  "energy_kind": "not_measured",
+  "validation_examples": 1
+}

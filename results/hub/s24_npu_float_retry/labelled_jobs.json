@@ -1,0 +1,34 @@
+{
+  "manifest": "results/hub/labelled1000/manifest.json",
+  "indices_sha256": "8c2a97fbb4648e3f98019b8605efd7b756100554f9b994dd7188c30507300c51",
+  "jobs": [
+    {
+      "start": 0,
+      "count": 250,
+      "id": "jgod86vx5",
+      "status": "SUCCESS",
+      "message": ""
+    },
+    {
+      "start": 250,
+      "count": 250,
+      "id": "jpv27kwjg",
+      "status": "SUCCESS",
+      "message": ""
+    },
+    {
+      "start": 500,
+      "count": 250,
+      "id": "jgj3qnlxp",
+      "status": "SUCCESS",
+      "message": ""
+    },
+    {
+      "start": 750,
+      "count": 250,
+      "id": "jpe6ymv1g",
+      "status": "SUCCESS",
+      "message": ""
+    }
+  ]
+}

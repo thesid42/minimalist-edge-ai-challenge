@@ -1,0 +1,66 @@
+{
+  "scope": "same laptop process CPU TDP/load estimate plus system RAM heuristic, GPU excluded",
+  "model_changes": "none; all scenarios use identical FP32 student",
+  "accuracy_evidence": "results/all_data/baseline_accuracy.json",
+  "timing_sample": "one fixed real image; dataset accuracy separately evaluated on all 27000",
+  "protocol": "Fresh process per scenario; serial 4,1,8,2 threads; three repetitions; 100 warmups,1000 timings,30 second inference energy loops",
+  "records": [
+    {
+      "threads": 1,
+      "replicates": 3,
+      "median_latency_ms": 7.28175,
+      "mean_estimated_j_per_inference": 0.09765687925022656,
+      "energy_stdev": 0.0005705228257996087,
+      "energy_min": 0.09699994970954068,
+      "energy_max": 0.09802811058097649,
+      "codecarbon_cpu_mode": "cpu_load",
+      "cpu_tdp_w": 45.0,
+      "model_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "latency_ratio_to_matched_4t": 2.6740663214718516,
+      "estimated_energy_ratio_to_matched_4t": 1.814571999661565
+    },
+    {
+      "threads": 2,
+      "replicates": 3,
+      "median_latency_ms": 3.96235,
+      "mean_estimated_j_per_inference": 0.06467163048306959,
+      "energy_stdev": 0.0018226027723530118,
+      "energy_min": 0.06263191092400906,
+      "energy_max": 0.06614042116605641,
+      "codecarbon_cpu_mode": "cpu_load",
+      "cpu_tdp_w": 45.0,
+      "model_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "latency_ratio_to_matched_4t": 1.4550879512320516,
+      "estimated_energy_ratio_to_matched_4t": 1.2016698746470045
+    },
+    {
+      "threads": 4,
+      "replicates": 3,
+      "median_latency_ms": 2.7231,
+      "mean_estimated_j_per_inference": 0.05381813412112636,
+      "energy_stdev": 0.0008580305580479186,
+      "energy_min": 0.05292444383984655,
+      "energy_max": 0.054635390788859484,
+      "codecarbon_cpu_mode": "cpu_load",
+      "cpu_tdp_w": 45.0,
+      "model_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "latency_ratio_to_matched_4t": 1.0,
+      "estimated_energy_ratio_to_matched_4t": 1.0
+    },
+    {
+      "threads": 8,
+      "replicates": 3,
+      "median_latency_ms": 2.85495,
+      "mean_estimated_j_per_inference": 0.08502469933105229,
+      "energy_stdev": 0.004110729244067162,
+      "energy_min": 0.08076521460977594,
+      "energy_max": 0.08896846687066097,
+      "codecarbon_cpu_mode": "cpu_load",
+      "cpu_tdp_w": 45.0,
+      "model_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "latency_ratio_to_matched_4t": 1.048419081194227,
+      "estimated_energy_ratio_to_matched_4t": 1.5798522323291726
+    }
+  ],
+  "reference_threads": 4
+}

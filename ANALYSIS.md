@@ -41,7 +41,7 @@ The historical pilot used a temporary split, 500 evaluation images and short rec
 - Uniform channel pruning collapsed class performance even at nominal 5%. Expansion-only 5% was better, but fell to 83.2% before recovery.
 - One short epoch on 500 training images recovered expansion-pruned accuracy to 95.6% with CE and 96.0% with teacher guidance. Worst-class recalls remained 76% and 82%. The two-image KD gain is not statistically strong evidence of superiority.
 
-Selective INT8 is freshly calibrated using the full training pool and evaluated on all data for the current comparison. Full-data recovery training has **not** been run in this protocol update. The commands now support it; budget its CPU time separately from the much shorter full-dataset inference benchmark.
+Selective INT8 is freshly calibrated using the full training pool and evaluated on all data for the current comparison. At the original protocol update, full-data recovery had not yet run. The later classifier-only full-data recovery is recorded below; full-backbone pruning recovery remains pending. The commands now support it; budget its CPU time separately from the much shorter full-dataset inference benchmark.
 
 ## Experiments to prioritize
 
@@ -59,7 +59,7 @@ Selective INT8 is freshly calibrated using the full training pool and evaluated 
 
 Cache identity must include teacher hash, preprocessing, image ordering and augmentations. A single cached output per image is valid for deterministic inputs; augmented variants require corresponding targets. Teacher weights stay frozen, outputs use no_grad, and KL is scaled by temperature squared. Compare identical training order and seeds.
 
-Avoid mask-only sparsity as a dense-storage/CPU speed optimization. Avoid aggressive uniform pruning, unsupported dynamic convolution quantization, and substituting unrelated LLMs for the specified image task. Lower input resolution needs clarification because the brief fixes 224x224. No current numerical scoring bands justify reviving the old 10x compression target.
+Avoid mask-only sparsity as a dense-storage/CPU speed optimization. Avoid aggressive uniform pruning, unsupported dynamic convolution quantization, and substituting unrelated LLMs for the specified image task. PDF section 3 permits lower spatial resolution while preserving the external 224x224 input. An explicit resize inside the exported graph is a valid experiment; accuracy and interpolation must be measured. No current numerical scoring bands justify reviving the old 10x compression target.
 
 ## Measurement and selection
 
@@ -86,3 +86,13 @@ Use [the numbered experiment log](experiments/README.md) and [the summary notebo
 Selective Percentile calibration with 512 samples achieved **98.80370% training-set accuracy**, **95.36% worst-class recall** (PermanentCrop), and **3.772 MiB** ONNX size. Four-thread median latency was **5.52065 ms**, peak RSS **87.94 MiB**, and TDP/CPU-load estimated energy **0.13219 J/inference**. It improves overall accuracy versus the earlier selective 256-image MinMax run but has slightly lower worst-class recall and remains slower than FP32 on this laptop. Both algorithm and count changed, so this is configuration screening, not evidence that either change alone caused the improvement. Fresh timing/energy measurement happened after full-data evaluation and while remote jobs waited; no concurrent CPU training/evaluation was running. A paired fresh FP32 remeasurement is appropriate before ranking close speed differences.
 
 AI Hub access is now verified using the ignored `.env` file. Galaxy S24 CPU profiling reports 5.533 ms; the corrected ONNX/QNN NPU route reports 0.366 ms and 104/104 profiled operations on NPU. These are Hub latency estimates on remote hardware, separate from laptop timing. Numerical checks use only 32 representative images. Read [the AI Hub guide](docs/ai_hub.md) for device catalogue, calibration-format differences, current status and reproducible commands. The first NPU inference rejected conflicting compute/provider flags; both failed jobs and corrected retry are retained. RB3 QNN DLC compiled but profiling failed with MODEL_GRAPH_ERROR; the ONNX/QNN alternative successfully profiles at 0.614 ms, with 104 NPU operations and two CPU I/O conversion operations. Its uncompressed asset is 8.797 MiB and retains floating-point weights, so it is a deployment experiment rather than a storage win. See the log for numerical-check status.
+
+## Next-priority execution (2026-10-13)
+
+Rechecked the challenge PDF: no device is named; sections 5.4-5.5 ask for exported ONNX timing and CodeCarbon energy, section 9 scores same-laptop ratios. Section 3 allows lower resolution if the external input remains (1,3,224,224).
+
+New work is detailed in [next_priority_results.md](docs/next_priority_results.md): labelled 1,000-image S24/RB3 checks; RB3 W8A16; NPU performance modes; repeated laptop thread/energy tests; internal 192/160 resizing; full-data classifier-only recovery; and FP16 weight storage with FP32 CPU compute. Keep source-specific device numbers separate from the new portable CPU candidate.
+
+Unrecovered 192 reached 98.00%, unrecovered 160 reached 93.0037% with worst Pasture recall 78.05%. Reject 160 without further recovery. One 192 classifier-only CE epoch used all 27,000 images, batch32, LR1e-4, frozen backbone and BN; 12,810 head parameters changed, verified by exact state comparison. It took 540.9 seconds and reached 99.1074% overall / 97.24% minimum class recall. The separately validated FP16-storage candidate reaches 99.1111% / 97.24%, is 4.28825 MiB, and retains FP32 CPU computation. This is a 0.05185 percentage-point loss versus the original 99.16296%, with improved minimum recall. It has unchanged learned parameter count (2,236,682); disk savings do not imply smaller inference RAM. Runtime/energy results use new matched repeated references and are recorded in the linked report when complete.
+
+The first larger remote checks: S24 CPU and NPU each 98.8%; RB3 W8A8 98.3%. The subset has 100 examples per class and excludes 512 calibration indices; it remains a diagnostic training-pool subset. Device accuracy is label-based, not numerical agreement. Do not compare this balanced 1,000 score directly against frequency-weighted 27,000-image scores.

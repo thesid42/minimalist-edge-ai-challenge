@@ -1,0 +1,205 @@
+[
+  {
+    "name": "resize192",
+    "label": "Internal 192 resize, unchanged weights",
+    "phase": "current_all_data",
+    "status": "completed",
+    "accuracy_pct": 98.0,
+    "worst_recall_pct": 93.8,
+    "examples": 27000,
+    "scope": "training_set",
+    "parameters": 2236682,
+    "size_mib": 8.510991096496582,
+    "median_cpu_4t_ms": 2.1325000000000003,
+    "estimated_cpu_4t_j": 0.05181308279974712,
+    "timing_replicates": 3,
+    "timing_evidence": [
+      "results/energy/resolution/resize192_rep1.json",
+      "results/energy/resolution/resize192_rep2.json",
+      "results/energy/resolution/resize192_rep3.json"
+    ],
+    "model_sha256": "95faed83d1e2200034483c561fbee269dbf954dddb12f1b31833006ed0ed137f",
+    "settings": {
+      "pruning_ratio": 0,
+      "pruning_scope": "expansion",
+      "round_to": 8,
+      "quantization": null,
+      "macs_note": "THOP convolution/linear MACs at internal size; bilinear Resize cost excluded",
+      "internal_resolution": 192,
+      "resize": "Inside exported graph, bilinear align_corners=False, antialias=False, normalized input"
+    },
+    "evidence": "results/all_data/resize192_accuracy.json",
+    "implementation": [
+      "edgeprep/challenge.py",
+      "edgeprep/export.py",
+      "edgeprep/benchmark.py",
+      "edgeprep/resolution.py"
+    ]
+  },
+  {
+    "name": "resize160",
+    "label": "Internal 160 resize, unchanged weights",
+    "phase": "current_all_data",
+    "status": "completed",
+    "accuracy_pct": 93.0037037037037,
+    "worst_recall_pct": 78.05,
+    "examples": 27000,
+    "scope": "training_set",
+    "parameters": 2236682,
+    "size_mib": 8.510991096496582,
+    "median_cpu_4t_ms": 1.56215,
+    "estimated_cpu_4t_j": 0.035195180890827946,
+    "timing_replicates": 3,
+    "timing_evidence": [
+      "results/energy/resolution/resize160_rep1.json",
+      "results/energy/resolution/resize160_rep2.json",
+      "results/energy/resolution/resize160_rep3.json"
+    ],
+    "model_sha256": "866237bdda6ab4f021c43d81ff892cebd22ff91d51f832fc86f6e70edac8ad01",
+    "settings": {
+      "pruning_ratio": 0,
+      "pruning_scope": "expansion",
+      "round_to": 8,
+      "quantization": null,
+      "macs_note": "THOP convolution/linear MACs at internal size; bilinear Resize cost excluded",
+      "internal_resolution": 160,
+      "resize": "Inside exported graph, bilinear align_corners=False, antialias=False, normalized input"
+    },
+    "evidence": "results/all_data/resize160_accuracy.json",
+    "implementation": [
+      "edgeprep/challenge.py",
+      "edgeprep/export.py",
+      "edgeprep/benchmark.py",
+      "edgeprep/resolution.py"
+    ]
+  },
+  {
+    "name": "resize192_head_ce",
+    "label": "Internal 192 + full-data classifier recovery",
+    "phase": "current_all_data",
+    "status": "completed",
+    "accuracy_pct": 99.10740740740741,
+    "worst_recall_pct": 97.24000000000001,
+    "examples": 27000,
+    "scope": "training_set",
+    "parameters": 2236682,
+    "size_mib": 8.510991096496582,
+    "median_cpu_4t_ms": null,
+    "estimated_cpu_4t_j": null,
+    "timing_replicates": null,
+    "timing_evidence": "results/all_data/resize192_head_ce_t4.json",
+    "model_sha256": "ce00f44eaff23ca7ab07b4512b5a0fb989796e2a532725032dd29d7657c9ab1f",
+    "settings": {
+      "pruning_ratio": 0,
+      "pruning_scope": "expansion",
+      "round_to": 8,
+      "quantization": null,
+      "macs_note": "THOP convolution/linear MACs at internal size; bilinear Resize cost excluded",
+      "internal_resolution": 192,
+      "resize": "Inside exported graph, bilinear align_corners=False, antialias=False, normalized input",
+      "recovery": {
+        "epochs": 1,
+        "train_limit": 0,
+        "teacher": null,
+        "teacher_sha256": null,
+        "alpha": 0.5,
+        "temperature": 4,
+        "lr": 0.0001,
+        "seed": 42,
+        "batch_size": 32,
+        "bn_running_stats": "frozen",
+        "head_only": true,
+        "trained_parameter_count": 12810,
+        "split_sha256": null,
+        "protocol": "organizer_all_data",
+        "available_train_count": 27000,
+        "history": [
+          {
+            "epoch": 1,
+            "loss": 0.03394648020210917
+          }
+        ],
+        "seconds": 540.8789951999788
+      }
+    },
+    "evidence": "results/all_data/resize192_head_ce_accuracy.json",
+    "implementation": [
+      "edgeprep/challenge.py",
+      "edgeprep/export.py",
+      "edgeprep/benchmark.py",
+      "edgeprep/resolution.py"
+    ]
+  },
+  {
+    "name": "resize192_head_ce_w16",
+    "label": "Recovered 192 + FP16 weight storage / FP32 compute",
+    "phase": "current_all_data",
+    "status": "completed",
+    "accuracy_pct": 99.11111111111111,
+    "worst_recall_pct": 97.24000000000001,
+    "examples": 27000,
+    "scope": "training_set",
+    "parameters": 2236682,
+    "size_mib": 4.288249969482422,
+    "median_cpu_4t_ms": 2.0538499999999997,
+    "estimated_cpu_4t_j": 0.04533759326123189,
+    "timing_replicates": 3,
+    "timing_evidence": [
+      "results/energy/runtime/resize192_head_ce_w16_spin_rep1.json",
+      "results/energy/runtime/resize192_head_ce_w16_spin_rep2.json",
+      "results/energy/runtime/resize192_head_ce_w16_spin_rep3.json"
+    ],
+    "model_sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+    "settings": {
+      "pruning_ratio": 0,
+      "pruning_scope": "expansion",
+      "round_to": 8,
+      "quantization": null,
+      "macs_note": "THOP convolution/linear MACs at internal size; bilinear Resize cost excluded",
+      "internal_resolution": 192,
+      "resize": "Inside exported graph, bilinear align_corners=False, antialias=False, normalized input",
+      "recovery": {
+        "epochs": 1,
+        "train_limit": 0,
+        "teacher": null,
+        "teacher_sha256": null,
+        "alpha": 0.5,
+        "temperature": 4,
+        "lr": 0.0001,
+        "seed": 42,
+        "batch_size": 32,
+        "bn_running_stats": "frozen",
+        "head_only": true,
+        "trained_parameter_count": 12810,
+        "split_sha256": null,
+        "protocol": "organizer_all_data",
+        "available_train_count": 27000,
+        "history": [
+          {
+            "epoch": 1,
+            "loss": 0.03394648020210917
+          }
+        ],
+        "seconds": 540.8789951999788
+      },
+      "weight_storage": {
+        "source_onnx": "E:\\Projects\\Minimilist challenge\\artifacts\\all_data\\resize192_head_ce\\model_fp32.onnx",
+        "source_onnx_sha256": "ce00f44eaff23ca7ab07b4512b5a0fb989796e2a532725032dd29d7657c9ab1f",
+        "output_sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+        "stored_float_values": 2219626,
+        "cast_nodes": 106,
+        "weight_storage_precision": "FP16 initializers",
+        "compute_precision": "FP32, restored through constant Cast nodes; not FP16 convolution",
+        "note": "ORT graph optimization can fold constant casts and expand weights back to FP32 in RAM. Disk savings do not imply RAM or compute savings."
+      }
+    },
+    "evidence": "results/all_data/resize192_head_ce_w16_accuracy.json",
+    "implementation": [
+      "edgeprep/challenge.py",
+      "edgeprep/export.py",
+      "edgeprep/benchmark.py",
+      "edgeprep/resolution.py",
+      "edgeprep/weight_storage.py"
+    ]
+  }
+]

@@ -2,21 +2,21 @@
 
 Before the organizer clarification, 13 variants were screened on 500 images from a provisional split. The table follows the experimental progression, not reconstructed timestamps. Full quantization, selective quantization, physical pruning, and short CE/KD recovery are different operations. CE/KD used only 500 training images for one epoch. These rows cannot be mixed with current all-data ratios.
 
-| label | accuracy_pct | worst_recall_pct | size_mib | median_cpu_4t_ms | examples |
-|---|---|---|---|---|---|
-| Unchanged FP32 student | 99.2 | 96.0 | 8.5063 | 2.1668 | 500 |
-| Full INT8, signed / MinMax 128 | 92.6 | 66.0 | 2.5256 | 5.6622 | 500 |
-| Full INT8, unsigned / MinMax 128 | 91.4 | 58.0 | 2.5414 | 4.3796 | 500 |
-| Full INT8 / MinMax 256 | 91.0 | 66.0 | 2.5257 | 5.2509 | 500 |
-| Full INT8 / Percentile 256 | 96.2 | 80.0 | 2.5255 | 5.7884 | 500 |
-| INT8 with first/last/head protected | 96.0 | 90.0 | 3.7159 | 6.0622 | 500 |
-| Selective INT8 / MinMax 256 | 98.4 | 94.0 | 3.772 | 5.3334 | 500 |
-| Uniform channel pruning 5% | 16.0 | 0.0 | 7.6219 | 1.84 | 500 |
-| Uniform channel pruning 10% | 17.2 | 0.0 | 6.9353 | 1.6972 | 500 |
-| Expansion-only pruning 5% | 83.2 | 46.0 | 8.1381 | 2.633 | 500 |
-| Expansion-only pruning 10% | 51.0 | 0.0 | 7.7957 | 2.7552 | 500 |
-| Expansion 5% + short CE recovery | 95.6 | 76.0 | 8.1381 | 2.1636 | 500 |
-| Expansion 5% + short teacher KD recovery | 96.0 | 82.0 | 8.1381 | 2.0575 | 500 |
+| label | accuracy_pct | worst_recall_pct | size_mib | median_cpu_4t_ms | estimated_cpu_4t_j | examples |
+|---|---|---|---|---|---|---|
+| Unchanged FP32 student | 99.2 | 96.0 | 8.5063 | 2.1668 | pending / n/a | 500 |
+| Full INT8, signed / MinMax 128 | 92.6 | 66.0 | 2.5256 | 5.6622 | pending / n/a | 500 |
+| Full INT8, unsigned / MinMax 128 | 91.4 | 58.0 | 2.5414 | 4.3796 | pending / n/a | 500 |
+| Full INT8 / MinMax 256 | 91.0 | 66.0 | 2.5257 | 5.2509 | pending / n/a | 500 |
+| Full INT8 / Percentile 256 | 96.2 | 80.0 | 2.5255 | 5.7884 | pending / n/a | 500 |
+| INT8 with first/last/head protected | 96.0 | 90.0 | 3.7159 | 6.0622 | pending / n/a | 500 |
+| Selective INT8 / MinMax 256 | 98.4 | 94.0 | 3.772 | 5.3334 | pending / n/a | 500 |
+| Uniform channel pruning 5% | 16.0 | 0.0 | 7.6219 | 1.84 | pending / n/a | 500 |
+| Uniform channel pruning 10% | 17.2 | 0.0 | 6.9353 | 1.6972 | pending / n/a | 500 |
+| Expansion-only pruning 5% | 83.2 | 46.0 | 8.1381 | 2.633 | pending / n/a | 500 |
+| Expansion-only pruning 10% | 51.0 | 0.0 | 7.7957 | 2.7552 | pending / n/a | 500 |
+| Expansion 5% + short CE recovery | 95.6 | 76.0 | 8.1381 | 2.1636 | pending / n/a | 500 |
+| Expansion 5% + short teacher KD recovery | 96.0 | 82.0 | 8.1381 | 2.0575 | pending / n/a | 500 |
 
 ## Implementation and exact settings
 

@@ -12,6 +12,8 @@
     "size_mib": 8.506295204162598,
     "median_cpu_4t_ms": 2.1668000000000003,
     "estimated_cpu_4t_j": null,
+    "timing_replicates": 1,
+    "timing_evidence": "results/challenge/baseline_t4.json",
     "model_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
     "settings": {
       "pruning_ratio": 0,
@@ -38,6 +40,8 @@
     "size_mib": 2.525644302368164,
     "median_cpu_4t_ms": 5.66225,
     "estimated_cpu_4t_j": null,
+    "timing_replicates": 1,
+    "timing_evidence": "results/challenge/qdq_s8_t4.json",
     "model_sha256": "dcc5763ef90e02ab614f62e301fbbad7559c2e28f6b1fe7837ed9a08122889f2",
     "settings": {
       "pruning_ratio": 0,
@@ -73,6 +77,8 @@
     "size_mib": 2.5413684844970703,
     "median_cpu_4t_ms": 4.37955,
     "estimated_cpu_4t_j": null,
+    "timing_replicates": 1,
+    "timing_evidence": "results/challenge/qdq_u8_t4.json",
     "model_sha256": "9354e0d37e239ee8c52832ecf04f6c2cec136422790b5f4d561415ae453565ea",
     "settings": {
       "pruning_ratio": 0,
@@ -108,6 +114,8 @@
     "size_mib": 2.525670051574707,
     "median_cpu_4t_ms": 5.25095,
     "estimated_cpu_4t_j": null,
+    "timing_replicates": 1,
+    "timing_evidence": "results/challenge/qdq_s8_256_t4.json",
     "model_sha256": "4238be6c91d5f3f94a8b66cb32693de5a09d110aa34583aa764c9e4dcac01b51",
     "settings": {
       "pruning_ratio": 0,
@@ -144,6 +152,8 @@
     "size_mib": 2.525515556335449,
     "median_cpu_4t_ms": 5.788449999999999,
     "estimated_cpu_4t_j": null,
+    "timing_replicates": 1,
+    "timing_evidence": "results/challenge/qdq_percentile_t4.json",
     "model_sha256": "32f5d6e68c27a0c7197239c82402c0f3b52e67f237625bc4c0813598cedd14bc",
     "settings": {
       "pruning_ratio": 0,
@@ -179,6 +189,8 @@
     "size_mib": 3.715916633605957,
     "median_cpu_4t_ms": 6.06225,
     "estimated_cpu_4t_j": null,
+    "timing_replicates": 1,
+    "timing_evidence": "results/challenge/qdq_protected_t4.json",
     "model_sha256": "218c6ccd270c97ee99d9b2ec4fc651908fa36c2dd184c80cbbf8c1a48db5517f",
     "settings": {
       "pruning_ratio": 0,
@@ -218,6 +230,8 @@
     "size_mib": 3.772030830383301,
     "median_cpu_4t_ms": 5.3334,
     "estimated_cpu_4t_j": null,
+    "timing_replicates": 1,
+    "timing_evidence": "results/challenge/qdq_pointwise_t4.json",
     "model_sha256": "9716717c1b9310d7dcd465b6cbf2d576cfc542f5d798b4119ca68ba1419c4c58",
     "settings": {
       "pruning_ratio": 0,
@@ -275,6 +289,8 @@
     "size_mib": 7.621918678283691,
     "median_cpu_4t_ms": 1.83995,
     "estimated_cpu_4t_j": null,
+    "timing_replicates": 1,
+    "timing_evidence": "results/challenge/prune05_t4.json",
     "model_sha256": "43154b32de291de6c636c33066b603bfd7195a12edd070d1525fcaef9ee803bb",
     "settings": {
       "pruning_ratio": 0.05,
@@ -301,6 +317,8 @@
     "size_mib": 6.935263633728027,
     "median_cpu_4t_ms": 1.6971500000000002,
     "estimated_cpu_4t_j": null,
+    "timing_replicates": 1,
+    "timing_evidence": "results/challenge/prune10_t4.json",
     "model_sha256": "b93ab50cadc3a770d28e4ea6681148c909f46ff68dac4f85ec7f601b06eb7dae",
     "settings": {
       "pruning_ratio": 0.1,
@@ -327,6 +345,8 @@
     "size_mib": 8.138100624084473,
     "median_cpu_4t_ms": 2.63295,
     "estimated_cpu_4t_j": null,
+    "timing_replicates": 1,
+    "timing_evidence": "results/challenge/expansion05_t4.json",
     "model_sha256": "fa89129efb0d55a8fff135277ed04d81bc955d869abb163019e64fd9235db0ed",
     "settings": {
       "pruning_ratio": 0.05,
@@ -354,6 +374,8 @@
     "size_mib": 7.795693397521973,
     "median_cpu_4t_ms": 2.75515,
     "estimated_cpu_4t_j": null,
+    "timing_replicates": 1,
+    "timing_evidence": "results/challenge/expansion10_t4.json",
     "model_sha256": "cb1f69728c0847e711cad22f5dc9372fd56e23833e0ccc4ba1ad6106e4e5eaff",
     "settings": {
       "pruning_ratio": 0.1,
@@ -381,6 +403,8 @@
     "size_mib": 8.138100624084473,
     "median_cpu_4t_ms": 2.1636499999999996,
     "estimated_cpu_4t_j": null,
+    "timing_replicates": 1,
+    "timing_evidence": "results/challenge/expansion05_ce_t4.json",
     "model_sha256": "bf786f76b3a78aa5d2ecae5b1b1a5492cfb49ce5ff7594cf265c23731844efcf",
     "settings": {
       "pruning_ratio": 0.05,
@@ -428,6 +452,8 @@
     "size_mib": 8.138100624084473,
     "median_cpu_4t_ms": 2.0575,
     "estimated_cpu_4t_j": null,
+    "timing_replicates": 1,
+    "timing_evidence": "results/challenge/expansion05_kd_t4.json",
     "model_sha256": "4f5726d1d7b6dbe902a7fb570a51e44547aee6f80334d259d7d6cb4c18bba38b",
     "settings": {
       "pruning_ratio": 0.05,

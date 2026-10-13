@@ -1,10 +1,10 @@
 # 03. Our current unchanged-student baseline
 
-After the organizer clarified all-data training and our own laptop reference, evaluated the unchanged student on all 27,000 images. This is training-set accuracy. Exported FP32 ONNX and measured serial CPU runtime/RAM/estimated energy. No recovery or retraining.
+After the organizer clarified all-data training and our own laptop reference, evaluated the unchanged student on all 27,000 images. This is training-set accuracy. Exported FP32 ONNX and measured serial CPU runtime/RAM/estimated energy. No recovery or retraining. The table can display newer matched three-repetition timings; baseline_metrics.json preserves the original 20-second reference measurement.
 
-| label | accuracy_pct | worst_recall_pct | size_mib | median_cpu_4t_ms | examples |
-|---|---|---|---|---|---|
-| Unchanged FP32 student | 99.163 | 95.84 | 8.5063 | 2.1036 | 27000 |
+| label | accuracy_pct | worst_recall_pct | size_mib | median_cpu_4t_ms | estimated_cpu_4t_j | examples |
+|---|---|---|---|---|---|---|
+| Unchanged FP32 student | 99.163 | 95.84 | 8.5063 | 2.7892 | 0.0549 | 27000 |
 
 ## Implementation and exact settings
 

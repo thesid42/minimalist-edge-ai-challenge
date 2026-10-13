@@ -1,0 +1,9 @@
+# PyTorch is installed separately from the official CUDA 12.8 wheel index.
+# Keep versions aligned with the isolated CPU inference environment.
+numpy==2.4.6
+onnx==1.23.2
+onnxscript==0.7.2
+onnxruntime==1.31.0
+torch-pruning==1.6.1
+thop==0.1.1.post2209072238
+pillow==12.3.0

@@ -1,12 +1,13 @@
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 import numpy as np
 import torch
 import onnxruntime as ort
 
-from edgeprep.challenge import load_model, prune_model
+from edgeprep.challenge import load_model, prune_model, training_device
 from edgeprep.challenge_data import validate_split, balanced_ids, data_protocol
 from edgeprep.export import export_fp32
 
@@ -15,6 +16,12 @@ class ChallengeTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         torch.set_num_threads(2)
+
+    def test_gpu_training_fails_instead_of_silent_cpu_fallback(self):
+        with patch("torch.cuda.is_available", return_value=False):
+            with self.assertRaisesRegex(RuntimeError,".venv-train-gpu"):
+                training_device("cuda")
+        self.assertEqual(training_device("cpu").type,"cpu")
 
     def test_split_rejects_overlap_duplicates_and_invalid_indices(self):
         for split in ({'train':[0,1],'val':[1,2]}, {'train':[0,0],'val':[2]},

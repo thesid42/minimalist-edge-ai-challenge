@@ -1,5 +1,6 @@
 """Isolated ONNX CPU worker: does NOT import PyTorch or hold other models in memory."""
 import argparse
+import dataclasses
 import hashlib
 import json
 import os
@@ -13,13 +14,16 @@ import psutil
 
 
 def benchmark(model, size, threads=1, runs=100, warmup=20, labels=None,
-              inputs=None, energy_seconds=0, energy_gpu_ids=None):
+              inputs=None, energy_seconds=0, energy_gpu_ids=None, energy_output=None, disable_spinning=False):
     if threads < 1 or runs < 1 or size < 1:
         raise ValueError("Threads, runs and size must be positive")
     process = psutil.Process()
     options = ort.SessionOptions()
     options.intra_op_num_threads = threads
     options.inter_op_num_threads = 1
+    if disable_spinning:
+        options.add_session_config_entry("session.intra_op.allow_spinning", "0")
+        options.add_session_config_entry("session.inter_op.allow_spinning", "0")
     options.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
     options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
     before_load = process.memory_info().rss
@@ -61,7 +65,7 @@ def benchmark(model, size, threads=1, runs=100, warmup=20, labels=None,
             raise ValueError("Nonfinite model outputs")
         result = {"model": str(Path(model).resolve()), "sha256": hashlib.sha256(Path(model).read_bytes()).hexdigest(),
                   "input_shape": [1, 3, size, size], "threads": threads, "runs": runs,
-                  "warmup": warmup, "provider": "CPUExecutionProvider", "load_ms": load_ms,
+                  "warmup": warmup, "spinning_enabled": not disable_spinning, "provider": "CPUExecutionProvider", "load_ms": load_ms,
                   "median_ms": float(np.median(times)), "p95_ms": float(np.percentile(times, 95)),
                   "mean_ms": float(np.mean(times)), "file_bytes": Path(model).stat().st_size,
                   "peak_rss_mib": peak[0] / 2**20, "rss_before_session_mib": before_load / 2**20,
@@ -84,14 +88,17 @@ def benchmark(model, size, threads=1, runs=100, warmup=20, labels=None,
             result["per_class_accuracy"] = {str(int(c)): float(np.mean(guesses[truth == c] == c)) for c in np.unique(truth)}
         if energy_seconds:
             from codecarbon import OfflineEmissionsTracker
-            output = Path(model).parent / "energy"
-            output.mkdir(exist_ok=True)
+            output = Path(energy_output) if energy_output else Path(model).parent / "energy"
+            output.mkdir(parents=True, exist_ok=True)
             # gpu_ids=[] avoids attributing idle GPU power to CPU-only ONNX inference.
             tracker = OfflineEmissionsTracker(country_iso_code="USA", output_dir=str(output),
                         tracking_mode="process", measure_power_secs=1, log_level="warning",
                         gpu_ids=[] if energy_gpu_ids is None else energy_gpu_ids,
                         save_to_api=False, save_to_file=True)
             tracker.start()
+            hardware = [x for x in getattr(tracker, "_hardware", []) if x.__class__.__name__ == "CPU"]
+            cpu_mode = getattr(hardware[0], "_mode", "unknown") if hardware else "unknown"
+            cpu_tdp = getattr(hardware[0], "_tdp", None) if hardware else None
             energy_runs = 0
             started = time.perf_counter()
             try:
@@ -100,12 +107,17 @@ def benchmark(model, size, threads=1, runs=100, warmup=20, labels=None,
                     energy_runs += 1
             finally:
                 tracker.stop()
+            inference_duration = time.perf_counter()-started
             record = tracker.final_emissions_data
             energy = record.energy_consumed if record else None
             result.update(energy_kind="codecarbon_estimate_not_device_meter",
-                          energy_runs=energy_runs, energy_duration_s=time.perf_counter()-started,
+                          energy_runs=energy_runs, energy_duration_s=inference_duration,
+                          codecarbon_cpu_mode=cpu_mode, codecarbon_cpu_tdp_w=cpu_tdp,
+                          codecarbon_mode="tdp_estimate" if cpu_mode in ("cpu_load", "constant") else "unknown_or_sensor",
+                          codecarbon_record=dataclasses.asdict(record) if record else None,
+                          energy_csv=str((output / "emissions.csv").resolve()),
                           energy_j_per_inference=energy*3_600_000/energy_runs if energy is not None else None,
-                          energy_gpu_ids=[], energy_scope="CPU and RAM attributed by CodeCarbon process mode",
+                          energy_gpu_ids=[], energy_scope="CodeCarbon process-attributed CPU plus estimated system RAM; GPU excluded",
                           energy_note="Windows AMD CPU may use TDP estimation; inspect startup logs and compare both models on the same machine.")
         peak[0] = max(peak[0], process.memory_info().rss)
         # Peak for the inference session, not subsequent CodeCarbon imports.
@@ -126,9 +138,11 @@ def main():
     parser.add_argument("--inputs")
     parser.add_argument("--labels")
     parser.add_argument("--energy-seconds", type=float, default=0)
+    parser.add_argument("--energy-output", help="Separate directory for this run raw CodeCarbon CSV")
+    parser.add_argument("--disable-spinning", action="store_true", help="Let idle ORT worker threads sleep instead of busy-waiting")
     args = parser.parse_args()
     result = benchmark(args.model, args.size, args.threads, args.runs, args.warmup,
-                       args.labels, args.inputs, args.energy_seconds)
+                       args.labels, args.inputs, args.energy_seconds, energy_output=args.energy_output, disable_spinning=args.disable_spinning)
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
     Path(args.output).write_text(json.dumps(result, indent=2), encoding="utf-8")
     print(json.dumps(result, indent=2))

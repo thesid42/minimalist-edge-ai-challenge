@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-13T17:32:35.608537+00:00",
+  "updated_utc": "2026-10-13T18:44:06.413979+00:00",
   "ordering": "Numbered phases and logical experimental progression; original wall-clock timestamps are not reconstructed",
   "records": [
     {
@@ -15,6 +15,8 @@
       "size_mib": 8.506295204162598,
       "median_cpu_4t_ms": 2.1668000000000003,
       "estimated_cpu_4t_j": null,
+      "timing_replicates": 1,
+      "timing_evidence": "results/challenge/baseline_t4.json",
       "model_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
       "settings": {
         "pruning_ratio": 0,
@@ -41,6 +43,8 @@
       "size_mib": 2.525644302368164,
       "median_cpu_4t_ms": 5.66225,
       "estimated_cpu_4t_j": null,
+      "timing_replicates": 1,
+      "timing_evidence": "results/challenge/qdq_s8_t4.json",
       "model_sha256": "dcc5763ef90e02ab614f62e301fbbad7559c2e28f6b1fe7837ed9a08122889f2",
       "settings": {
         "pruning_ratio": 0,
@@ -76,6 +80,8 @@
       "size_mib": 2.5413684844970703,
       "median_cpu_4t_ms": 4.37955,
       "estimated_cpu_4t_j": null,
+      "timing_replicates": 1,
+      "timing_evidence": "results/challenge/qdq_u8_t4.json",
       "model_sha256": "9354e0d37e239ee8c52832ecf04f6c2cec136422790b5f4d561415ae453565ea",
       "settings": {
         "pruning_ratio": 0,
@@ -111,6 +117,8 @@
       "size_mib": 2.525670051574707,
       "median_cpu_4t_ms": 5.25095,
       "estimated_cpu_4t_j": null,
+      "timing_replicates": 1,
+      "timing_evidence": "results/challenge/qdq_s8_256_t4.json",
       "model_sha256": "4238be6c91d5f3f94a8b66cb32693de5a09d110aa34583aa764c9e4dcac01b51",
       "settings": {
         "pruning_ratio": 0,
@@ -147,6 +155,8 @@
       "size_mib": 2.525515556335449,
       "median_cpu_4t_ms": 5.788449999999999,
       "estimated_cpu_4t_j": null,
+      "timing_replicates": 1,
+      "timing_evidence": "results/challenge/qdq_percentile_t4.json",
       "model_sha256": "32f5d6e68c27a0c7197239c82402c0f3b52e67f237625bc4c0813598cedd14bc",
       "settings": {
         "pruning_ratio": 0,
@@ -182,6 +192,8 @@
       "size_mib": 3.715916633605957,
       "median_cpu_4t_ms": 6.06225,
       "estimated_cpu_4t_j": null,
+      "timing_replicates": 1,
+      "timing_evidence": "results/challenge/qdq_protected_t4.json",
       "model_sha256": "218c6ccd270c97ee99d9b2ec4fc651908fa36c2dd184c80cbbf8c1a48db5517f",
       "settings": {
         "pruning_ratio": 0,
@@ -221,6 +233,8 @@
       "size_mib": 3.772030830383301,
       "median_cpu_4t_ms": 5.3334,
       "estimated_cpu_4t_j": null,
+      "timing_replicates": 1,
+      "timing_evidence": "results/challenge/qdq_pointwise_t4.json",
       "model_sha256": "9716717c1b9310d7dcd465b6cbf2d576cfc542f5d798b4119ca68ba1419c4c58",
       "settings": {
         "pruning_ratio": 0,
@@ -278,6 +292,8 @@
       "size_mib": 7.621918678283691,
       "median_cpu_4t_ms": 1.83995,
       "estimated_cpu_4t_j": null,
+      "timing_replicates": 1,
+      "timing_evidence": "results/challenge/prune05_t4.json",
       "model_sha256": "43154b32de291de6c636c33066b603bfd7195a12edd070d1525fcaef9ee803bb",
       "settings": {
         "pruning_ratio": 0.05,
@@ -304,6 +320,8 @@
       "size_mib": 6.935263633728027,
       "median_cpu_4t_ms": 1.6971500000000002,
       "estimated_cpu_4t_j": null,
+      "timing_replicates": 1,
+      "timing_evidence": "results/challenge/prune10_t4.json",
       "model_sha256": "b93ab50cadc3a770d28e4ea6681148c909f46ff68dac4f85ec7f601b06eb7dae",
       "settings": {
         "pruning_ratio": 0.1,
@@ -330,6 +348,8 @@
       "size_mib": 8.138100624084473,
       "median_cpu_4t_ms": 2.63295,
       "estimated_cpu_4t_j": null,
+      "timing_replicates": 1,
+      "timing_evidence": "results/challenge/expansion05_t4.json",
       "model_sha256": "fa89129efb0d55a8fff135277ed04d81bc955d869abb163019e64fd9235db0ed",
       "settings": {
         "pruning_ratio": 0.05,
@@ -357,6 +377,8 @@
       "size_mib": 7.795693397521973,
       "median_cpu_4t_ms": 2.75515,
       "estimated_cpu_4t_j": null,
+      "timing_replicates": 1,
+      "timing_evidence": "results/challenge/expansion10_t4.json",
       "model_sha256": "cb1f69728c0847e711cad22f5dc9372fd56e23833e0ccc4ba1ad6106e4e5eaff",
       "settings": {
         "pruning_ratio": 0.1,
@@ -384,6 +406,8 @@
       "size_mib": 8.138100624084473,
       "median_cpu_4t_ms": 2.1636499999999996,
       "estimated_cpu_4t_j": null,
+      "timing_replicates": 1,
+      "timing_evidence": "results/challenge/expansion05_ce_t4.json",
       "model_sha256": "bf786f76b3a78aa5d2ecae5b1b1a5492cfb49ce5ff7594cf265c23731844efcf",
       "settings": {
         "pruning_ratio": 0.05,
@@ -431,6 +455,8 @@
       "size_mib": 8.138100624084473,
       "median_cpu_4t_ms": 2.0575,
       "estimated_cpu_4t_j": null,
+      "timing_replicates": 1,
+      "timing_evidence": "results/challenge/expansion05_kd_t4.json",
       "model_sha256": "4f5726d1d7b6dbe902a7fb570a51e44547aee6f80334d259d7d6cb4c18bba38b",
       "settings": {
         "pruning_ratio": 0.05,
@@ -476,8 +502,14 @@
       "scope": "training_set",
       "parameters": 2236682,
       "size_mib": 8.506295204162598,
-      "median_cpu_4t_ms": 2.1035500000000003,
-      "estimated_cpu_4t_j": 0.049584945817464754,
+      "median_cpu_4t_ms": 2.7892,
+      "estimated_cpu_4t_j": 0.05492719441706297,
+      "timing_replicates": 3,
+      "timing_evidence": [
+        "results/energy/runtime/baseline_spin_rep1.json",
+        "results/energy/runtime/baseline_spin_rep2.json",
+        "results/energy/runtime/baseline_spin_rep3.json"
+      ],
       "model_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
       "settings": {
         "pruning_ratio": 0,
@@ -504,6 +536,8 @@
       "size_mib": 3.77199649810791,
       "median_cpu_4t_ms": 5.184200000000001,
       "estimated_cpu_4t_j": 0.11915866185072288,
+      "timing_replicates": 1,
+      "timing_evidence": "results/all_data/qdq_pointwise_t4.json",
       "model_sha256": "ab32fdbdf01fbcbb30bd750cb15879c9af880a64f7a44d37b4ce4860e65f524f",
       "settings": {
         "pruning_ratio": 0,
@@ -561,6 +595,8 @@
       "size_mib": 3.771927833557129,
       "median_cpu_4t_ms": 5.52065,
       "estimated_cpu_4t_j": 0.13219140392896084,
+      "timing_replicates": 1,
+      "timing_evidence": "results/all_data/qdq_percentile512_t4.json",
       "model_sha256": "e18134cf9b8eef6e81d9cb521fe9234515831d111533eeebe72740bc82319d92",
       "settings": {
         "pruning_ratio": 0,
@@ -606,6 +642,209 @@
       ]
     },
     {
+      "name": "resize192",
+      "label": "Internal 192 resize, unchanged weights",
+      "phase": "current_all_data",
+      "status": "completed",
+      "accuracy_pct": 98.0,
+      "worst_recall_pct": 93.8,
+      "examples": 27000,
+      "scope": "training_set",
+      "parameters": 2236682,
+      "size_mib": 8.510991096496582,
+      "median_cpu_4t_ms": 2.1325000000000003,
+      "estimated_cpu_4t_j": 0.05181308279974712,
+      "timing_replicates": 3,
+      "timing_evidence": [
+        "results/energy/resolution/resize192_rep1.json",
+        "results/energy/resolution/resize192_rep2.json",
+        "results/energy/resolution/resize192_rep3.json"
+      ],
+      "model_sha256": "95faed83d1e2200034483c561fbee269dbf954dddb12f1b31833006ed0ed137f",
+      "settings": {
+        "pruning_ratio": 0,
+        "pruning_scope": "expansion",
+        "round_to": 8,
+        "quantization": null,
+        "macs_note": "THOP convolution/linear MACs at internal size; bilinear Resize cost excluded",
+        "internal_resolution": 192,
+        "resize": "Inside exported graph, bilinear align_corners=False, antialias=False, normalized input"
+      },
+      "evidence": "results/all_data/resize192_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py",
+        "edgeprep/resolution.py"
+      ]
+    },
+    {
+      "name": "resize160",
+      "label": "Internal 160 resize, unchanged weights",
+      "phase": "current_all_data",
+      "status": "completed",
+      "accuracy_pct": 93.0037037037037,
+      "worst_recall_pct": 78.05,
+      "examples": 27000,
+      "scope": "training_set",
+      "parameters": 2236682,
+      "size_mib": 8.510991096496582,
+      "median_cpu_4t_ms": 1.56215,
+      "estimated_cpu_4t_j": 0.035195180890827946,
+      "timing_replicates": 3,
+      "timing_evidence": [
+        "results/energy/resolution/resize160_rep1.json",
+        "results/energy/resolution/resize160_rep2.json",
+        "results/energy/resolution/resize160_rep3.json"
+      ],
+      "model_sha256": "866237bdda6ab4f021c43d81ff892cebd22ff91d51f832fc86f6e70edac8ad01",
+      "settings": {
+        "pruning_ratio": 0,
+        "pruning_scope": "expansion",
+        "round_to": 8,
+        "quantization": null,
+        "macs_note": "THOP convolution/linear MACs at internal size; bilinear Resize cost excluded",
+        "internal_resolution": 160,
+        "resize": "Inside exported graph, bilinear align_corners=False, antialias=False, normalized input"
+      },
+      "evidence": "results/all_data/resize160_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py",
+        "edgeprep/resolution.py"
+      ]
+    },
+    {
+      "name": "resize192_head_ce",
+      "label": "Internal 192 + full-data classifier recovery",
+      "phase": "current_all_data",
+      "status": "completed",
+      "accuracy_pct": 99.10740740740741,
+      "worst_recall_pct": 97.24000000000001,
+      "examples": 27000,
+      "scope": "training_set",
+      "parameters": 2236682,
+      "size_mib": 8.510991096496582,
+      "median_cpu_4t_ms": null,
+      "estimated_cpu_4t_j": null,
+      "timing_replicates": null,
+      "timing_evidence": "results/all_data/resize192_head_ce_t4.json",
+      "model_sha256": "ce00f44eaff23ca7ab07b4512b5a0fb989796e2a532725032dd29d7657c9ab1f",
+      "settings": {
+        "pruning_ratio": 0,
+        "pruning_scope": "expansion",
+        "round_to": 8,
+        "quantization": null,
+        "macs_note": "THOP convolution/linear MACs at internal size; bilinear Resize cost excluded",
+        "internal_resolution": 192,
+        "resize": "Inside exported graph, bilinear align_corners=False, antialias=False, normalized input",
+        "recovery": {
+          "epochs": 1,
+          "train_limit": 0,
+          "teacher": null,
+          "teacher_sha256": null,
+          "alpha": 0.5,
+          "temperature": 4,
+          "lr": 0.0001,
+          "seed": 42,
+          "batch_size": 32,
+          "bn_running_stats": "frozen",
+          "head_only": true,
+          "trained_parameter_count": 12810,
+          "split_sha256": null,
+          "protocol": "organizer_all_data",
+          "available_train_count": 27000,
+          "history": [
+            {
+              "epoch": 1,
+              "loss": 0.03394648020210917
+            }
+          ],
+          "seconds": 540.8789951999788
+        }
+      },
+      "evidence": "results/all_data/resize192_head_ce_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py",
+        "edgeprep/resolution.py"
+      ]
+    },
+    {
+      "name": "resize192_head_ce_w16",
+      "label": "Recovered 192 + FP16 weight storage / FP32 compute",
+      "phase": "current_all_data",
+      "status": "completed",
+      "accuracy_pct": 99.11111111111111,
+      "worst_recall_pct": 97.24000000000001,
+      "examples": 27000,
+      "scope": "training_set",
+      "parameters": 2236682,
+      "size_mib": 4.288249969482422,
+      "median_cpu_4t_ms": 2.0538499999999997,
+      "estimated_cpu_4t_j": 0.04533759326123189,
+      "timing_replicates": 3,
+      "timing_evidence": [
+        "results/energy/runtime/resize192_head_ce_w16_spin_rep1.json",
+        "results/energy/runtime/resize192_head_ce_w16_spin_rep2.json",
+        "results/energy/runtime/resize192_head_ce_w16_spin_rep3.json"
+      ],
+      "model_sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+      "settings": {
+        "pruning_ratio": 0,
+        "pruning_scope": "expansion",
+        "round_to": 8,
+        "quantization": null,
+        "macs_note": "THOP convolution/linear MACs at internal size; bilinear Resize cost excluded",
+        "internal_resolution": 192,
+        "resize": "Inside exported graph, bilinear align_corners=False, antialias=False, normalized input",
+        "recovery": {
+          "epochs": 1,
+          "train_limit": 0,
+          "teacher": null,
+          "teacher_sha256": null,
+          "alpha": 0.5,
+          "temperature": 4,
+          "lr": 0.0001,
+          "seed": 42,
+          "batch_size": 32,
+          "bn_running_stats": "frozen",
+          "head_only": true,
+          "trained_parameter_count": 12810,
+          "split_sha256": null,
+          "protocol": "organizer_all_data",
+          "available_train_count": 27000,
+          "history": [
+            {
+              "epoch": 1,
+              "loss": 0.03394648020210917
+            }
+          ],
+          "seconds": 540.8789951999788
+        },
+        "weight_storage": {
+          "source_onnx": "E:\\Projects\\Minimilist challenge\\artifacts\\all_data\\resize192_head_ce\\model_fp32.onnx",
+          "source_onnx_sha256": "ce00f44eaff23ca7ab07b4512b5a0fb989796e2a532725032dd29d7657c9ab1f",
+          "output_sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+          "stored_float_values": 2219626,
+          "cast_nodes": 106,
+          "weight_storage_precision": "FP16 initializers",
+          "compute_precision": "FP32, restored through constant Cast nodes; not FP16 convolution",
+          "note": "ORT graph optimization can fold constant casts and expand weights back to FP32 in RAM. Disk savings do not imply RAM or compute savings."
+        }
+      },
+      "evidence": "results/all_data/resize192_head_ce_w16_accuracy.json",
+      "implementation": [
+        "edgeprep/challenge.py",
+        "edgeprep/export.py",
+        "edgeprep/benchmark.py",
+        "edgeprep/resolution.py",
+        "edgeprep/weight_storage.py"
+      ]
+    },
+    {
       "name": "s24_cpu_fp32",
       "phase": "remote_exploration",
       "status": "completed",
@@ -629,8 +868,14 @@
       },
       "top1_agreement_pct": 100.0,
       "numerical_samples": 32,
-      "accuracy_pct": null,
+      "accuracy_pct": 98.8,
+      "labelled_samples": 1000,
+      "worst_recall_pct": 90.0,
+      "labelled_accuracy_scope": "training_set_subset",
+      "labelled_top1_agreement_pct": 100.0,
+      "performance_mode": "burst",
       "energy_j": null,
+      "accuracy_inherited_from": null,
       "failure_details": [],
       "settings": {
         "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
@@ -670,7 +915,9 @@
       "evidence": "results/hub/s24_cpu_fp32",
       "implementation": [
         "edgeprep/hub_profile.py",
-        "edgeprep/hub_auth.py"
+        "edgeprep/hub_auth.py",
+        "edgeprep/hub_accuracy.py",
+        "edgeprep/hub_modes.py"
       ]
     },
     {
@@ -693,7 +940,13 @@
       "top1_agreement_pct": null,
       "numerical_samples": null,
       "accuracy_pct": null,
+      "labelled_samples": null,
+      "worst_recall_pct": null,
+      "labelled_accuracy_scope": null,
+      "labelled_top1_agreement_pct": null,
+      "performance_mode": "burst",
       "energy_j": null,
+      "accuracy_inherited_from": null,
       "failure_details": [
         {
           "code": "FAILED",
@@ -750,7 +1003,9 @@
       "evidence": "results/hub/s24_npu_float",
       "implementation": [
         "edgeprep/hub_profile.py",
-        "edgeprep/hub_auth.py"
+        "edgeprep/hub_auth.py",
+        "edgeprep/hub_accuracy.py",
+        "edgeprep/hub_modes.py"
       ]
     },
     {
@@ -777,8 +1032,14 @@
       },
       "top1_agreement_pct": 100.0,
       "numerical_samples": 32,
-      "accuracy_pct": null,
+      "accuracy_pct": 98.8,
+      "labelled_samples": 1000,
+      "worst_recall_pct": 90.0,
+      "labelled_accuracy_scope": "training_set_subset",
+      "labelled_top1_agreement_pct": 100.0,
+      "performance_mode": "burst",
       "energy_j": null,
+      "accuracy_inherited_from": null,
       "failure_details": [],
       "settings": {
         "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
@@ -830,7 +1091,9 @@
       "evidence": "results/hub/s24_npu_float_retry",
       "implementation": [
         "edgeprep/hub_profile.py",
-        "edgeprep/hub_auth.py"
+        "edgeprep/hub_auth.py",
+        "edgeprep/hub_accuracy.py",
+        "edgeprep/hub_modes.py"
       ]
     },
     {
@@ -852,7 +1115,13 @@
       "top1_agreement_pct": null,
       "numerical_samples": null,
       "accuracy_pct": null,
+      "labelled_samples": null,
+      "worst_recall_pct": null,
+      "labelled_accuracy_scope": null,
+      "labelled_top1_agreement_pct": null,
+      "performance_mode": "burst",
       "energy_j": null,
+      "accuracy_inherited_from": null,
       "failure_details": [
         {
           "code": "FAILED",
@@ -911,7 +1180,9 @@
       "evidence": "results/hub/rb3_npu_w8a8",
       "implementation": [
         "edgeprep/hub_profile.py",
-        "edgeprep/hub_auth.py"
+        "edgeprep/hub_auth.py",
+        "edgeprep/hub_accuracy.py",
+        "edgeprep/hub_modes.py"
       ]
     },
     {
@@ -939,8 +1210,14 @@
       },
       "top1_agreement_pct": 96.875,
       "numerical_samples": 32,
-      "accuracy_pct": null,
+      "accuracy_pct": 98.3,
+      "labelled_samples": 1000,
+      "worst_recall_pct": 89.0,
+      "labelled_accuracy_scope": "training_set_subset",
+      "labelled_top1_agreement_pct": 99.3,
+      "performance_mode": "burst",
       "energy_j": null,
+      "accuracy_inherited_from": null,
       "failure_details": [],
       "settings": {
         "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
@@ -998,7 +1275,1114 @@
       "evidence": "results/hub/rb3_onnx_npu_w8a8",
       "implementation": [
         "edgeprep/hub_profile.py",
-        "edgeprep/hub_auth.py"
+        "edgeprep/hub_auth.py",
+        "edgeprep/hub_accuracy.py",
+        "edgeprep/hub_modes.py"
+      ]
+    },
+    {
+      "name": "rb3_onnx_npu_w8a16",
+      "phase": "remote_exploration",
+      "status": "completed",
+      "device": "Dragonwing RB3 Gen 2 Vision Kit",
+      "runtime": "onnx",
+      "requested_compute": "npu",
+      "precision": "w8a16",
+      "hub_estimated_latency_ms": 1.056,
+      "inference_memory_peak_range_bytes": [
+        372736,
+        3023664
+      ],
+      "deployment_assets": {
+        "target.onnx.onnx.zip": {
+          "download_bytes": 5282743,
+          "uncompressed_payload_bytes": 9228490
+        }
+      },
+      "actual_layer_compute_counts": {
+        "CPU": 2,
+        "NPU": 104
+      },
+      "top1_agreement_pct": 96.875,
+      "numerical_samples": 32,
+      "accuracy_pct": 98.5,
+      "labelled_samples": 1000,
+      "worst_recall_pct": 88.0,
+      "labelled_accuracy_scope": "training_set_subset",
+      "labelled_top1_agreement_pct": 99.5,
+      "performance_mode": "burst",
+      "energy_j": null,
+      "accuracy_inherited_from": null,
+      "failure_details": [],
+      "settings": {
+        "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
+        "source_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+        "device": "Dragonwing RB3 Gen 2 Vision Kit",
+        "runtime": "onnx",
+        "compute_unit_requested": "npu",
+        "precision": "w8a16",
+        "input_specs": {
+          "images": [
+            1,
+            3,
+            224,
+            224
+          ]
+        },
+        "compile_options": "--target_runtime onnx --compute_unit npu",
+        "inference_options": "--max_profiler_iterations 100 --onnx_options intra_op_num_threads=4;inter_op_num_threads=1;execution_mode=SEQUENTIAL;enable_memory_pattern=true;enable_cpu_memory_arena=true;qnn_htp_performance_mode=burst --onnx_execution_providers qnn",
+        "quantize_options": "--range_scheme mse_minimizer",
+        "calibration_count_requested": 512,
+        "calibration_sha256": "2c75a98417368a573b598ed6010def4165e65016731ec04e3bef53ff3673569c",
+        "direct_onnx": false,
+        "compiled_job": null,
+        "quantized_job": null,
+        "local_qdq": false,
+        "validation_note": "Separate representative-input numerical smoke check; not full-dataset accuracy",
+        "target_reference": "Exploration only unless organizers designate this device; preserve laptop CPU baseline",
+        "energy": "Inspect returned fields; never convert latency into energy"
+      },
+      "jobs": {
+        "device": "Dragonwing RB3 Gen 2 Vision Kit",
+        "runtime": "onnx",
+        "sdk_version": "0.56.0",
+        "prepare_onnx": "jg9odn3wg",
+        "jg9odn3wg_status": {
+          "code": "SUCCESS",
+          "message": ""
+        },
+        "quantize": "jpx0xo73p",
+        "jpx0xo73p_status": {
+          "code": "SUCCESS",
+          "message": ""
+        },
+        "compile": "jgn1kv9kp",
+        "jgn1kv9kp_status": {
+          "code": "SUCCESS",
+          "message": ""
+        },
+        "profile_inference": "jp2oey7rg",
+        "jp2oey7rg_status": {
+          "code": "SUCCESS",
+          "message": ""
+        },
+        "validation_inference": "jp1o6zj75",
+        "jp1o6zj75_status": {
+          "code": "SUCCESS",
+          "message": ""
+        }
+      },
+      "evidence": "results/hub/rb3_onnx_npu_w8a16",
+      "implementation": [
+        "edgeprep/hub_profile.py",
+        "edgeprep/hub_auth.py",
+        "edgeprep/hub_accuracy.py",
+        "edgeprep/hub_modes.py"
+      ]
+    },
+    {
+      "name": "s24_npu_float_retry_balanced",
+      "phase": "remote_exploration",
+      "status": "completed",
+      "device": "Samsung Galaxy S24 (Family)",
+      "runtime": "onnx",
+      "requested_compute": "npu",
+      "precision": "none",
+      "hub_estimated_latency_ms": 0.778,
+      "inference_memory_peak_range_bytes": [
+        135168,
+        51040384
+      ],
+      "deployment_assets": {},
+      "actual_layer_compute_counts": {
+        "NPU": 104
+      },
+      "top1_agreement_pct": null,
+      "numerical_samples": null,
+      "accuracy_pct": 98.8,
+      "labelled_samples": 1000,
+      "worst_recall_pct": 90.0,
+      "labelled_accuracy_scope": "training_set_subset",
+      "labelled_top1_agreement_pct": 100.0,
+      "performance_mode": "balanced",
+      "energy_j": null,
+      "accuracy_inherited_from": "results\\hub\\s24_npu_float_retry\\dataset_accuracy.json",
+      "failure_details": [],
+      "settings": {
+        "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
+        "source_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+        "device": "Samsung Galaxy S24 (Family)",
+        "runtime": "onnx",
+        "compute_unit_requested": "npu",
+        "precision": "none",
+        "input_specs": {
+          "images": [
+            1,
+            3,
+            224,
+            224
+          ]
+        },
+        "compile_options": "--target_runtime onnx --compute_unit npu",
+        "inference_options": "--max_profiler_iterations 100 --onnx_options intra_op_num_threads=4;inter_op_num_threads=1;execution_mode=SEQUENTIAL;enable_memory_pattern=true;enable_cpu_memory_arena=true;qnn_htp_performance_mode=balanced --onnx_execution_providers qnn",
+        "quantize_options": null,
+        "calibration_count_requested": 512,
+        "calibration_sha256": null,
+        "direct_onnx": false,
+        "compiled_job": "jp0o600ep",
+        "local_qdq": false,
+        "validation_note": "Same compiled artifact as larger labelled burst run; power-mode profile only",
+        "target_reference": "Exploration only unless organizers designate this device; preserve laptop CPU baseline",
+        "energy": "Inspect returned fields; never convert latency into energy",
+        "performance_mode": "balanced",
+        "accuracy_evidence": "results\\hub\\s24_npu_float_retry\\dataset_accuracy.json"
+      },
+      "jobs": {
+        "profile_inference": "jp1o6zd85",
+        "compile": "jp0o600ep",
+        "jp1o6zd85_status": {
+          "code": "SUCCESS",
+          "message": ""
+        }
+      },
+      "evidence": "results/hub/s24_npu_float_retry_balanced",
+      "implementation": [
+        "edgeprep/hub_profile.py",
+        "edgeprep/hub_auth.py",
+        "edgeprep/hub_accuracy.py",
+        "edgeprep/hub_modes.py"
+      ]
+    },
+    {
+      "name": "s24_npu_float_retry_power_saver",
+      "phase": "remote_exploration",
+      "status": "completed",
+      "device": "Samsung Galaxy S24 (Family)",
+      "runtime": "onnx",
+      "requested_compute": "npu",
+      "precision": "none",
+      "hub_estimated_latency_ms": 1.192,
+      "inference_memory_peak_range_bytes": [
+        0,
+        50193952
+      ],
+      "deployment_assets": {},
+      "actual_layer_compute_counts": {
+        "NPU": 104
+      },
+      "top1_agreement_pct": null,
+      "numerical_samples": null,
+      "accuracy_pct": 98.8,
+      "labelled_samples": 1000,
+      "worst_recall_pct": 90.0,
+      "labelled_accuracy_scope": "training_set_subset",
+      "labelled_top1_agreement_pct": 100.0,
+      "performance_mode": "power_saver",
+      "energy_j": null,
+      "accuracy_inherited_from": "results\\hub\\s24_npu_float_retry\\dataset_accuracy.json",
+      "failure_details": [],
+      "settings": {
+        "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
+        "source_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+        "device": "Samsung Galaxy S24 (Family)",
+        "runtime": "onnx",
+        "compute_unit_requested": "npu",
+        "precision": "none",
+        "input_specs": {
+          "images": [
+            1,
+            3,
+            224,
+            224
+          ]
+        },
+        "compile_options": "--target_runtime onnx --compute_unit npu",
+        "inference_options": "--max_profiler_iterations 100 --onnx_options intra_op_num_threads=4;inter_op_num_threads=1;execution_mode=SEQUENTIAL;enable_memory_pattern=true;enable_cpu_memory_arena=true;qnn_htp_performance_mode=power_saver --onnx_execution_providers qnn",
+        "quantize_options": null,
+        "calibration_count_requested": 512,
+        "calibration_sha256": null,
+        "direct_onnx": false,
+        "compiled_job": "jp0o600ep",
+        "local_qdq": false,
+        "validation_note": "Same compiled artifact as larger labelled burst run; power-mode profile only",
+        "target_reference": "Exploration only unless organizers designate this device; preserve laptop CPU baseline",
+        "energy": "Inspect returned fields; never convert latency into energy",
+        "performance_mode": "power_saver",
+        "accuracy_evidence": "results\\hub\\s24_npu_float_retry\\dataset_accuracy.json"
+      },
+      "jobs": {
+        "profile_inference": "jgd621rrp",
+        "compile": "jp0o600ep",
+        "jgd621rrp_status": {
+          "code": "SUCCESS",
+          "message": ""
+        }
+      },
+      "evidence": "results/hub/s24_npu_float_retry_power_saver",
+      "implementation": [
+        "edgeprep/hub_profile.py",
+        "edgeprep/hub_auth.py",
+        "edgeprep/hub_accuracy.py",
+        "edgeprep/hub_modes.py"
+      ]
+    },
+    {
+      "name": "rb3_onnx_npu_w8a8_balanced",
+      "phase": "remote_exploration",
+      "status": "completed",
+      "device": "Dragonwing RB3 Gen 2 Vision Kit",
+      "runtime": "onnx",
+      "requested_compute": "npu",
+      "precision": "w8a8",
+      "hub_estimated_latency_ms": 0.648,
+      "inference_memory_peak_range_bytes": [
+        372736,
+        3027856
+      ],
+      "deployment_assets": {},
+      "actual_layer_compute_counts": {
+        "CPU": 2,
+        "NPU": 104
+      },
+      "top1_agreement_pct": null,
+      "numerical_samples": null,
+      "accuracy_pct": 98.3,
+      "labelled_samples": 1000,
+      "worst_recall_pct": 89.0,
+      "labelled_accuracy_scope": "training_set_subset",
+      "labelled_top1_agreement_pct": 99.3,
+      "performance_mode": "balanced",
+      "energy_j": null,
+      "accuracy_inherited_from": "results\\hub\\rb3_onnx_npu_w8a8\\dataset_accuracy.json",
+      "failure_details": [],
+      "settings": {
+        "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
+        "source_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+        "device": "Dragonwing RB3 Gen 2 Vision Kit",
+        "runtime": "onnx",
+        "compute_unit_requested": "npu",
+        "precision": "w8a8",
+        "input_specs": {
+          "images": [
+            1,
+            3,
+            224,
+            224
+          ]
+        },
+        "compile_options": "--target_runtime onnx --compute_unit npu",
+        "inference_options": "--max_profiler_iterations 100 --onnx_options intra_op_num_threads=4;inter_op_num_threads=1;execution_mode=SEQUENTIAL;enable_memory_pattern=true;enable_cpu_memory_arena=true;qnn_htp_performance_mode=balanced --onnx_execution_providers qnn",
+        "quantize_options": "--range_scheme mse_minimizer",
+        "calibration_count_requested": 512,
+        "calibration_sha256": "2c75a98417368a573b598ed6010def4165e65016731ec04e3bef53ff3673569c",
+        "direct_onnx": false,
+        "compiled_job": "jp8j1y0x5",
+        "quantized_job": "j56ow4475",
+        "local_qdq": false,
+        "validation_note": "Same compiled artifact as larger labelled burst run; power-mode profile only",
+        "target_reference": "Exploration only unless organizers designate this device; preserve laptop CPU baseline",
+        "energy": "Inspect returned fields; never convert latency into energy",
+        "performance_mode": "balanced",
+        "accuracy_evidence": "results\\hub\\rb3_onnx_npu_w8a8\\dataset_accuracy.json"
+      },
+      "jobs": {
+        "profile_inference": "j57o9rjvg",
+        "compile": "jp8j1y0x5",
+        "j57o9rjvg_status": {
+          "code": "SUCCESS",
+          "message": ""
+        }
+      },
+      "evidence": "results/hub/rb3_onnx_npu_w8a8_balanced",
+      "implementation": [
+        "edgeprep/hub_profile.py",
+        "edgeprep/hub_auth.py",
+        "edgeprep/hub_accuracy.py",
+        "edgeprep/hub_modes.py"
+      ]
+    },
+    {
+      "name": "rb3_onnx_npu_w8a8_power_saver",
+      "phase": "remote_exploration",
+      "status": "completed",
+      "device": "Dragonwing RB3 Gen 2 Vision Kit",
+      "runtime": "onnx",
+      "requested_compute": "npu",
+      "precision": "w8a8",
+      "hub_estimated_latency_ms": 0.68,
+      "inference_memory_peak_range_bytes": [
+        368640,
+        3023760
+      ],
+      "deployment_assets": {},
+      "actual_layer_compute_counts": {
+        "CPU": 2,
+        "NPU": 104
+      },
+      "top1_agreement_pct": null,
+      "numerical_samples": null,
+      "accuracy_pct": 98.3,
+      "labelled_samples": 1000,
+      "worst_recall_pct": 89.0,
+      "labelled_accuracy_scope": "training_set_subset",
+      "labelled_top1_agreement_pct": 99.3,
+      "performance_mode": "power_saver",
+      "energy_j": null,
+      "accuracy_inherited_from": "results\\hub\\rb3_onnx_npu_w8a8\\dataset_accuracy.json",
+      "failure_details": [],
+      "settings": {
+        "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
+        "source_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+        "device": "Dragonwing RB3 Gen 2 Vision Kit",
+        "runtime": "onnx",
+        "compute_unit_requested": "npu",
+        "precision": "w8a8",
+        "input_specs": {
+          "images": [
+            1,
+            3,
+            224,
+            224
+          ]
+        },
+        "compile_options": "--target_runtime onnx --compute_unit npu",
+        "inference_options": "--max_profiler_iterations 100 --onnx_options intra_op_num_threads=4;inter_op_num_threads=1;execution_mode=SEQUENTIAL;enable_memory_pattern=true;enable_cpu_memory_arena=true;qnn_htp_performance_mode=power_saver --onnx_execution_providers qnn",
+        "quantize_options": "--range_scheme mse_minimizer",
+        "calibration_count_requested": 512,
+        "calibration_sha256": "2c75a98417368a573b598ed6010def4165e65016731ec04e3bef53ff3673569c",
+        "direct_onnx": false,
+        "compiled_job": "jp8j1y0x5",
+        "quantized_job": "j56ow4475",
+        "local_qdq": false,
+        "validation_note": "Same compiled artifact as larger labelled burst run; power-mode profile only",
+        "target_reference": "Exploration only unless organizers designate this device; preserve laptop CPU baseline",
+        "energy": "Inspect returned fields; never convert latency into energy",
+        "performance_mode": "power_saver",
+        "accuracy_evidence": "results\\hub\\rb3_onnx_npu_w8a8\\dataset_accuracy.json"
+      },
+      "jobs": {
+        "profile_inference": "jp4e3rx8g",
+        "compile": "jp8j1y0x5",
+        "jp4e3rx8g_status": {
+          "code": "SUCCESS",
+          "message": ""
+        }
+      },
+      "evidence": "results/hub/rb3_onnx_npu_w8a8_power_saver",
+      "implementation": [
+        "edgeprep/hub_profile.py",
+        "edgeprep/hub_auth.py",
+        "edgeprep/hub_accuracy.py",
+        "edgeprep/hub_modes.py"
+      ]
+    },
+    {
+      "threads": 1,
+      "replicates": 3,
+      "median_latency_ms": 7.28175,
+      "mean_estimated_j_per_inference": 0.09765687925022656,
+      "energy_stdev": 0.0005705228257996087,
+      "energy_min": 0.09699994970954068,
+      "energy_max": 0.09802811058097649,
+      "codecarbon_cpu_mode": "cpu_load",
+      "cpu_tdp_w": 45.0,
+      "model_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "latency_ratio_to_matched_4t": 2.6740663214718516,
+      "estimated_energy_ratio_to_matched_4t": 1.814571999661565,
+      "name": "cpu_threads_1",
+      "label": "FP32 CPU 1 threads",
+      "phase": "runtime_energy",
+      "status": "completed",
+      "evidence": "results/energy/thread_sweep/summary.json",
+      "implementation": [
+        "scripts/thread_energy_sweep.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "threads": 2,
+      "replicates": 3,
+      "median_latency_ms": 3.96235,
+      "mean_estimated_j_per_inference": 0.06467163048306959,
+      "energy_stdev": 0.0018226027723530118,
+      "energy_min": 0.06263191092400906,
+      "energy_max": 0.06614042116605641,
+      "codecarbon_cpu_mode": "cpu_load",
+      "cpu_tdp_w": 45.0,
+      "model_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "latency_ratio_to_matched_4t": 1.4550879512320516,
+      "estimated_energy_ratio_to_matched_4t": 1.2016698746470045,
+      "name": "cpu_threads_2",
+      "label": "FP32 CPU 2 threads",
+      "phase": "runtime_energy",
+      "status": "completed",
+      "evidence": "results/energy/thread_sweep/summary.json",
+      "implementation": [
+        "scripts/thread_energy_sweep.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "threads": 4,
+      "replicates": 3,
+      "median_latency_ms": 2.7231,
+      "mean_estimated_j_per_inference": 0.05381813412112636,
+      "energy_stdev": 0.0008580305580479186,
+      "energy_min": 0.05292444383984655,
+      "energy_max": 0.054635390788859484,
+      "codecarbon_cpu_mode": "cpu_load",
+      "cpu_tdp_w": 45.0,
+      "model_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "latency_ratio_to_matched_4t": 1.0,
+      "estimated_energy_ratio_to_matched_4t": 1.0,
+      "name": "cpu_threads_4",
+      "label": "FP32 CPU 4 threads",
+      "phase": "runtime_energy",
+      "status": "completed",
+      "evidence": "results/energy/thread_sweep/summary.json",
+      "implementation": [
+        "scripts/thread_energy_sweep.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "threads": 8,
+      "replicates": 3,
+      "median_latency_ms": 2.85495,
+      "mean_estimated_j_per_inference": 0.08502469933105229,
+      "energy_stdev": 0.004110729244067162,
+      "energy_min": 0.08076521460977594,
+      "energy_max": 0.08896846687066097,
+      "codecarbon_cpu_mode": "cpu_load",
+      "cpu_tdp_w": 45.0,
+      "model_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "latency_ratio_to_matched_4t": 1.048419081194227,
+      "estimated_energy_ratio_to_matched_4t": 1.5798522323291726,
+      "name": "cpu_threads_8",
+      "label": "FP32 CPU 8 threads",
+      "phase": "runtime_energy",
+      "status": "completed",
+      "evidence": "results/energy/thread_sweep/summary.json",
+      "implementation": [
+        "scripts/thread_energy_sweep.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
+      "sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "input_shape": [
+        1,
+        3,
+        224,
+        224
+      ],
+      "threads": 4,
+      "runs": 1000,
+      "warmup": 100,
+      "spinning_enabled": true,
+      "provider": "CPUExecutionProvider",
+      "load_ms": 33.858400012832135,
+      "median_ms": 2.7892,
+      "p95_ms": 6.5859250000000005,
+      "mean_ms": 3.399693533333333,
+      "file_bytes": 8919497,
+      "peak_rss_mib": 86.42578125,
+      "rss_before_session_mib": 46.70703125,
+      "session_rss_delta_mib": 31.14453125,
+      "process_cpu_seconds": 12.640625,
+      "process_cpu_percent_one_core_basis": 390.291021357899,
+      "platform": "Windows-10-10.0.19045-SP0",
+      "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+      "onnxruntime": "1.31.0",
+      "accuracy": 1.0,
+      "per_class_accuracy": {
+        "0": 1.0
+      },
+      "timing_input": "first provided preprocessed sample",
+      "energy_j_per_inference": 0.05492719441706297,
+      "energy_kind": "codecarbon_estimate_not_device_meter",
+      "validation_examples": 1,
+      "energy_runs": 12066,
+      "energy_duration_s": 30.034159199974965,
+      "codecarbon_cpu_mode": "cpu_load",
+      "codecarbon_cpu_tdp_w": 45.0,
+      "codecarbon_mode": "tdp_estimate",
+      "codecarbon_record": {
+        "timestamp": "2026-10-13T11:23:39",
+        "project_name": "codecarbon",
+        "run_id": "aa396ed0-8196-41b7-ba65-b724294cc999",
+        "experiment_id": "5b0fa12a-3dd7-45bb-9766-cc326314d9f1",
+        "duration": 30.060111100028735,
+        "emissions": 6.513244796420865e-05,
+        "emissions_rate": 2.166740094455153e-06,
+        "cpu_power": 11.236248838839265,
+        "gpu_power": 0.0,
+        "ram_power": 10.0,
+        "cpu_energy": 9.50606522747779e-05,
+        "gpu_energy": 0.0,
+        "ram_energy": 8.122407750035766e-05,
+        "energy_consumed": 0.00017628472977513553,
+        "water_consumed": 0.0,
+        "country_name": "United States",
+        "country_iso_code": "USA",
+        "region": null,
+        "cloud_provider": "",
+        "cloud_region": "",
+        "os": "Windows-10-10.0.19045-SP0",
+        "python_version": "3.11.16",
+        "codecarbon_version": "3.3.1",
+        "cpu_count": 16,
+        "cpu_model": "AMD Ryzen 7 5800H with Radeon Graphics",
+        "gpu_count": 1,
+        "gpu_model": "1 x NVIDIA GeForce RTX 3070 Laptop GPU",
+        "longitude": null,
+        "latitude": null,
+        "ram_total_size": 27.855533599853516,
+        "tracking_mode": "process",
+        "cpu_utilization_percent": 5.524137931034482,
+        "gpu_utilization_percent": 0,
+        "ram_utilization_percent": 49.28965517241378,
+        "ram_used_gb": 13.731379541857489,
+        "on_cloud": "N",
+        "pue": 1.0,
+        "wue": 0.0
+      },
+      "energy_csv": "E:\\Projects\\Minimilist challenge\\results\\energy\\runtime\\baseline_spin_rep1\\emissions.csv",
+      "energy_gpu_ids": [],
+      "energy_scope": "CodeCarbon process-attributed CPU plus estimated system RAM; GPU excluded",
+      "energy_note": "Windows AMD CPU may use TDP estimation; inspect startup logs and compare both models on the same machine.",
+      "name": "baseline_spin",
+      "replicates": 3,
+      "energy_stdev": 0.0020593308036014166,
+      "energy_min": 0.052596140161651574,
+      "energy_max": 0.05649951744249622,
+      "energy_estimation_note": "Process CPU TDP/load plus system RAM heuristic, GPU excluded. Default Windows Balanced plan, AC power.",
+      "aggregate_note": "Median of run medians/P95, mean of means/energy, max of process RSS peaks",
+      "evidence": "results/energy/runtime/summary.json",
+      "latency_ratio_to_matched_baseline": 1.0,
+      "estimated_energy_ratio_to_matched_baseline": 1.0,
+      "phase": "runtime_energy",
+      "status": "completed",
+      "label": "baseline_spin",
+      "implementation": [
+        "scripts/runtime_energy_sweep.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "model": "E:\\Projects\\Minimilist challenge\\artifacts\\baseline\\model_fp32.onnx",
+      "sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "input_shape": [
+        1,
+        3,
+        224,
+        224
+      ],
+      "threads": 4,
+      "runs": 1000,
+      "warmup": 100,
+      "spinning_enabled": false,
+      "provider": "CPUExecutionProvider",
+      "load_ms": 31.680200016126037,
+      "median_ms": 3.78285,
+      "p95_ms": 6.4233400000000005,
+      "mean_ms": 4.060647633333334,
+      "file_bytes": 8919497,
+      "peak_rss_mib": 86.36328125,
+      "rss_before_session_mib": 46.73046875,
+      "session_rss_delta_mib": 31.98828125,
+      "process_cpu_seconds": 11.640625,
+      "process_cpu_percent_one_core_basis": 307.87674102341265,
+      "platform": "Windows-10-10.0.19045-SP0",
+      "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+      "onnxruntime": "1.31.0",
+      "accuracy": 1.0,
+      "per_class_accuracy": {
+        "0": 1.0
+      },
+      "timing_input": "first provided preprocessed sample",
+      "energy_j_per_inference": 0.06400360972271547,
+      "energy_kind": "codecarbon_estimate_not_device_meter",
+      "validation_examples": 1,
+      "energy_runs": 7832,
+      "energy_duration_s": 30.022744999965653,
+      "codecarbon_cpu_mode": "cpu_load",
+      "codecarbon_cpu_tdp_w": 45.0,
+      "codecarbon_mode": "tdp_estimate",
+      "codecarbon_record": {
+        "timestamp": "2026-10-13T11:24:17",
+        "project_name": "codecarbon",
+        "run_id": "14ede959-4f87-42c4-b4e8-749ab6d5c717",
+        "experiment_id": "5b0fa12a-3dd7-45bb-9766-cc326314d9f1",
+        "duration": 30.045890100009274,
+        "emissions": 5.278150939271235e-05,
+        "emissions_rate": 1.7566964805178484e-06,
+        "cpu_power": 7.283267003334668,
+        "gpu_power": 0.0,
+        "ram_power": 10.0,
+        "cpu_energy": 6.131215081813923e-05,
+        "gpu_energy": 0.0,
+        "ram_energy": 8.154405083316509e-05,
+        "energy_consumed": 0.0001428562016513043,
+        "water_consumed": 0.0,
+        "country_name": "United States",
+        "country_iso_code": "USA",
+        "region": null,
+        "cloud_provider": "",
+        "cloud_region": "",
+        "os": "Windows-10-10.0.19045-SP0",
+        "python_version": "3.11.16",
+        "codecarbon_version": "3.3.1",
+        "cpu_count": 16,
+        "cpu_model": "AMD Ryzen 7 5800H with Radeon Graphics",
+        "gpu_count": 1,
+        "gpu_model": "1 x NVIDIA GeForce RTX 3070 Laptop GPU",
+        "longitude": null,
+        "latitude": null,
+        "ram_total_size": 27.855533599853516,
+        "tracking_mode": "process",
+        "cpu_utilization_percent": 0.0,
+        "gpu_utilization_percent": 0,
+        "ram_utilization_percent": 49.493103448275875,
+        "ram_used_gb": 13.786487184721848,
+        "on_cloud": "N",
+        "pue": 1.0,
+        "wue": 0.0
+      },
+      "energy_csv": "E:\\Projects\\Minimilist challenge\\results\\energy\\runtime\\baseline_sleep_rep1\\emissions.csv",
+      "energy_gpu_ids": [],
+      "energy_scope": "CodeCarbon process-attributed CPU plus estimated system RAM; GPU excluded",
+      "energy_note": "Windows AMD CPU may use TDP estimation; inspect startup logs and compare both models on the same machine.",
+      "name": "baseline_sleep",
+      "replicates": 3,
+      "energy_stdev": 0.0018064197690743009,
+      "energy_min": 0.06208018754291018,
+      "energy_max": 0.06566423977843407,
+      "energy_estimation_note": "Process CPU TDP/load plus system RAM heuristic, GPU excluded. Default Windows Balanced plan, AC power.",
+      "aggregate_note": "Median of run medians/P95, mean of means/energy, max of process RSS peaks",
+      "evidence": "results/energy/runtime/summary.json",
+      "latency_ratio_to_matched_baseline": 1.3562491036856446,
+      "estimated_energy_ratio_to_matched_baseline": 1.1652444731972864,
+      "phase": "runtime_energy",
+      "status": "completed",
+      "label": "baseline_sleep",
+      "implementation": [
+        "scripts/runtime_energy_sweep.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "model": "E:\\Projects\\Minimilist challenge\\artifacts\\all_data\\resize192_head_ce_w16\\model_weight16.onnx",
+      "sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+      "input_shape": [
+        1,
+        3,
+        224,
+        224
+      ],
+      "threads": 4,
+      "runs": 1000,
+      "warmup": 100,
+      "spinning_enabled": true,
+      "provider": "CPUExecutionProvider",
+      "load_ms": 41.02730000158772,
+      "median_ms": 2.0538499999999997,
+      "p95_ms": 4.383745,
+      "mean_ms": 2.4898134666666665,
+      "file_bytes": 4496556,
+      "peak_rss_mib": 83.3359375,
+      "rss_before_session_mib": 46.64453125,
+      "session_rss_delta_mib": 34.234375,
+      "process_cpu_seconds": 8.359375,
+      "process_cpu_percent_one_core_basis": 397.3583108444514,
+      "platform": "Windows-10-10.0.19045-SP0",
+      "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+      "onnxruntime": "1.31.0",
+      "accuracy": 0.0,
+      "per_class_accuracy": {
+        "0": 0.0
+      },
+      "timing_input": "first provided preprocessed sample",
+      "energy_j_per_inference": 0.04533759326123189,
+      "energy_kind": "codecarbon_estimate_not_device_meter",
+      "validation_examples": 1,
+      "energy_runs": 13956,
+      "energy_duration_s": 30.03510290000122,
+      "codecarbon_cpu_mode": "cpu_load",
+      "codecarbon_cpu_tdp_w": 45.0,
+      "codecarbon_mode": "tdp_estimate",
+      "codecarbon_record": {
+        "timestamp": "2026-10-13T11:24:53",
+        "project_name": "codecarbon",
+        "run_id": "7fd22ade-4f9f-4c71-a0b3-d9d1f8b649e7",
+        "experiment_id": "5b0fa12a-3dd7-45bb-9766-cc326314d9f1",
+        "duration": 30.06203629996162,
+        "emissions": 6.393448059839843e-05,
+        "emissions_rate": 2.126751493493475e-06,
+        "cpu_power": 10.856556628960254,
+        "gpu_power": 0.0,
+        "ram_power": 10.0,
+        "cpu_energy": 9.182003751022835e-05,
+        "gpu_energy": 0.0,
+        "ram_energy": 8.122232444422682e-05,
+        "energy_consumed": 0.00017304236195445522,
+        "water_consumed": 0.0,
+        "country_name": "United States",
+        "country_iso_code": "USA",
+        "region": null,
+        "cloud_provider": "",
+        "cloud_region": "",
+        "os": "Windows-10-10.0.19045-SP0",
+        "python_version": "3.11.16",
+        "codecarbon_version": "3.3.1",
+        "cpu_count": 16,
+        "cpu_model": "AMD Ryzen 7 5800H with Radeon Graphics",
+        "gpu_count": 1,
+        "gpu_model": "1 x NVIDIA GeForce RTX 3070 Laptop GPU",
+        "longitude": null,
+        "latitude": null,
+        "ram_total_size": 27.855533599853516,
+        "tracking_mode": "process",
+        "cpu_utilization_percent": 1.9689655172413794,
+        "gpu_utilization_percent": 0,
+        "ram_utilization_percent": 49.027586206896565,
+        "ram_used_gb": 13.656093202788254,
+        "on_cloud": "N",
+        "pue": 1.0,
+        "wue": 0.0
+      },
+      "energy_csv": "E:\\Projects\\Minimilist challenge\\results\\energy\\runtime\\resize192_head_ce_w16_spin_rep1\\emissions.csv",
+      "energy_gpu_ids": [],
+      "energy_scope": "CodeCarbon process-attributed CPU plus estimated system RAM; GPU excluded",
+      "energy_note": "Windows AMD CPU may use TDP estimation; inspect startup logs and compare both models on the same machine.",
+      "name": "resize192_head_ce_w16_spin",
+      "replicates": 3,
+      "energy_stdev": 0.0020449499292590823,
+      "energy_min": 0.04373510192171332,
+      "energy_max": 0.04764078311878669,
+      "energy_estimation_note": "Process CPU TDP/load plus system RAM heuristic, GPU excluded. Default Windows Balanced plan, AC power.",
+      "aggregate_note": "Median of run medians/P95, mean of means/energy, max of process RSS peaks",
+      "evidence": "results/energy/runtime/summary.json",
+      "latency_ratio_to_matched_baseline": 0.7363580955112575,
+      "estimated_energy_ratio_to_matched_baseline": 0.8254125072724978,
+      "phase": "runtime_energy",
+      "status": "completed",
+      "label": "resize192_head_ce_w16_spin",
+      "implementation": [
+        "scripts/runtime_energy_sweep.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "model": "E:\\Projects\\Minimilist challenge\\artifacts\\all_data\\resize192_head_ce_w16\\model_weight16.onnx",
+      "sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+      "input_shape": [
+        1,
+        3,
+        224,
+        224
+      ],
+      "threads": 4,
+      "runs": 1000,
+      "warmup": 100,
+      "spinning_enabled": false,
+      "provider": "CPUExecutionProvider",
+      "load_ms": 44.59740000311285,
+      "median_ms": 3.4335,
+      "p95_ms": 6.217999999999999,
+      "mean_ms": 4.100048366666667,
+      "file_bytes": 4496556,
+      "peak_rss_mib": 83.5390625,
+      "rss_before_session_mib": 46.55078125,
+      "session_rss_delta_mib": 34.50390625,
+      "process_cpu_seconds": 10.90625,
+      "process_cpu_percent_one_core_basis": 298.8557206623448,
+      "platform": "Windows-10-10.0.19045-SP0",
+      "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+      "onnxruntime": "1.31.0",
+      "accuracy": 0.0,
+      "per_class_accuracy": {
+        "0": 0.0
+      },
+      "timing_input": "first provided preprocessed sample",
+      "energy_j_per_inference": 0.05527868752871295,
+      "energy_kind": "codecarbon_estimate_not_device_meter",
+      "validation_examples": 1,
+      "energy_runs": 9549,
+      "energy_duration_s": 30.02307600004133,
+      "codecarbon_cpu_mode": "cpu_load",
+      "codecarbon_cpu_tdp_w": 45.0,
+      "codecarbon_mode": "tdp_estimate",
+      "codecarbon_record": {
+        "timestamp": "2026-10-13T11:25:31",
+        "project_name": "codecarbon",
+        "run_id": "10ac574b-72c4-4feb-adfe-5e8acd02d6a0",
+        "experiment_id": "5b0fa12a-3dd7-45bb-9766-cc326314d9f1",
+        "duration": 30.048950400028843,
+        "emissions": 5.041401505480378e-05,
+        "emissions_rate": 1.6777296505755951e-06,
+        "cpu_power": 6.577175115589711,
+        "gpu_power": 0.0,
+        "ram_power": 10.0,
+        "cpu_energy": 5.482617185426603e-05,
+        "gpu_energy": 0.0,
+        "ram_energy": 8.162226972280125e-05,
+        "energy_consumed": 0.0001364484415770673,
+        "water_consumed": 0.0,
+        "country_name": "United States",
+        "country_iso_code": "USA",
+        "region": null,
+        "cloud_provider": "",
+        "cloud_region": "",
+        "os": "Windows-10-10.0.19045-SP0",
+        "python_version": "3.11.16",
+        "codecarbon_version": "3.3.1",
+        "cpu_count": 16,
+        "cpu_model": "AMD Ryzen 7 5800H with Radeon Graphics",
+        "gpu_count": 1,
+        "gpu_model": "1 x NVIDIA GeForce RTX 3070 Laptop GPU",
+        "longitude": null,
+        "latitude": null,
+        "ram_total_size": 27.855533599853516,
+        "tracking_mode": "process",
+        "cpu_utilization_percent": 1.1482758620689655,
+        "gpu_utilization_percent": 0,
+        "ram_utilization_percent": 49.34137931034481,
+        "ram_used_gb": 13.743777702594626,
+        "on_cloud": "N",
+        "pue": 1.0,
+        "wue": 0.0
+      },
+      "energy_csv": "E:\\Projects\\Minimilist challenge\\results\\energy\\runtime\\resize192_head_ce_w16_sleep_rep1\\emissions.csv",
+      "energy_gpu_ids": [],
+      "energy_scope": "CodeCarbon process-attributed CPU plus estimated system RAM; GPU excluded",
+      "energy_note": "Windows AMD CPU may use TDP estimation; inspect startup logs and compare both models on the same machine.",
+      "name": "resize192_head_ce_w16_sleep",
+      "replicates": 3,
+      "energy_stdev": 0.004106754293871862,
+      "energy_min": 0.05144144828541651,
+      "energy_max": 0.059610215576413494,
+      "energy_estimation_note": "Process CPU TDP/load plus system RAM heuristic, GPU excluded. Default Windows Balanced plan, AC power.",
+      "aggregate_note": "Median of run medians/P95, mean of means/energy, max of process RSS peaks",
+      "evidence": "results/energy/runtime/summary.json",
+      "latency_ratio_to_matched_baseline": 1.2309981356661408,
+      "estimated_energy_ratio_to_matched_baseline": 1.006399254784089,
+      "phase": "runtime_energy",
+      "status": "completed",
+      "label": "resize192_head_ce_w16_sleep",
+      "implementation": [
+        "scripts/runtime_energy_sweep.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "status": "completed",
+      "purpose": "GPU training / CPU export and inference pipeline verification, not a competition candidate",
+      "training_examples": 100,
+      "optimizer_steps": 5,
+      "training": {
+        "epochs": 1,
+        "train_limit": 100,
+        "teacher": null,
+        "teacher_sha256": null,
+        "alpha": 0.5,
+        "temperature": 4,
+        "lr": 1e-05,
+        "seed": 42,
+        "batch_size": 20,
+        "bn_running_stats": "frozen",
+        "head_only": false,
+        "trained_parameter_count": 2236682,
+        "split_sha256": null,
+        "protocol": "organizer_all_data",
+        "available_train_count": 27000,
+        "history": [
+          {
+            "epoch": 1,
+            "loss": 0.044976741261780265
+          }
+        ],
+        "seconds": 8.18067269999301,
+        "execution": {
+          "device": "cuda",
+          "device_name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+          "torch_version": "2.8.0+cu128",
+          "cuda_version": "12.8",
+          "amp": true,
+          "amp_dtype": "float16",
+          "workers": 0,
+          "tf32": false,
+          "cudnn_benchmark": false,
+          "checkpoint_tensor_device": "cpu"
+        }
+      },
+      "checkpoint_sha256": "35b00fce89f79295ef62ad8589d012444c73e79f0c5dd3eae9904f6d67082ba2",
+      "cpu_export_recipe": "artifacts/gpu_smoke/export/recipe.json",
+      "accuracy_evidence": "results/gpu_training/smoke_accuracy.json",
+      "selected_candidate_changed": false,
+      "checkpoint_validation": {
+        "changed_tensor_count": 158,
+        "all_checkpoint_tensors_finite": true,
+        "bn_buffers_unchanged": true,
+        "checkpoint_tensors_cpu": true
+      },
+      "name": "gpu_training_pipeline",
+      "label": "RTX 3070 training / CPU inference verification",
+      "phase": "training_environment",
+      "evidence": "results/gpu_training/verification.json",
+      "implementation": [
+        "scripts/setup_gpu_training.ps1",
+        "scripts/verify_gpu_training.py",
+        "edgeprep/challenge.py"
+      ],
+      "training_device": "NVIDIA GeForce RTX 3070 Laptop GPU",
+      "amp": true,
+      "seconds": 8.18067269999301,
+      "inference_provider": "CPUExecutionProvider"
+    },
+    {
+      "name": "latency_baseline",
+      "median_ms": 4.893050000000001,
+      "run_medians_ms": [
+        4.893050000000001,
+        5.2014499999999995,
+        2.6362,
+        5.3629999999999995,
+        3.35915
+      ],
+      "median_min_ms": 2.6362,
+      "median_max_ms": 5.3629999999999995,
+      "p95_ms": 8.211164999999998,
+      "replicates": 5,
+      "model_sha256": "0110d1204a3c304ceb5d4a3c178897d3804b6840014170a1407c3781f0ca7dc0",
+      "threads": 4,
+      "warmup": 100,
+      "runs_per_rep": 1000,
+      "provider": "CPUExecutionProvider",
+      "spinning_enabled": true,
+      "evidence": [
+        "results/latency/resize192/baseline_rep1.json",
+        "results/latency/resize192/baseline_rep2.json",
+        "results/latency/resize192/baseline_rep3.json",
+        "results/latency/resize192/baseline_rep4.json",
+        "results/latency/resize192/baseline_rep5.json"
+      ],
+      "latency_ratio_to_matched_baseline": 1.0,
+      "label": "baseline",
+      "phase": "matched_192_latency",
+      "status": "completed",
+      "implementation": [
+        "scripts/compare_192_latency.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "latency_resize192",
+      "median_ms": 2.22175,
+      "run_medians_ms": [
+        1.96465,
+        3.61175,
+        2.22175,
+        3.13075,
+        2.1301
+      ],
+      "median_min_ms": 1.96465,
+      "median_max_ms": 3.61175,
+      "p95_ms": 5.581004999999998,
+      "replicates": 5,
+      "model_sha256": "95faed83d1e2200034483c561fbee269dbf954dddb12f1b31833006ed0ed137f",
+      "threads": 4,
+      "warmup": 100,
+      "runs_per_rep": 1000,
+      "provider": "CPUExecutionProvider",
+      "spinning_enabled": true,
+      "evidence": [
+        "results/latency/resize192/resize192_rep1.json",
+        "results/latency/resize192/resize192_rep2.json",
+        "results/latency/resize192/resize192_rep3.json",
+        "results/latency/resize192/resize192_rep4.json",
+        "results/latency/resize192/resize192_rep5.json"
+      ],
+      "latency_ratio_to_matched_baseline": 0.45406239462094194,
+      "label": "resize192",
+      "phase": "matched_192_latency",
+      "status": "completed",
+      "implementation": [
+        "scripts/compare_192_latency.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "latency_resize192_head_ce",
+      "median_ms": 2.10755,
+      "run_medians_ms": [
+        2.0347999999999997,
+        4.0626,
+        2.10755,
+        4.2736,
+        1.8651499999999999
+      ],
+      "median_min_ms": 1.8651499999999999,
+      "median_max_ms": 4.2736,
+      "p95_ms": 4.743264999999999,
+      "replicates": 5,
+      "model_sha256": "ce00f44eaff23ca7ab07b4512b5a0fb989796e2a532725032dd29d7657c9ab1f",
+      "threads": 4,
+      "warmup": 100,
+      "runs_per_rep": 1000,
+      "provider": "CPUExecutionProvider",
+      "spinning_enabled": true,
+      "evidence": [
+        "results/latency/resize192/resize192_head_ce_rep1.json",
+        "results/latency/resize192/resize192_head_ce_rep2.json",
+        "results/latency/resize192/resize192_head_ce_rep3.json",
+        "results/latency/resize192/resize192_head_ce_rep4.json",
+        "results/latency/resize192/resize192_head_ce_rep5.json"
+      ],
+      "latency_ratio_to_matched_baseline": 0.4307231685758371,
+      "label": "resize192_head_ce",
+      "phase": "matched_192_latency",
+      "status": "completed",
+      "implementation": [
+        "scripts/compare_192_latency.py",
+        "edgeprep/benchmark.py"
+      ]
+    },
+    {
+      "name": "latency_resize192_head_ce_w16",
+      "median_ms": 2.1788,
+      "run_medians_ms": [
+        2.1788,
+        3.8339,
+        2.02435,
+        2.7014500000000004,
+        1.8374
+      ],
+      "median_min_ms": 1.8374,
+      "median_max_ms": 3.8339,
+      "p95_ms": 4.858795,
+      "replicates": 5,
+      "model_sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+      "threads": 4,
+      "warmup": 100,
+      "runs_per_rep": 1000,
+      "provider": "CPUExecutionProvider",
+      "spinning_enabled": true,
+      "evidence": [
+        "results/latency/resize192/resize192_head_ce_w16_rep1.json",
+        "results/latency/resize192/resize192_head_ce_w16_rep2.json",
+        "results/latency/resize192/resize192_head_ce_w16_rep3.json",
+        "results/latency/resize192/resize192_head_ce_w16_rep4.json",
+        "results/latency/resize192/resize192_head_ce_w16_rep5.json"
+      ],
+      "latency_ratio_to_matched_baseline": 0.445284638415712,
+      "label": "resize192_head_ce_w16",
+      "phase": "matched_192_latency",
+      "status": "completed",
+      "implementation": [
+        "scripts/compare_192_latency.py",
+        "edgeprep/benchmark.py"
       ]
     }
   ]
