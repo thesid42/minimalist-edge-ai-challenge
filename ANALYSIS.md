@@ -23,9 +23,9 @@ Measured directly from the supplied files and exact architectures:
 | MobileNetV2 student | 2,236,682 | 8.772 | 0.3262 G |
 | ResNet-50 teacher | 23,528,522 | 90.063 | 4.1317 G |
 
-The brief's baseline table lists [23.53] M parameters, [4.13] G MACs and [22.67] MB, which is internally inconsistent with the provided student. Its parameter/MAC figures match the teacher. The bracketed accuracy and missing worst-class value are also placeholders. **Do not reuse the earlier pre-release 10x compression bands**: the new PDF has a weighted rubric but no numeric bands or exact combined score formula, despite referring to calibrated bands.
+The brief's baseline table lists [23.53] M parameters, [4.13] G MACs and [22.67] MB, which is internally inconsistent with the provided student. Its parameter/MAC figures match the teacher. The printed accuracy is [98.00]% and worst-class accuracy is [XX.XX]%. At the user's explicit request, baseline_metrics.json transcribes the printed 98.00%, 23.53M, 22.67 MB and 4.13G values. Unknown fields remain null. The summary includes clearly named pdf_reference_* ratios using these numbers, alongside measured-student ratios; PDF ratios must not be represented as measured student compression. **Do not reuse the earlier pre-release 10x compression bands**: the new PDF has a weighted rubric but no numeric bands or exact combined score formula, despite referring to calibrated bands.
 
-Record official JSON separately, reproduce baseline accuracy, and explain any discrepancy before submitting. Compression must be relative to the supplied MobileNetV2. Compare like-for-like ONNX file sizes as an engineering measurement; also report original checkpoint size and use the organizer's prescribed file denominator for official metrics. Quantization changes storage precision, not the number of learned parameters.
+Record any later organizer JSON separately, reproduce baseline accuracy, and explain any discrepancy before submitting. Compression must be relative to the supplied MobileNetV2. Compare like-for-like ONNX file sizes as an engineering measurement; also report original checkpoint size and use the organizer's prescribed file denominator for official metrics. Quantization changes storage precision, not the number of learned parameters.
 
 ## Constraints and scoring implications
 
@@ -41,13 +41,32 @@ Energy is a baseline/final ratio on the same machine. TDP estimation is allowed 
 
 See results/challenge/summary.csv and summary.json for current consolidated measurements. Each candidate uses the same 500 provisional validation examples. No recovery is applied unless the candidate name explicitly says recovery.
 
-Initial accuracy: FP32 baseline 99.2%; full S8S8 MinMax with 128 calibration images 92.6%; U8U8 at 128 images 91.4%; S8S8 MinMax at 256 images 91.0%; Percentile at 256 images 96.2%; keeping the first/last convolutions and classifier FP32 at 256 images 96.0%; also protecting depthwise layers 98.4%, with worst-class recall 94% versus baseline 96%.
+Diagnostic accuracy: FP32 measured baseline 99.2%; full S8S8 MinMax with 128 calibration images 92.6%; U8U8 at 128 images 91.4%; S8S8 MinMax at 256 images 91.0%; Percentile at 256 images 96.2%; keeping the first/last convolutions and classifier FP32 at 256 images 96.0%; also protecting depthwise layers 98.4%, with worst-class recall 94% versus baseline 96%.
 
 This is a useful controlled comparison: 256-image MinMax versus 256-image Percentile isolates the calibration method; 256-image full MinMax versus end-protected versus end-and-depthwise-protected isolates precision policy. Increasing sample count alone did not help in this run. U8U8 is worth testing on AVX2 but did not recover accuracy here. A local gain does not establish device-toolchain compatibility or official-split accuracy.
 
 Uniform structural pruning, nominal 5% / 10% with channel multiples of eight, dropped accuracy to 16.0% / 17.2%. Dependency handling and export parity pass, but both models collapse semantically. Expansion-only pruning, preserving bottleneck outputs/residual widths and ranking BN-scaled projection-column norms, improves the starting point but still drops to 83.2% / 51.0% without recovery. Nominal channel ratio is not parameter reduction: expansion 5% removes about 4.35% of parameters, while uniform 5% removes about 10.41%. Rounding can make small layers lose a larger fraction than the headline ratio.
 
 The initial results support protecting cheap sensitive layers and targeting high-parameter pointwise convolutions. They do **not** support choosing a pruned model without recovery. Three pipeline tests pass: split misuse rejection, balanced partition sampling, and deterministic dependency-safe replay / fixed-input ONNX export of the actual student. CPU dependency integrity passes. An eight-image teacher-guided recovery smoke test completes and its state replays into a valid ONNX graph; it is not an accuracy-improvement claim.
+
+## Recovery, runtime and energy results
+
+Expansion-only 5% pruning followed by one epoch on the same 500 provisional training images reached 95.6% with CE and 96.0% with teacher KL + CE, from 83.2% before recovery. Worst-class recall was 76% / 82%, versus baseline 96% and selective pointwise INT8 94%. The KD improvement is only two images out of 500; one seed cannot establish a reliable superiority claim. Reported recovery times were 71.7 / 101.6 seconds during partially concurrent preparation. They are indicative, not a controlled serial cost comparison. An accuracy recovery gain is clear; the accuracy/parameter tradeoff still does not beat the unpruned selective-quantization candidate for reliability.
+
+| Candidate | Diagnostic accuracy | Worst-class recall | ONNX MiB | CPU median, 1 thread | CPU median, 4 threads |
+|---|---:|---:|---:|---:|---:|
+| FP32 student | 99.2% | 96% | 8.506 | 7.077 ms | 2.167 ms |
+| Full S8S8, MinMax / 256 | 91.0% | 66% | 2.526 | 9.882 ms | 5.251 ms |
+| Full S8S8, Percentile / 256 | 96.2% | 80% | 2.526 | 9.709 ms | 5.788 ms |
+| Protect ends + depthwise | 98.4% | 94% | 3.772 | 9.917 ms | 5.333 ms |
+| Expansion 5% + CE | 95.6% | 76% | about 8.14 | 6.733 ms | 2.164 ms |
+| Expansion 5% + KD | 96.0% | 82% | about 8.14 | 6.763 ms | 2.058 ms |
+
+The selective INT8 graph is 2.255x smaller than measured FP32 ONNX, with unchanged parameter count, but 40.1% slower at one thread and 2.46x slower at four threads. Its RSS peak was 87.3 MiB versus baseline 85.3 MiB, so it did not improve peak process memory here. Full INT8 uses less RAM but loses much more accuracy. Small RSS differences can reflect process/runtime allocation variation and should not be overinterpreted.
+
+Same-machine, same-input, one-thread 20-second CodeCarbon windows estimated 0.09414 J/inference for FP32 and 0.13400 for selective INT8, a 1.424x increase. Startup logs explicitly show TDP / CPU-load fallback; idle GPU power was excluded. These are CPU/RAM estimates, not hardware-meter readings or AI Hub board measurements. The slower graph did not earn an energy win on this machine.
+
+Therefore keep **both** the original FP32 high-accuracy/runtime fallback and the selective INT8 storage candidate. The latter is worth testing on the actual organizer target, whose kernels may behave differently. Further pruning needs layer sensitivity and stronger low-cost recovery; do not submit the tested unrecovered pruning states. The published results cover thirteen model variants, twenty-six isolated thread-specific timing/RAM measurements and two energy estimates.
 
 ## Exploration priorities
 

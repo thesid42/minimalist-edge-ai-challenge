@@ -1,0 +1,35 @@
+{
+  "model": "E:\\Projects\\Minimilist challenge\\artifacts\\qdq_s8_256\\model_int8.onnx",
+  "sha256": "4238be6c91d5f3f94a8b66cb32693de5a09d110aa34583aa764c9e4dcac01b51",
+  "input_shape": [
+    1,
+    3,
+    224,
+    224
+  ],
+  "threads": 4,
+  "runs": 300,
+  "warmup": 20,
+  "provider": "CPUExecutionProvider",
+  "load_ms": 103.02480001701042,
+  "median_ms": 5.25095,
+  "p95_ms": 6.4294899999999995,
+  "mean_ms": 5.390872,
+  "file_bytes": 2648357,
+  "peak_rss_mib": 75.24609375,
+  "rss_before_session_mib": 46.35546875,
+  "session_rss_delta_mib": 28.890625,
+  "process_cpu_seconds": 6.4375,
+  "process_cpu_percent_one_core_basis": 397.87617252518316,
+  "platform": "Windows-10-10.0.19045-SP0",
+  "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+  "onnxruntime": "1.31.0",
+  "accuracy": 1.0,
+  "per_class_accuracy": {
+    "0": 1.0
+  },
+  "timing_input": "first provided preprocessed sample",
+  "energy_j_per_inference": null,
+  "energy_kind": "not_measured",
+  "validation_examples": 1
+}

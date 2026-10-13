@@ -10,6 +10,7 @@ import numpy as np
 def main():
     root=Path('results/challenge');rows=[]
     baseline=json.loads((root/'baseline_accuracy.json').read_text())
+    reference=json.loads(Path('baseline_metrics.json').read_text()) if Path('baseline_metrics.json').exists() else None
     for p in sorted(root.glob('*_accuracy.json')):
         name=p.name.removesuffix('_accuracy.json')
         acc=json.loads(p.read_text());model=Path(acc['model'])
@@ -35,6 +36,11 @@ def main():
     for row in rows:
         row['parameter_reduction']=baseline_row['parameters']/row['parameters']
         row['onnx_size_reduction']=baseline_row['size_mib']/row['size_mib']
+        if reference:
+            row['pdf_reference_accuracy_retention']=row['accuracy']/reference['accuracy']
+            row['pdf_reference_parameter_reduction']=reference['params_million']*1e6/row['parameters']
+            row['pdf_reference_size_reduction']=reference['size_mb']/row['size_mib']
+            row['pdf_reference_mac_reduction']=reference['macs_giga']*1e9/row['macs']
     (root/'summary.json').write_text(json.dumps(rows,indent=2),encoding='utf-8')
     fields=list(dict.fromkeys(k for row in rows for k in row))
     with open(root/'summary.csv','w',newline='',encoding='utf-8') as stream:
@@ -43,17 +49,20 @@ def main():
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
-    fig,axes=plt.subplots(1,2,figsize=(13,5))
+    fig,axes=plt.subplots(1,2,figsize=(14,7))
+    colors=plt.get_cmap('tab20').colors
+    handles=[]
     for i,row in enumerate(rows):
-        for ax,x,key in [(axes[0],row['size_mib'],'Exported ONNX size (MiB)'),
-                         (axes[1],row.get('latency_t1_ms',np.nan),'CPU latency, batch 1 / one thread (ms)')]:
-            ax.scatter(x,row['accuracy']*100,s=55)
-            ax.annotate(row['candidate'],(x,row['accuracy']*100),fontsize=7,
-                        xytext=(4,4 if i%2 else -12),textcoords='offset points')
+        for panel,(ax,x,key) in enumerate([(axes[0],row['size_mib'],'Exported ONNX size (MiB)'),
+                         (axes[1],row.get('latency_t1_ms',np.nan),'CPU latency, batch 1 / one thread (ms)')]):
+            handle=ax.scatter(x,row['accuracy']*100,s=75,color=colors[i],edgecolors='white',linewidth=.7,label=row['candidate'])
+            if panel==0:handles.append(handle)
             ax.set_xlabel(key);ax.set_ylabel('Diagnostic accuracy (%)');ax.grid(alpha=.2)
-    fig.suptitle('EuroSAT pilot: 500 balanced provisional validation images')
-    fig.text(.5,.01,'Not official scores. Checkpoint training overlap unknown; no recovery except explicitly labelled candidates.',ha='center',fontsize=9)
-    fig.tight_layout(rect=(0,.05,1,.93));fig.savefig(root/'tradeoff.png',dpi=160);plt.close(fig)
+            ax.set_ylim(10,103);ax.margins(x=.1)
+    fig.suptitle('EuroSAT pilot: 13 variants / 500 balanced provisional validation images')
+    fig.legend(handles,[r['candidate'] for r in rows],loc='lower center',bbox_to_anchor=(.5,.035),ncol=4,frameon=False,fontsize=9)
+    fig.text(.5,.01,'Diagnostic only: checkpoint training overlap unknown. Accuracy and efficiency use measured student; PDF-reference ratios are also in CSV.',ha='center',fontsize=8)
+    fig.tight_layout(rect=(0,.22,1,.93));fig.savefig(root/'tradeoff.png',dpi=160);plt.close(fig)
     print('Saved summary.json, summary.csv and tradeoff.png')
 
 

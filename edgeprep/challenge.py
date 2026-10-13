@@ -76,11 +76,17 @@ def prune_model(model, ratio, round_to=8, scope="uniform"):
 def restore_recipe(path):
     recipe = json.loads(Path(path).read_text(encoding="utf-8"))
     source = Path(recipe["source_checkpoint"])
+    if not source.exists():
+        source = Path("Models") / PureWindowsPath(recipe["source_checkpoint"]).name
     if digest(source) != recipe["source_sha256"]:
         raise ValueError("Checkpoint differs from the recipe's original source")
     model = prune_model(load_model(source), recipe["pruning_ratio"], recipe["round_to"],recipe.get("pruning_scope","uniform"))
     if recipe.get("recovered_checkpoint"):
-        state = torch.load(recipe["recovered_checkpoint"], map_location="cpu", weights_only=True)
+        recovered = Path(recipe["recovered_checkpoint"])
+        if not recovered.exists(): recovered = Path(path).parent / "recovered_state.pt"
+        if recipe.get("recovered_sha256") and digest(recovered)!=recipe["recovered_sha256"]:
+            raise ValueError("Recovered checkpoint hash differs from recipe")
+        state = torch.load(recovered, map_location="cpu", weights_only=True)
         model.load_state_dict(state, strict=True)
     return model, recipe
 
@@ -195,6 +201,7 @@ def recover(args):
     out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
     torch.save(model.eval().state_dict(),out/"recovered_state.pt")
     recipe.update(recovered_checkpoint=str((out/"recovered_state.pt").resolve()),
+                  recovered_sha256=digest(out/"recovered_state.pt"),
                   recovery={"epochs":args.epochs,"train_limit":args.train_limit,"train_indices":train_ids,
                             "teacher":str(Path(args.teacher).resolve()) if args.teacher else None,
                             "teacher_sha256":digest(args.teacher) if args.teacher else None,

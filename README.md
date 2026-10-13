@@ -2,7 +2,9 @@
 
 Compress the **provided, already-distilled MobileNetV2** for ten-class EuroSAT RGB land-use classification. The optional ResNet-50 supports recovery distillation. Input is fixed at **(1, 3, 224, 224)**. Benchmark exported ONNX on CPU.
 
-The project is ready for diagnostic experiments. The organizers' `val_split.json`, `baseline_metrics.json`, starter notebook and common AI Hub device are still pending. A provisional split is included for testing; its accuracy is **not an official score**, because the supplied checkpoints may have trained on those images.
+The project is ready for diagnostic experiments. The organizers' `val_split.json`, reproduced baseline measurements, starter notebook and common AI Hub device are still pending. A provisional split is included for testing; its accuracy is **not an official score**, because the supplied checkpoints may have trained on those images.
+
+The requested printed PDF baseline is transcribed in [baseline_metrics.json](baseline_metrics.json): 98.00%, 23.53M parameters, 22.67 MB and 4.13G MACs. Its parameter/MAC figures match the teacher; measured student values and explicit PDF-reference ratios are kept separately. No official validation split is embedded in the PDF.
 
 Read [ANALYSIS.md](ANALYSIS.md) for constraints, current findings, prioritized experiments and event strategy. Results are under [results/challenge](results/challenge). Earlier speculative CIFAR preparation is archived locally and is not part of this repository.
 

@@ -1,0 +1,35 @@
+{
+  "model": "E:\\Projects\\Minimilist challenge\\artifacts\\expansion05_kd\\model_fp32.onnx",
+  "sha256": "4f5726d1d7b6dbe902a7fb570a51e44547aee6f80334d259d7d6cb4c18bba38b",
+  "input_shape": [
+    1,
+    3,
+    224,
+    224
+  ],
+  "threads": 4,
+  "runs": 300,
+  "warmup": 20,
+  "provider": "CPUExecutionProvider",
+  "load_ms": 39.754700002959,
+  "median_ms": 2.0575,
+  "p95_ms": 3.4056300000000004,
+  "mean_ms": 2.219963,
+  "file_bytes": 8533417,
+  "peak_rss_mib": 78.52734375,
+  "rss_before_session_mib": 46.58203125,
+  "session_rss_delta_mib": 31.9453125,
+  "process_cpu_seconds": 2.671875,
+  "process_cpu_percent_one_core_basis": 400.8832747944309,
+  "platform": "Windows-10-10.0.19045-SP0",
+  "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+  "onnxruntime": "1.31.0",
+  "accuracy": 1.0,
+  "per_class_accuracy": {
+    "0": 1.0
+  },
+  "timing_input": "first provided preprocessed sample",
+  "energy_j_per_inference": null,
+  "energy_kind": "not_measured",
+  "validation_examples": 1
+}

@@ -1,0 +1,144 @@
+{
+  "pdf_sha256": "9099b26c4b16df3f2b868ab2ccd85f10019e1ad8e64bbb99b11a489594cc99ca",
+  "pages": 13,
+  "embedded_attachment_names": [],
+  "hyperlinks": [
+    {
+      "page": 1,
+      "url": "https://drive.google.com/file/d/12bYZkUFWZicOYU7abdQ6GFRzxtFpCcpT/view?usp=sharing"
+    },
+    {
+      "page": 2,
+      "url": "https://drive.google.com/file/d/12bYZkUFWZicOYU7abdQ6GFRzxtFpCcpT/view?usp=sharing"
+    },
+    {
+      "page": 2,
+      "url": "https://drive.google.com/file/d/1Zijt-4dCmNdk_nglwJWYdXW3U82zqmPu/view?usp=sharing"
+    },
+    {
+      "page": 3,
+      "url": "https://brew.sh/"
+    },
+    {
+      "page": 3,
+      "url": "https://brew.sh/"
+    },
+    {
+      "page": 4,
+      "url": "https://aihub.qualcomm.com/"
+    },
+    {
+      "page": 4,
+      "url": "https://aihub.qualcomm.com/"
+    },
+    {
+      "page": 4,
+      "url": "https://github.com/phelber/EuroSAT"
+    },
+    {
+      "page": 4,
+      "url": "https://github.com/phelber/EuroSAT"
+    },
+    {
+      "page": 9,
+      "url": "https://pytorch.org/tutorials/intermediate/pruning_tutorial.html"
+    },
+    {
+      "page": 9,
+      "url": "https://pytorch.org/tutorials/intermediate/pruning_tutorial.html"
+    },
+    {
+      "page": 10,
+      "url": "https://onnxruntime.ai/"
+    },
+    {
+      "page": 10,
+      "url": "https://onnxruntime.ai/"
+    },
+    {
+      "page": 10,
+      "url": "https://pytorch.org/docs/stable/quantization.html"
+    },
+    {
+      "page": 10,
+      "url": "https://pytorch.org/docs/stable/quantization.html"
+    },
+    {
+      "page": 13,
+      "url": "https://pytorch.org/"
+    },
+    {
+      "page": 13,
+      "url": "https://pytorch.org/"
+    },
+    {
+      "page": 13,
+      "url": "https://pytorch.org/vision/stable/index.html"
+    },
+    {
+      "page": 13,
+      "url": "https://pytorch.org/vision/stable/index.html"
+    },
+    {
+      "page": 13,
+      "url": "https://github.com/phelber/EuroSAT"
+    },
+    {
+      "page": 13,
+      "url": "https://github.com/phelber/EuroSAT"
+    },
+    {
+      "page": 13,
+      "url": "https://onnx.ai/"
+    },
+    {
+      "page": 13,
+      "url": "https://onnx.ai/"
+    },
+    {
+      "page": 13,
+      "url": "https://onnxruntime.ai/"
+    },
+    {
+      "page": 13,
+      "url": "https://onnxruntime.ai/"
+    },
+    {
+      "page": 13,
+      "url": "https://github.com/Lyken17/pytorch-OpCounter"
+    },
+    {
+      "page": 13,
+      "url": "https://github.com/Lyken17/pytorch-OpCounter"
+    },
+    {
+      "page": 13,
+      "url": "https://codecarbon.io/"
+    },
+    {
+      "page": 13,
+      "url": "https://codecarbon.io/"
+    },
+    {
+      "page": 13,
+      "url": "https://psutil.readthedocs.io/"
+    },
+    {
+      "page": 13,
+      "url": "https://psutil.readthedocs.io/"
+    },
+    {
+      "page": 13,
+      "url": "https://psutil.readthedocs.io/"
+    },
+    {
+      "page": 13,
+      "url": "https://aihub.qualcomm.com/"
+    },
+    {
+      "page": 13,
+      "url": "https://aihub.qualcomm.com/"
+    }
+  ],
+  "val_split_evidence": "Page 2 says supplied at kickoff; page 5 reads external val_split.json. No indices or embedded attachment are present."
+}
