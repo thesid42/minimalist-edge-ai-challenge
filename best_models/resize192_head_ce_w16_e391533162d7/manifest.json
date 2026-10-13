@@ -1,0 +1,25 @@
+{
+  "name": "resize192_head_ce_w16",
+  "saved_utc": "2026-10-13T18:56:04.828599+00:00",
+  "selection_reason": "Selected portable edge candidate: nearly preserves overall accuracy, improves worst-class recall, halves ONNX storage, and improves matched CPU latency and estimated energy. Explicitly selected by the team; all 27000 images evaluated.",
+  "selection_method": "Explicit experiment winner; balance accuracy, worst-class recall, size, CPU latency and estimated energy. Not highest accuracy alone.",
+  "files": {
+    "model_weight16.onnx": {
+      "sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+      "bytes": 4496556
+    },
+    "recovered_state.pt": {
+      "sha256": "ac2c6d5264a5e51dedbea4a51f301cb0901134344f9c0d73f140ba934aeb8ff9",
+      "bytes": 9193803
+    }
+  },
+  "inference_model": "model_weight16.onnx",
+  "training_checkpoint": "recovered_state.pt",
+  "recipe": "recipe.json",
+  "metrics": "metrics.json",
+  "weight_precision": "FP16 initializers",
+  "cpu_compute_precision": "FP32",
+  "training_data_count": 27000,
+  "evaluation_count": 27000,
+  "accuracy_scope": "training_set"
+}

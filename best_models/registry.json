@@ -1,0 +1,11 @@
+{
+  "winners": [
+    {
+      "name": "resize192_head_ce_w16",
+      "bundle": "best_models/resize192_head_ce_w16_e391533162d7",
+      "model_sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+      "saved_utc": "2026-10-13T18:56:04.828599+00:00",
+      "selection_reason": "Selected portable edge candidate: nearly preserves overall accuracy, improves worst-class recall, halves ONNX storage, and improves matched CPU latency and estimated energy. Explicitly selected by the team; all 27000 images evaluated."
+    }
+  ]
+}

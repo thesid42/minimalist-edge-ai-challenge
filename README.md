@@ -10,9 +10,9 @@ Current evidence is under [results/all_data](results/all_data). [baseline_metric
 
 ## Latest completed results
 
-Refreshed from saved evidence at 2026-10-13 18:46 UTC. [Full results](docs/next_priority_results.md) and [numbered experiment log](experiments/README.md) are regenerated together.
+Refreshed from saved evidence at 2026-10-13 18:58 UTC. [Full results](docs/next_priority_results.md) and [numbered experiment log](experiments/README.md) are regenerated together.
 
-The strongest measured laptop candidate is **internal 192 + one full-data classifier recovery epoch + FP16 weight storage / FP32 CPU compute**. External input remains `(1,3,224,224)`.
+The measured 192 candidate uses **internal 192 + one full-data classifier recovery epoch + FP16 weight storage / FP32 CPU compute**. External input remains `(1,3,224,224)`.
 
 | Matched laptop measurement | Original student | Recovered 192 / weight16 |
 |---|---:|---:|
@@ -23,6 +23,9 @@ The strongest measured laptop candidate is **internal 192 + one full-data classi
 | Estimated J/inference, mean of 3 windows | 0.054927 | **0.045338** |
 
 Accuracy decreases 0.0519 percentage points; the candidate is 26.4% faster and uses 17.5% less estimated energy in this matched sequence. CodeCarbon uses CPU TDP/load plus a RAM heuristic on this Windows 10 laptop, with GPU excluded; these are not meter readings. FP16 storage halves file size while ORT folds weights to FP32 for CPU compute; it does not prove a RAM saving. Four threads outperformed 1/2/8 in the measured latency/energy tradeoff. Sleeping workers regressed latency here; the unrecovered 160 model loses too much accuracy (93.00%).
+
+
+**Saved winner weights:** [resize192_head_ce_w16](best_models/resize192_head_ce_w16_e391533162d7/README.md), with the inference ONNX, full recovered checkpoint, portable recipe, checksums and results. [Current selection](best_models/current.json) / [winner history](best_models/registry.json). Future winners are saved separately; older weights are retained. [Preservation workflow](docs/model_preservation.md).
 
 A separate direct latency comparison of all 192 variants is now complete (five repetitions, four CPU threads, default spinning):
 

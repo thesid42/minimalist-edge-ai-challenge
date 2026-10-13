@@ -7805,6 +7805,7 @@ a.anchor-link {
 <h1 id="Sequential-experiment-notebook">Sequential experiment notebook<a class="anchor-link" href="#Sequential-experiment-notebook">¶</a></h1><p>Read the numbered folders in order. Each README explains <strong>what changed, implementation, results and interpretation</strong>, with links to the original evidence. <code>Experiment_Log.ipynb</code> presents the same tables with saved outputs; no rerunning training is required to read it. <code>runs.json</code> is the machine-readable registry.</p>
 <p>Quantization reduces numerical precision and weight storage. Channel pruning physically removes parts of the network. Recovery trains a compressed model to restore accuracy. Device compilation prepares it for a particular runtime.</p>
 <p>Two accuracy protocols exist: the historical 500-image pilot and the current 27,000-image training-set evaluation. They are separate tables. Remote runs retain the historical 32-image numerical check and now add a labelled 1,000-image balanced diagnostic subset. That subset excludes 512 calibration images but is not held-out generalization or full-dataset accuracy. All model changes still start from the supplied student.</p>
+<p><strong>Current saved winner:</strong> <a href="../best_models/resize192_head_ce_w16_e391533162d7/README.md">resize192_head_ce_w16</a>. The versioned folder contains inference ONNX, recovered training weights, recipe, checksums and metrics. Older winners stay preserved. <a href="../docs/model_preservation.md">Saving future winners</a>.</p>
 </div>
 </div>
 </div>

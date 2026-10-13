@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "all_saved_weight_hashes_match": true,
+  "saved_onnx_outputs_identical_to_evaluated_artifact": true,
+  "cpu_provider": [
+    "CPUExecutionProvider"
+  ],
+  "input_shape": [
+    1,
+    3,
+    224,
+    224
+  ],
+  "output_shape": [
+    1,
+    10
+  ],
+  "recovered_state_identical_to_original_trained_checkpoint": true,
+  "checkpoint_finite_cpu_tensors": true,
+  "scope": "Integrity and load/inference verification only. Full accuracy and timings are retained original evidence, not rerun."
+}

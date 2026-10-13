@@ -137,6 +137,9 @@ Quantization reduces numerical precision and weight storage. Channel pruning phy
 Two accuracy protocols exist: the historical 500-image pilot and the current 27,000-image training-set evaluation. They are separate tables. Remote runs retain the historical 32-image numerical check and now add a labelled 1,000-image balanced diagnostic subset. That subset excludes 512 calibration images but is not held-out generalization or full-dataset accuracy. All model changes still start from the supplied student.
 
 """
+    saved=read("best_models/current.json")
+    if saved:
+        introduction+=f'**Current saved winner:** [{saved["name"]}](../{saved["bundle"]}/README.md). The versioned folder contains inference ONNX, recovered training weights, recipe, checksums and metrics. Older winners stay preserved. [Saving future winners](../docs/model_preservation.md).\n\n'
     index=introduction+"| Step | Experiment | Read |\n|---|---|---|\n"
     notebook_cells=[]
     def markdown(text):

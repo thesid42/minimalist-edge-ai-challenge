@@ -23,7 +23,7 @@ def main():
         final=next(r for r in energy['records'] if r['name']=='resize192_head_ce_w16_spin')
         bsize=Path(baseline['model']).stat().st_size/2**20
         csize=Path(candidate['model']).stat().st_size/2**20
-        parts += ['The strongest measured laptop candidate is **internal 192 + one full-data classifier recovery epoch + FP16 weight storage / FP32 CPU compute**. External input remains `(1,3,224,224)`.\n',
+        parts += ['The measured 192 candidate uses **internal 192 + one full-data classifier recovery epoch + FP16 weight storage / FP32 CPU compute**. External input remains `(1,3,224,224)`.\n',
             '| Matched laptop measurement | Original student | Recovered 192 / weight16 |\n|---|---:|---:|',
             f'| Accuracy on all 27,000 images | {baseline["accuracy"]*100:.4f}% | **{candidate["accuracy"]*100:.4f}%** |',
             f'| Worst class recall | {baseline["worst_class_accuracy"]*100:.2f}% | **{candidate["worst_class_accuracy"]*100:.2f}%** |',
@@ -31,6 +31,9 @@ def main():
             f'| Four-thread median latency, 3 repetitions | {original["median_ms"]:.3f} ms | **{final["median_ms"]:.3f} ms** |',
             f'| Estimated J/inference, mean of 3 windows | {original["energy_j_per_inference"]:.6f} | **{final["energy_j_per_inference"]:.6f}** |',
             f'\nAccuracy decreases {(baseline["accuracy"]-candidate["accuracy"])*100:.4f} percentage points; the candidate is {(1-final["latency_ratio_to_matched_baseline"])*100:.1f}% faster and uses {(1-final["estimated_energy_ratio_to_matched_baseline"])*100:.1f}% less estimated energy in this matched sequence. CodeCarbon uses CPU TDP/load plus a RAM heuristic on this Windows 10 laptop, with GPU excluded; these are not meter readings. FP16 storage halves file size while ORT folds weights to FP32 for CPU compute; it does not prove a RAM saving. Four threads outperformed 1/2/8 in the measured latency/energy tradeoff. Sleeping workers regressed latency here; the unrecovered 160 model loses too much accuracy (93.00%).\n']
+    saved=read('best_models/current.json')
+    if saved:
+        parts.append(f'\n**Saved winner weights:** [{saved["name"]}]({saved["bundle"]}/README.md), with the inference ONNX, full recovered checkpoint, portable recipe, checksums and results. [Current selection](best_models/current.json) / [winner history](best_models/registry.json). Future winners are saved separately; older weights are retained. [Preservation workflow](docs/model_preservation.md).\n')
     direct=read('results/latency/resize192/summary.json')
     if direct:
         parts+=['A separate direct latency comparison of all 192 variants is now complete (five repetitions, four CPU threads, default spinning):\n',
