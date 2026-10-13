@@ -13,6 +13,8 @@ The earlier selected `resize192_head_ce_w16` remains preserved as a historical F
 
 `best_models/current.json` identifies the current winner. `best_models/registry.json` keeps previously selected winners. Each winner gets a separate folder keyed by name and model hash; the save helper rejects different weights in an existing snapshot.
 
+[Two-page technical report for the current FP32 selection](../output/pdf/best192_fp32_technical_report.pdf), with an [editable text version](submission_best192.md).
+
 ## Future experiments
 
 Training already saves `recovered_state.pt` in its experiment output. Once full-data evaluation and CPU benchmarking justify promoting a candidate, save it before cleanup:

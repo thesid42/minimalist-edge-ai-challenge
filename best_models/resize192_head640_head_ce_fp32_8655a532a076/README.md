@@ -17,3 +17,5 @@ model, recipe = restore_recipe("best_models/resize192_head640_head_ce_fp32_8655a
 ```
 
 Run the saved ONNX with CPUExecutionProvider. Preserve this version when promoting a future winner.
+
+[Two-page submission technical report](../../output/pdf/best192_fp32_technical_report.pdf) / [editable report](../../docs/submission_best192.md).

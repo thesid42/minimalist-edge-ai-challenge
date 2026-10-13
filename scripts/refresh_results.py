@@ -62,6 +62,8 @@ def main():
         for name,label in [('baseline','Unchanged original224'),('recovered192','Recovered192')]:
             parts.append(f'| {label} | {rows[name+"_fp32"]["size_mib"]:.6f} MiB | {rows[name+"_weight16"]["size_mib"]:.6f} MiB |')
         parts.append(f'\nAt identical FP16 storage, recovered192 is **{storage["candidate_minus_baseline_weight16_bytes"]:,} bytes larger**. The roughly 50% portable-file reduction comes from weight precision; the baseline gets it too. Resolution reduction lowers spatial computation and recovery restores accuracy, while parameter count stays unchanged. [Full comparison and accuracy check](docs/matched_weight_storage.md).\n')
+    if (ROOT/'output/pdf/best192_fp32_technical_report.pdf').exists():
+        parts.append('\n**Submission report for the selected smaller192 FP32 model:** [two-page PDF](output/pdf/best192_fp32_technical_report.pdf) / [editable text](docs/submission_best192.md). It includes the pipeline tradeoff curve, matched metrics, per-class recall, energy mode and reproduction details.\n')
     saved=read('best_models/current.json')
     if saved:
         parts.append(f'\n**Saved winner weights:** [{saved["name"]}]({saved["bundle"]}/README.md), with the inference ONNX, full recovered checkpoint, portable recipe, checksums and results. [Current selection](best_models/current.json) / [winner history](best_models/registry.json). Future winners are saved separately; older weights are retained. [Preservation workflow](docs/model_preservation.md).\n')
