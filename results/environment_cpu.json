@@ -1,0 +1,27 @@
+{
+  "python": "3.11.16 (main, Sep  1 2026, 14:15:24) [MSC v.1944 64 bit (AMD64)]",
+  "executable": "E:\\Projects\\Minimilist challenge\\.venv\\Scripts\\python.exe",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "ram_gib": 27.855533599853516,
+  "logical_cpu_count": 16,
+  "packages": {
+    "torch": "2.8.0+cpu",
+    "torchvision": "0.23.0+cpu",
+    "torchaudio": "2.8.0+cpu",
+    "onnx": "1.23.2",
+    "onnxruntime": "1.31.0",
+    "thop": "0.1.1-2209072238",
+    "codecarbon": "3.3.1",
+    "psutil": "7.2.2",
+    "qai-hub": "0.56.0",
+    "matplotlib": "3.11.2",
+    "torch-pruning": "1.6.1",
+    "scikit-learn": "1.9.1",
+    "onnxscript": "0.7.2"
+  },
+  "cuda_available": false,
+  "cuda_runtime": null,
+  "gpu": null,
+  "optimizer_step": "passed",
+  "qai_config_present": false
+}

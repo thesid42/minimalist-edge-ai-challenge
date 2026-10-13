@@ -1,0 +1,16 @@
+{
+  "student": {
+    "path": "E:\\Projects\\Minimilist challenge\\Models\\student_mobilenetv2_distilled.pt",
+    "sha256": "842e9dc640bbdb6c71186ff2ecae06f670b1aef7be8ac6b64ede56f5c727c9a8",
+    "parameters": 2236682,
+    "macs": 326219520.0,
+    "size_mib": 8.77234935760498
+  },
+  "teacher": {
+    "path": "E:\\Projects\\Minimilist challenge\\Models\\teacher_resnet50_eurosat.pt",
+    "sha256": "5ba4d8e8105f0cada0f703b681be18314f9a5aa4b3d0f6951ebf6c51909f5b30",
+    "parameters": 23528522,
+    "macs": 4131715072.0,
+    "size_mib": 90.0627794265747
+  }
+}

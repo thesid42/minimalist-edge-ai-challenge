@@ -1,0 +1,11 @@
+{
+  "team_name": "REPLACE_ME",
+  "baseline": {"accuracy": null, "params_million": null, "size_mb": null, "macs_giga": null, "latency_ms": null, "peak_ram_mb": null, "joules_per_inference": null},
+  "final": {"accuracy": null, "params_million": null, "size_mb": null, "macs_giga": null, "latency_ms": null, "peak_ram_mb": null, "joules_per_inference": null},
+  "worst_class_accuracy": null,
+  "codecarbon_mode": "tdp_estimate",
+  "techniques_applied": [],
+  "ai_hub_profile_summary": "Pending organizer profile and authentication; local fallback allowed",
+  "measurement_machine": "REPLACE_ME",
+  "status": "TEMPLATE ONLY - NOT A COMPLETED SUBMISSION"
+}

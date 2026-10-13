@@ -1,0 +1,17 @@
+.venv/
+.venv-gpu/
+.tools/
+.cache/
+__pycache__/
+*.pyc
+data/
+artifacts/
+tmp/
+.env
+*.token
+Models/
+archive/
+results/**/*.npy
+results/**/*.npz
+.qai_hub/
+submission/

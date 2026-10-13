@@ -1,0 +1,17 @@
+{
+  "images": 27000,
+  "classes": {
+    "AnnualCrop": 0,
+    "Forest": 1,
+    "HerbaceousVegetation": 2,
+    "Highway": 3,
+    "Industrial": 4,
+    "Pasture": 5,
+    "PermanentCrop": 6,
+    "Residential": 7,
+    "River": 8,
+    "SeaLake": 9
+  },
+  "archive_md5": "c8fa014336c82ac7804f0398fcb19387",
+  "bad_images": []
+}
