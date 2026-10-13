@@ -1,0 +1,3 @@
+{
+  "text": "| Model / mode | ONNX MiB | Diagnostic accuracy | Median ms | P95 ms | Peak RSS MiB | Estimated W | Estimated J/image, mean +/- SD |\n|---|---:|---:|---:|---:|---:|---:|---:|\n| baseline_spin | 8.506 | 99.0% (100 images) | 2.227 | 2.378 | 108.56 | 12.93 | 0.039579 +/- 0.012240 |\n| baseline_sleep | 8.506 | 99.0% (100 images) | 2.664 | 2.876 | 102.56 | 9.33 | 0.029173 +/- 0.006575 |\n| candidate_spin | 4.288 | 100.0% (100 images) | 1.871 | 1.969 | 101.86 | 14.69 | 0.028200 +/- 0.000244 |\n| candidate_sleep | 4.288 | 100.0% (100 images) | 2.204 | 2.380 | 101.34 | 8.96 | 0.020962 +/- 0.000544 |"
+}

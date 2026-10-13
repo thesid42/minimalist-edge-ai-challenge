@@ -1,6 +1,7 @@
 """Refresh README, detailed results, sequential log and notebook saved outputs."""
 from datetime import datetime, timezone
 import json
+import re
 from pathlib import Path
 import sys
 ROOT=Path(__file__).resolve().parents[1]
@@ -57,11 +58,15 @@ def main():
             parts.append(f'| {label} | {timing} | {acc} |')
         parts.append('\nThe exact saved FP16-storage source is uploaded without extra quantization. Hub compilation expands its target payload to 8.523 MiB; the portable source stays 4.288 MiB. The 500-image sample has 50/class and excludes calibration data; accuracy is diagnostic training-pool accuracy. [Full device report and job evidence](docs/saved192_ai_hub.md).\n')
     parts+=['\nThe first Hub table above uses the original 224 model, not the recovered 192 candidate. Actual NPU placement is recorded per operation. These are training-pool diagnostic accuracies (100/class), disjoint from 512 calibration images; they are not all-data scores or held-out results. W8A16 gains two correct predictions over W8A8 on this sample at higher latency; its worst class is 88% vs W8A8\'s 89%, so it is not a uniform accuracy improvement. Hub power modes expose latency, not measured joules.\n',
-        'New training uses `.venv-train-gpu` / RTX 3070 / CUDA; laptop export, evaluation and inference use `.venv` / CPU. AI Hub can use CPU or NPU. A real 100-image, five-step GPU recovery, CPU export and CPU inference verification passed; it is a pipeline check, not a new competition result. **12 functional tests and dependency checks pass.**\n',
+        'New training uses `.venv-train-gpu` / RTX 3070 / CUDA; laptop export, evaluation and inference use `.venv` / CPU. AI Hub can use CPU or NPU. A real 100-image, five-step GPU recovery, CPU export and CPU inference verification passed; it is a pipeline check, not a new competition result. **18 functional tests and dependency checks pass.**\n',
         'See [GPU setup](docs/gpu_training.md). Refresh the README, log and saved notebook tables after each completed result: `.venv\\Scripts\\python.exe scripts/refresh_results.py`. This reads evidence only and submits no jobs or training.\n']
     path=ROOT/'README.md';text=path.read_text(encoding='utf-8')
     start=text.index('## Latest completed results');end=text.index('## Models and data',start)
-    path.write_text(text[:start]+'\n'.join(parts)+'\n'+text[end:],encoding='utf-8')
+    mac_blocks=re.findall(r'<!-- BEGIN (MAC[^>]+) -->.*?<!-- END \1 -->',text[start:end],flags=re.S)
+    preserved=[]
+    for marker in mac_blocks:
+        preserved.append(re.search(r'<!-- BEGIN '+re.escape(marker)+r' -->.*?<!-- END '+re.escape(marker)+r' -->',text[start:end],flags=re.S).group(0))
+    path.write_text(text[:start]+'\n'.join(parts)+'\n'+'\n\n'.join(preserved)+'\n'+text[end:],encoding='utf-8')
     print('Refreshed README, result report, numbered folders, registry and notebook')
 
 if __name__=='__main__':main()

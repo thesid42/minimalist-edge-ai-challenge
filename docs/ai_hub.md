@@ -80,6 +80,6 @@ New labelled 1,000-image evaluations replace reliance on 32-image smoke checks f
 
 ## Saved 192 winner: exact-phone 500-image test
 
-The recovered192 / FP16-storage winner is now tested separately on exact named Samsung Galaxy S24, CPU and NPU. Accuracy uses 500 labelled images (50/class), a separate immutable sample/reference directory, and the saved model hash. No extra Hub quantization is applied. [Current results, compiled storage behavior and reproduction](saved192_ai_hub.md), also recorded as experiment step 13.
+The recovered192 / FP16-storage winner is now tested separately on exact named Samsung Galaxy S24, CPU and NPU. Accuracy uses 500 labelled images (50/class), a separate immutable sample/reference directory, and the saved model hash. No extra Hub quantization is applied. [Current results, compiled storage behavior and reproduction](saved192_ai_hub.md), also recorded as experiment step 14.
 
 `hub_accuracy.py` now accepts `--model` and `--sample-dir` for preparation, and `--sample-dir` for submission. Collection automatically uses the manifest recorded in each run's labelled_jobs.json. The old original224 / 1,000-image reference remains intact.

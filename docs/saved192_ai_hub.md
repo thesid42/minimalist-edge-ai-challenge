@@ -11,7 +11,25 @@ Latency: separate on-device profile, 100 iterations, batch one, using the Hub-re
 | Runtime | Profile latency | Labelled accuracy | Correct / 500 | Worst class recall | Agreement with saved source | Actual operation placement |
 |---|---:|---:|---:|---:|---:|---|
 | CPU / four threads | 4.183 ms | 99.40% | 497 | 96.0% | 100.0% | {'CPU': 56} |
-| QNN NPU / burst | 0.435 ms | pending | pending | pending | pending | {'NPU': 105} |
+| QNN NPU / burst | 0.435 ms | 99.40% | 497 | 96.0% | 100.0% | {'NPU': 105} |
+
+## Class recall on the 500-image sample
+
+| Class | CPU | NPU |
+|---|---:|---:|
+| AnnualCrop | 100.0% | 100.0% |
+| Forest | 100.0% | 100.0% |
+| HerbaceousVegetation | 100.0% | 100.0% |
+| Highway | 100.0% | 100.0% |
+| Industrial | 100.0% | 100.0% |
+| Pasture | 98.0% | 98.0% |
+| PermanentCrop | 96.0% | 96.0% |
+| Residential | 100.0% | 100.0% |
+| River | 100.0% | 100.0% |
+| SeaLake | 100.0% | 100.0% |
+
+Both runtimes make the same three errors as the saved model locally: two PermanentCrop images and one Pasture image. Agreement is reported separately from label-based accuracy.
+
 
 ## What happened to weight storage?
 

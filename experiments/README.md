@@ -22,7 +22,8 @@ Two accuracy protocols exist: the historical 500-image pilot and the current 27,
 | 10 | Recovered model and worker-thread power tradeoff | [Details](10_runtime_power/README.md) |
 | 11 | GPU training environment and CPU inference verification | [Details](11_gpu_training/README.md) |
 | 12 | Direct comparison of 192 model latencies | [Details](12_192_latency/README.md) |
-| 13 | Saved 192 FP16-storage model on an edge phone | [Details](13_saved192_edge_500/README.md) |
+| 13 | Matched Mac CPU measurements | [Details](13_mac_cpu/README.md) |
+| 14 | Saved 192 FP16-storage model on an edge phone | [Details](14_saved192_edge_500/README.md) |
 
 Current CPU results:
 

@@ -96,6 +96,10 @@ def table(rows, remote=False):
 
 def main():
     OUT.mkdir(exist_ok=True)
+    previous=read("experiments/runs.json",{})
+    external_records=[r for r in previous.get("records",[]) if r["phase"].startswith("mac_")]
+    previous_notebook=read("experiments/Experiment_Log.ipynb",{})
+    external_cells=[c for c in previous_notebook.get("cells",[]) if any(k.startswith("mac_cpu") for k in c.get("metadata",{}))]
     historical=local_records("results/challenge", ["baseline","qdq_s8","qdq_u8","qdq_s8_256","qdq_percentile","qdq_protected","qdq_pointwise","prune05","prune10","expansion05","expansion10","expansion05_ce","expansion05_kd"], "historical_pilot")
     names=["baseline","qdq_pointwise","qdq_percentile512"]
     discovered=sorted((ROOT/"results/all_data").glob("*_accuracy.json"),key=lambda p:p.stat().st_mtime)
@@ -125,11 +129,12 @@ def main():
       ("10_runtime_power", "Recovered model and worker-thread power tradeoff", "Compare default versus sleeping ORT workers on unchanged FP32 and recovered-192 graphs. Three fresh serial repetitions, four threads, identical timing inputs and 30-second CodeCarbon windows. These are estimates. Worker options belong to the runtime and are not enforced by a submitted ONNX file. Accuracy evidence is separate full-data model evaluation.",["scripts/runtime_energy_sweep.py","docs/next_priority_results.md","docs/energy_measurement.md"],runtime_rows),
       ("11_gpu_training", "GPU training environment and CPU inference verification", "New laptop training uses RTX 3070 CUDA, while laptop evaluation/inference remains CPU-only. This does not constrain AI Hub CPU/NPU. Separate matching-version environments, fail-fast CUDA requirement, AMP and CPU-portable checkpoints. Real 100-image full-backbone recovery / five GPU optimizer steps, followed by CPU export and CPU inference, verifies the pipeline only. The earlier 27,000-image classifier recovery occurred on CPU before this preference and remains the selected candidate.",["docs/gpu_training.md","requirements-train-gpu.lock.txt","results/gpu_training/smoke_accuracy.json"],gpu_rows),
       ("12_192_latency", "Direct comparison of 192 model latencies", "Fresh rotating-order CPU timing compares unchanged 224, unchanged internal192, recovered192 FP32 and recovered192 FP16 storage. Five serial processes per model, 100 warmups / 1000 timings / four threads, default spinning. No training in parallel. Timing input is one real image; accuracy evidence remains the separate 27,000-image evaluations. FP16 storage still computes FP32; do not attribute noisy small timing differences to half-precision execution.",["scripts/compare_192_latency.py","results/latency/resize192/summary.json"],latency_rows),
-      ("13_saved192_edge_500", "Saved 192 FP16-storage model on an edge phone", "Test the exact saved winner on Samsung Galaxy S24 (Snapdragon 8 Gen 3), separately on CPU and QNN NPU, without additional quantization. Compile from the saved FP16-storage source; inspect compiler output size and actual operation placement. Accuracy uses 500 balanced real images (50/class), disjoint from 512 calibration images, with a local reference from this exact model. Separate microbenchmark profiles give steady inference latency, excluding upload/preprocessing. This is a training-pool diagnostic sample, not 27000-image or held-out accuracy. Jobs can route to separate units of the same named phone.",["docs/saved192_ai_hub.md","results/hub/resize192_labelled500/manifest.json","results/hub/resize192_device.json"],saved_remote)
+      ("13_mac_cpu", "Matched Mac CPU measurements", "Collaborator measurements on Apple M4 Pro, including full-data accuracy and separate matched CPU latency/estimated energy. Original Mac reports, raw evidence and notebook cells are preserved; do not mix their baselines with Windows or AI Hub.",["results/mac/README.md","experiments/13_mac_cpu/README.md"],[]),
+      ("14_saved192_edge_500", "Saved 192 FP16-storage model on an edge phone", "Test the exact saved winner on Samsung Galaxy S24 (Snapdragon 8 Gen 3), separately on CPU and QNN NPU, without additional quantization. Compile from the saved FP16-storage source; inspect compiler output size and actual operation placement. Accuracy uses 500 balanced real images (50/class), disjoint from 512 calibration images, with a local reference from this exact model. Separate microbenchmark profiles give steady inference latency, excluding upload/preprocessing. This is a training-pool diagnostic sample, not 27000-image or held-out accuracy. Jobs can route to separate units of the same named phone.",["docs/saved192_ai_hub.md","results/hub/resize192_labelled500/manifest.json","results/hub/resize192_device.json"],saved_remote)
     ]
     for r in gpu_rows:
         r.update(training_device=r["training"]["execution"]["device_name"],amp=r["training"]["execution"]["amp"],seconds=r["training"]["seconds"],inference_provider="CPUExecutionProvider")
-    registry={"updated_utc":datetime.now(timezone.utc).isoformat(),"ordering":"Numbered phases and logical experimental progression; original wall-clock timestamps are not reconstructed", "records":historical+current+remote+energy_rows+runtime_rows+gpu_rows+latency_rows}
+    registry={"updated_utc":datetime.now(timezone.utc).isoformat(),"ordering":"Numbered phases and logical experimental progression; original wall-clock timestamps are not reconstructed", "records":historical+current+remote+energy_rows+runtime_rows+gpu_rows+latency_rows+external_records}
     (OUT/"runs.json").write_text(json.dumps(registry,indent=2),encoding="utf-8")
     introduction="""# Experiment log - start here
 
@@ -156,8 +161,11 @@ Two accuracy protocols exist: the historical 500-image pilot and the current 27,
         index+=f"| {n:02} | {title} | [Details]({slug}/README.md) |\n"
         body=f"# {n:02}. {title}\n\n{explanation}\n\n"
         markdown(body)
+        if slug=="13_mac_cpu":
+            notebook_cells.extend(external_cells)
+            continue
         if rows:
-            df=table(rows,n in (6,13)) if n not in (9,10) else pd.DataFrame([{k:r.get(k) for k in ["threads","replicates","median_latency_ms","mean_estimated_j_per_inference","energy_stdev","latency_ratio_to_matched_4t","estimated_energy_ratio_to_matched_4t"]} for r in rows]).round(6)
+            df=table(rows,n in (6,14)) if n not in (9,10) else pd.DataFrame([{k:r.get(k) for k in ["threads","replicates","median_latency_ms","mean_estimated_j_per_inference","energy_stdev","latency_ratio_to_matched_4t","estimated_energy_ratio_to_matched_4t"]} for r in rows]).round(6)
             if n==10:df=pd.DataFrame([{k:r.get(k) for k in ["name","median_ms","energy_j_per_inference","energy_stdev","latency_ratio_to_matched_baseline","estimated_energy_ratio_to_matched_baseline"]} for r in rows]).round(6)
             if n==11:
                 df=pd.DataFrame([{"name":r["name"],"status":r["status"],"training_examples":r["training_examples"],"optimizer_steps":r["optimizer_steps"],"training_device":r["training"]["execution"]["device_name"],"amp":r["training"]["execution"]["amp"],"seconds":r["training"]["seconds"],"inference_provider":"CPUExecutionProvider"} for r in rows])
@@ -176,7 +184,7 @@ Two accuracy protocols exist: the historical 500-image pilot and the current 27,
             code(source,df.to_html(index=False,na_rep="pending / n/a"))
             if n == 6:
                 body += "All latency values in this table are Hub estimates. S24 CPU/NPU comparisons use the same source; numerical agreement retains the 32-image smoke check; labelled accuracy columns use the new 1,000-image diagnostic sample. Actual placement, memory ranges, failure reasons and job IDs are in details.json.\n\n"
-            if n==13:
+            if n==14:
                 body+="Labelled sample count is 500. Precision 'none' means no extra Hub quantization; the source already has FP16 weight storage with FP32 restores. Read the source/compiled hashes and deployment asset sizes before claiming precision or compression on the device.\n\n"
             body+="## Implementation and exact settings\n\nOpen [details.json](details.json) for model hashes, pruning/quantization/recovery settings and evidence paths.\n\n"
             for r in rows:

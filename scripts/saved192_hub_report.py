@@ -26,6 +26,14 @@ def main():
         agreement=f'{score["top1_agreement_with_source"]*100:.1f}%' if score else 'pending'
         placement=str(dict(Counter(x.get('compute_unit','unknown') for x in profile.get('execution_detail',[])))) if profile else 'pending'
         parts.append(f'| {label} | {time} | {acc} | {correct} | {worst} | {agreement} | {placement} |')
+    cpu=read('results/hub/resize192_s24_cpu/dataset_accuracy.json')
+    npu=read('results/hub/resize192_s24_npu/dataset_accuracy.json')
+    if cpu and npu:
+        parts+=['\n## Class recall on the 500-image sample\n',
+            '| Class | CPU | NPU |\n|---|---:|---:|']
+        for label in sample['classes']:
+            parts.append(f'| {label} | {cpu["per_class_recall"][label]*100:.1f}% | {npu["per_class_recall"][label]*100:.1f}% |')
+        parts.append('\nBoth runtimes make the same three errors as the saved model locally: two PermanentCrop images and one Pasture image. Agreement is reported separately from label-based accuracy.\n')
     parts += ['\n## What happened to weight storage?\n',
         'The uploaded portable source is **4,496,556 bytes / 4.288 MiB**. Both compiled ONNX target packages contain **8,937,126 bytes / 8.523 MiB** uncompressed, including external weights. The target graph has FLOAT initializers: the compiler folded the source FP16-to-FP32 casts and expanded its weight storage. The original saved file remains unchanged. ZIP size is transfer compression and is not the model-size denominator.\n',
         'This confirms a distinction between the smaller portable file and the compiler-produced deployment artifact. The source disk saving is real, but it does not survive this specific Hub compile path. NPU execution is verified by per-operation placement; float precision inside the device kernel is not inferred from file size or the source label.\n',

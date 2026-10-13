@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-13T19:51:45.403063+00:00",
+  "updated_utc": "2026-10-13T20:01:33.253257+00:00",
   "ordering": "Numbered phases and logical experimental progression; original wall-clock timestamps are not reconstructed",
   "records": [
     {
@@ -1769,7 +1769,7 @@
     {
       "name": "resize192_s24_npu",
       "phase": "remote_exploration",
-      "status": "pending",
+      "status": "completed",
       "device": "Samsung Galaxy S24",
       "runtime": "onnx",
       "requested_compute": "npu",
@@ -1790,11 +1790,11 @@
       },
       "top1_agreement_pct": null,
       "numerical_samples": null,
-      "accuracy_pct": null,
-      "labelled_samples": null,
-      "worst_recall_pct": null,
-      "labelled_accuracy_scope": null,
-      "labelled_top1_agreement_pct": null,
+      "accuracy_pct": 99.4,
+      "labelled_samples": 500,
+      "worst_recall_pct": 96.0,
+      "labelled_accuracy_scope": "training_set_subset",
+      "labelled_top1_agreement_pct": 100.0,
       "performance_mode": "burst",
       "energy_j": null,
       "accuracy_inherited_from": null,
@@ -2564,6 +2564,596 @@
         "scripts/compare_192_latency.py",
         "edgeprep/benchmark.py"
       ]
+    },
+    {
+      "name": "mac_baseline_spin",
+      "model_sha256": "33f281351022a7580ba30c6dc3c7a0d22ba05a3b20e70eea11bf6c7b73202876",
+      "file_bytes": 8919497,
+      "replicates": 3,
+      "median_ms": 2.2266245,
+      "median_range_ms": [
+        2.1794585,
+        2.2382295
+      ],
+      "p95_ms": 2.3777643,
+      "peak_rss_mib": 108.5625,
+      "estimated_energy_j_per_inference": 0.03957871563415671,
+      "estimated_power_w": 12.926474917516272,
+      "cpu_power_mode": "cpu_load",
+      "cpu_tdp_w": 35.0,
+      "evidence": "results/mac/paired_runtime/summary.json",
+      "phase": "mac_cpu_runtime",
+      "status": "completed",
+      "label": "baseline_spin",
+      "diagnostic_accuracy_pct": 99.0,
+      "diagnostic_examples": 100,
+      "scope": "training_pool_diagnostic_subset",
+      "accuracy_evidence": "results/mac/baseline_accuracy_subset.json",
+      "implementation": [
+        "scripts/measure_mac.py",
+        "edgeprep/benchmark.py"
+      ],
+      "machine": {
+        "cpu": "Apple M4 Pro",
+        "os": "macOS-27.0.1-arm64-arm-64bit",
+        "power_source": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=36307043)\t100%; charged; 0:00 remaining present: true",
+        "settings": {
+          "baseline": "artifacts/mac/baseline/model_fp32.onnx",
+          "candidate": "best_models/resize192_head_ce_w16_e391533162d7/model_weight16.onnx",
+          "output": "results/mac/paired_runtime",
+          "inputs": "results/mac/data/timing_input.npy",
+          "labels": "results/mac/data/timing_label.npy",
+          "threads": 4,
+          "repetitions": 3,
+          "runs": 1000,
+          "warmup": 100,
+          "energy_seconds": 30
+        },
+        "candidate_status": "provided",
+        "protocol": "Serial fresh processes; rotated scenario order each repetition; CPU only; batch size one",
+        "power_caveat": "CodeCarbon CPU-load/TDP and RAM heuristic only, not Apple sensors or a device power meter",
+        "accuracy_caveat": "Timing sample correctness is only a smoke test, not model accuracy"
+      },
+      "run_evidence": [
+        "results/mac/paired_runtime/baseline_spin_rep1.json",
+        "results/mac/paired_runtime/baseline_spin_rep2.json",
+        "results/mac/paired_runtime/baseline_spin_rep3.json"
+      ],
+      "estimated_energy_range_j_per_inference": [
+        0.032248360895180454,
+        0.05370902495238015
+      ],
+      "estimated_energy_stdev_j_per_inference": 0.012240080153081688
+    },
+    {
+      "name": "mac_baseline_sleep",
+      "model_sha256": "33f281351022a7580ba30c6dc3c7a0d22ba05a3b20e70eea11bf6c7b73202876",
+      "file_bytes": 8919497,
+      "replicates": 3,
+      "median_ms": 2.6636455,
+      "median_range_ms": [
+        2.6600835,
+        3.5242085
+      ],
+      "p95_ms": 2.87569615,
+      "peak_rss_mib": 102.5625,
+      "estimated_energy_j_per_inference": 0.029173141236764944,
+      "estimated_power_w": 9.329553501842039,
+      "cpu_power_mode": "cpu_load",
+      "cpu_tdp_w": 35.0,
+      "evidence": "results/mac/paired_runtime/summary.json",
+      "phase": "mac_cpu_runtime",
+      "status": "completed",
+      "label": "baseline_sleep",
+      "diagnostic_accuracy_pct": 99.0,
+      "diagnostic_examples": 100,
+      "scope": "training_pool_diagnostic_subset",
+      "accuracy_evidence": "results/mac/baseline_accuracy_subset.json",
+      "implementation": [
+        "scripts/measure_mac.py",
+        "edgeprep/benchmark.py"
+      ],
+      "machine": {
+        "cpu": "Apple M4 Pro",
+        "os": "macOS-27.0.1-arm64-arm-64bit",
+        "power_source": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=36307043)\t100%; charged; 0:00 remaining present: true",
+        "settings": {
+          "baseline": "artifacts/mac/baseline/model_fp32.onnx",
+          "candidate": "best_models/resize192_head_ce_w16_e391533162d7/model_weight16.onnx",
+          "output": "results/mac/paired_runtime",
+          "inputs": "results/mac/data/timing_input.npy",
+          "labels": "results/mac/data/timing_label.npy",
+          "threads": 4,
+          "repetitions": 3,
+          "runs": 1000,
+          "warmup": 100,
+          "energy_seconds": 30
+        },
+        "candidate_status": "provided",
+        "protocol": "Serial fresh processes; rotated scenario order each repetition; CPU only; batch size one",
+        "power_caveat": "CodeCarbon CPU-load/TDP and RAM heuristic only, not Apple sensors or a device power meter",
+        "accuracy_caveat": "Timing sample correctness is only a smoke test, not model accuracy"
+      },
+      "run_evidence": [
+        "results/mac/paired_runtime/baseline_sleep_rep1.json",
+        "results/mac/paired_runtime/baseline_sleep_rep2.json",
+        "results/mac/paired_runtime/baseline_sleep_rep3.json"
+      ],
+      "estimated_energy_range_j_per_inference": [
+        0.024726365440174404,
+        0.03672594067790791
+      ],
+      "estimated_energy_stdev_j_per_inference": 0.006575179741413599
+    },
+    {
+      "name": "mac_candidate_spin",
+      "model_sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+      "file_bytes": 4496556,
+      "replicates": 3,
+      "median_ms": 1.870834,
+      "median_range_ms": [
+        1.8598124999999999,
+        1.8867085000000001
+      ],
+      "p95_ms": 1.96875205,
+      "peak_rss_mib": 101.859375,
+      "estimated_energy_j_per_inference": 0.028199895669822655,
+      "estimated_power_w": 14.686023392702548,
+      "cpu_power_mode": "cpu_load",
+      "cpu_tdp_w": 35.0,
+      "evidence": "results/mac/paired_runtime/summary.json",
+      "phase": "mac_cpu_runtime",
+      "status": "completed",
+      "label": "candidate_spin",
+      "diagnostic_accuracy_pct": 100.0,
+      "diagnostic_examples": 100,
+      "scope": "training_pool_diagnostic_subset",
+      "accuracy_evidence": "results/mac/candidate_accuracy_subset.json",
+      "implementation": [
+        "scripts/measure_mac.py",
+        "edgeprep/benchmark.py"
+      ],
+      "machine": {
+        "cpu": "Apple M4 Pro",
+        "os": "macOS-27.0.1-arm64-arm-64bit",
+        "power_source": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=36307043)\t100%; charged; 0:00 remaining present: true",
+        "settings": {
+          "baseline": "artifacts/mac/baseline/model_fp32.onnx",
+          "candidate": "best_models/resize192_head_ce_w16_e391533162d7/model_weight16.onnx",
+          "output": "results/mac/paired_runtime",
+          "inputs": "results/mac/data/timing_input.npy",
+          "labels": "results/mac/data/timing_label.npy",
+          "threads": 4,
+          "repetitions": 3,
+          "runs": 1000,
+          "warmup": 100,
+          "energy_seconds": 30
+        },
+        "candidate_status": "provided",
+        "protocol": "Serial fresh processes; rotated scenario order each repetition; CPU only; batch size one",
+        "power_caveat": "CodeCarbon CPU-load/TDP and RAM heuristic only, not Apple sensors or a device power meter",
+        "accuracy_caveat": "Timing sample correctness is only a smoke test, not model accuracy"
+      },
+      "run_evidence": [
+        "results/mac/paired_runtime/candidate_spin_rep1.json",
+        "results/mac/paired_runtime/candidate_spin_rep2.json",
+        "results/mac/paired_runtime/candidate_spin_rep3.json"
+      ],
+      "estimated_energy_range_j_per_inference": [
+        0.028050193401705434,
+        0.0284812385019222
+      ],
+      "estimated_energy_stdev_j_per_inference": 0.00024381734591576856
+    },
+    {
+      "name": "mac_candidate_sleep",
+      "model_sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+      "file_bytes": 4496556,
+      "replicates": 3,
+      "median_ms": 2.2041455,
+      "median_range_ms": [
+        2.1879375000000003,
+        2.272625
+      ],
+      "p95_ms": 2.37979825,
+      "peak_rss_mib": 101.34375,
+      "estimated_energy_j_per_inference": 0.020961849454189937,
+      "estimated_power_w": 8.961647388413143,
+      "cpu_power_mode": "cpu_load",
+      "cpu_tdp_w": 35.0,
+      "evidence": "results/mac/paired_runtime/summary.json",
+      "phase": "mac_cpu_runtime",
+      "status": "completed",
+      "label": "candidate_sleep",
+      "diagnostic_accuracy_pct": 100.0,
+      "diagnostic_examples": 100,
+      "scope": "training_pool_diagnostic_subset",
+      "accuracy_evidence": "results/mac/candidate_accuracy_subset.json",
+      "implementation": [
+        "scripts/measure_mac.py",
+        "edgeprep/benchmark.py"
+      ],
+      "machine": {
+        "cpu": "Apple M4 Pro",
+        "os": "macOS-27.0.1-arm64-arm-64bit",
+        "power_source": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=36307043)\t100%; charged; 0:00 remaining present: true",
+        "settings": {
+          "baseline": "artifacts/mac/baseline/model_fp32.onnx",
+          "candidate": "best_models/resize192_head_ce_w16_e391533162d7/model_weight16.onnx",
+          "output": "results/mac/paired_runtime",
+          "inputs": "results/mac/data/timing_input.npy",
+          "labels": "results/mac/data/timing_label.npy",
+          "threads": 4,
+          "repetitions": 3,
+          "runs": 1000,
+          "warmup": 100,
+          "energy_seconds": 30
+        },
+        "candidate_status": "provided",
+        "protocol": "Serial fresh processes; rotated scenario order each repetition; CPU only; batch size one",
+        "power_caveat": "CodeCarbon CPU-load/TDP and RAM heuristic only, not Apple sensors or a device power meter",
+        "accuracy_caveat": "Timing sample correctness is only a smoke test, not model accuracy"
+      },
+      "run_evidence": [
+        "results/mac/paired_runtime/candidate_sleep_rep1.json",
+        "results/mac/paired_runtime/candidate_sleep_rep2.json",
+        "results/mac/paired_runtime/candidate_sleep_rep3.json"
+      ],
+      "estimated_energy_range_j_per_inference": [
+        0.020410805806500856,
+        0.021497856228943315
+      ],
+      "estimated_energy_stdev_j_per_inference": 0.0005436811895714668
+    },
+    {
+      "name": "mac_full_baseline_spin",
+      "model_sha256": "33f281351022a7580ba30c6dc3c7a0d22ba05a3b20e70eea11bf6c7b73202876",
+      "file_bytes": 8919497,
+      "replicates": 3,
+      "median_ms": 2.2576045000000002,
+      "mean_ms": 2.2855814503333334,
+      "load_ms": 9.396040986757725,
+      "median_range_ms": [
+        2.2531465,
+        2.2904995
+      ],
+      "p95_ms": 2.4204271,
+      "peak_rss_mib": 109.109375,
+      "session_rss_delta_mib": 61.21875,
+      "process_cpu_percent_one_core_basis": 399.48582900746686,
+      "estimated_energy_j_per_inference": 0.033765073396213305,
+      "estimated_energy_stdev_j_per_inference": 0.0006457348533079345,
+      "estimated_energy_range_j_per_inference": [
+        0.0333715085398037,
+        0.034510311409334596
+      ],
+      "estimated_power_w": 14.461825895335748,
+      "cpu_power_mode": "cpu_load",
+      "cpu_tdp_w": 35.0,
+      "evidence": "results/mac/full_runtime/summary.json",
+      "phase": "mac_cpu_full_runtime",
+      "status": "completed",
+      "label": "baseline_spin",
+      "scope": "training_set",
+      "accuracy_evidence": "results/mac/eval27000/baseline_accuracy.json",
+      "implementation": [
+        "scripts/measure_mac.py",
+        "edgeprep/benchmark.py"
+      ],
+      "machine": {
+        "cpu": "Apple M4 Pro",
+        "os": "macOS-27.0.1-arm64-arm-64bit",
+        "power_source": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=36307043)\t99%; discharging; 15:01 remaining present: true",
+        "settings": {
+          "baseline": "artifacts/mac/baseline/model_fp32.onnx",
+          "candidate": "best_models/resize192_head_ce_w16_e391533162d7/model_weight16.onnx",
+          "output": "results/mac/full_runtime",
+          "inputs": "results/mac/data/timing_input.npy",
+          "labels": "results/mac/data/timing_label.npy",
+          "threads": 4,
+          "repetitions": 3,
+          "runs": 1000,
+          "warmup": 100,
+          "energy_seconds": 30
+        },
+        "candidate_status": "provided",
+        "protocol": "Serial fresh processes; rotated scenario order each repetition; CPU only; batch size one",
+        "power_caveat": "CodeCarbon CPU-load/TDP and RAM heuristic only, not Apple sensors or a device power meter",
+        "accuracy_caveat": "Timing sample correctness is only a smoke test, not model accuracy"
+      },
+      "examples": 27000,
+      "accuracy_pct": 99.16296296296296,
+      "worst_class_recall_pct": 95.84,
+      "correct_predictions": 26774,
+      "evaluation_seconds_including_preprocessing": 79.30363895895425,
+      "projected_inference_only_energy_j_for_dataset": 911.6569816977592,
+      "run_evidence": [
+        "results/mac/full_runtime/baseline_spin_rep1.json",
+        "results/mac/full_runtime/baseline_spin_rep2.json",
+        "results/mac/full_runtime/baseline_spin_rep3.json"
+      ]
+    },
+    {
+      "name": "mac_full_baseline_sleep",
+      "model_sha256": "33f281351022a7580ba30c6dc3c7a0d22ba05a3b20e70eea11bf6c7b73202876",
+      "file_bytes": 8919497,
+      "replicates": 3,
+      "median_ms": 2.603583,
+      "mean_ms": 2.6318898256666667,
+      "load_ms": 8.028458047192544,
+      "median_range_ms": [
+        2.5698125000000003,
+        2.6280835
+      ],
+      "p95_ms": 2.79691525,
+      "peak_rss_mib": 107.765625,
+      "session_rss_delta_mib": 59.546875,
+      "process_cpu_percent_one_core_basis": 251.92187957659758,
+      "estimated_energy_j_per_inference": 0.024801701390301755,
+      "estimated_energy_stdev_j_per_inference": 0.00026347554872359244,
+      "estimated_energy_range_j_per_inference": [
+        0.02462906341009181,
+        0.02510496844012834
+      ],
+      "estimated_power_w": 9.30569838758027,
+      "cpu_power_mode": "cpu_load",
+      "cpu_tdp_w": 35.0,
+      "evidence": "results/mac/full_runtime/summary.json",
+      "phase": "mac_cpu_full_runtime",
+      "status": "completed",
+      "label": "baseline_sleep",
+      "scope": "training_set",
+      "accuracy_evidence": "results/mac/eval27000/baseline_accuracy.json",
+      "implementation": [
+        "scripts/measure_mac.py",
+        "edgeprep/benchmark.py"
+      ],
+      "machine": {
+        "cpu": "Apple M4 Pro",
+        "os": "macOS-27.0.1-arm64-arm-64bit",
+        "power_source": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=36307043)\t99%; discharging; 15:01 remaining present: true",
+        "settings": {
+          "baseline": "artifacts/mac/baseline/model_fp32.onnx",
+          "candidate": "best_models/resize192_head_ce_w16_e391533162d7/model_weight16.onnx",
+          "output": "results/mac/full_runtime",
+          "inputs": "results/mac/data/timing_input.npy",
+          "labels": "results/mac/data/timing_label.npy",
+          "threads": 4,
+          "repetitions": 3,
+          "runs": 1000,
+          "warmup": 100,
+          "energy_seconds": 30
+        },
+        "candidate_status": "provided",
+        "protocol": "Serial fresh processes; rotated scenario order each repetition; CPU only; batch size one",
+        "power_caveat": "CodeCarbon CPU-load/TDP and RAM heuristic only, not Apple sensors or a device power meter",
+        "accuracy_caveat": "Timing sample correctness is only a smoke test, not model accuracy"
+      },
+      "examples": 27000,
+      "accuracy_pct": 99.16296296296296,
+      "worst_class_recall_pct": 95.84,
+      "correct_predictions": 26774,
+      "evaluation_seconds_including_preprocessing": 79.30363895895425,
+      "projected_inference_only_energy_j_for_dataset": 669.6459375381473,
+      "run_evidence": [
+        "results/mac/full_runtime/baseline_sleep_rep1.json",
+        "results/mac/full_runtime/baseline_sleep_rep2.json",
+        "results/mac/full_runtime/baseline_sleep_rep3.json"
+      ]
+    },
+    {
+      "name": "mac_full_candidate_spin",
+      "model_sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+      "file_bytes": 4496556,
+      "replicates": 3,
+      "median_ms": 1.8670624999999998,
+      "mean_ms": 1.8928025536666666,
+      "load_ms": 12.04791700001806,
+      "median_range_ms": [
+        1.8568544999999999,
+        1.8957085
+      ],
+      "p95_ms": 1.9621205,
+      "peak_rss_mib": 105.8125,
+      "session_rss_delta_mib": 57.875,
+      "process_cpu_percent_one_core_basis": 398.16628394439175,
+      "estimated_energy_j_per_inference": 0.027979343299955484,
+      "estimated_energy_stdev_j_per_inference": 0.00035608632118819933,
+      "estimated_energy_range_j_per_inference": [
+        0.027618856732846014,
+        0.028330859886559957
+      ],
+      "estimated_power_w": 14.520765677593783,
+      "cpu_power_mode": "cpu_load",
+      "cpu_tdp_w": 35.0,
+      "evidence": "results/mac/full_runtime/summary.json",
+      "phase": "mac_cpu_full_runtime",
+      "status": "completed",
+      "label": "candidate_spin",
+      "scope": "training_set",
+      "accuracy_evidence": "results/mac/eval27000/candidate_accuracy.json",
+      "implementation": [
+        "scripts/measure_mac.py",
+        "edgeprep/benchmark.py"
+      ],
+      "machine": {
+        "cpu": "Apple M4 Pro",
+        "os": "macOS-27.0.1-arm64-arm-64bit",
+        "power_source": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=36307043)\t99%; discharging; 15:01 remaining present: true",
+        "settings": {
+          "baseline": "artifacts/mac/baseline/model_fp32.onnx",
+          "candidate": "best_models/resize192_head_ce_w16_e391533162d7/model_weight16.onnx",
+          "output": "results/mac/full_runtime",
+          "inputs": "results/mac/data/timing_input.npy",
+          "labels": "results/mac/data/timing_label.npy",
+          "threads": 4,
+          "repetitions": 3,
+          "runs": 1000,
+          "warmup": 100,
+          "energy_seconds": 30
+        },
+        "candidate_status": "provided",
+        "protocol": "Serial fresh processes; rotated scenario order each repetition; CPU only; batch size one",
+        "power_caveat": "CodeCarbon CPU-load/TDP and RAM heuristic only, not Apple sensors or a device power meter",
+        "accuracy_caveat": "Timing sample correctness is only a smoke test, not model accuracy"
+      },
+      "examples": 27000,
+      "accuracy_pct": 99.11111111111111,
+      "worst_class_recall_pct": 97.24000000000001,
+      "correct_predictions": 26760,
+      "evaluation_seconds_including_preprocessing": 65.91115216701292,
+      "projected_inference_only_energy_j_for_dataset": 755.4422690987981,
+      "run_evidence": [
+        "results/mac/full_runtime/candidate_spin_rep1.json",
+        "results/mac/full_runtime/candidate_spin_rep2.json",
+        "results/mac/full_runtime/candidate_spin_rep3.json"
+      ]
+    },
+    {
+      "name": "mac_full_candidate_sleep",
+      "model_sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+      "file_bytes": 4496556,
+      "replicates": 3,
+      "median_ms": 2.2949580000000003,
+      "mean_ms": 2.3151580436666666,
+      "load_ms": 11.056166025809944,
+      "median_range_ms": [
+        2.2680625,
+        2.380979
+      ],
+      "p95_ms": 2.40233605,
+      "peak_rss_mib": 104.125,
+      "session_rss_delta_mib": 56.515625,
+      "process_cpu_percent_one_core_basis": 243.7953511362712,
+      "estimated_energy_j_per_inference": 0.02109225884786071,
+      "estimated_energy_stdev_j_per_inference": 0.0006429877863603263,
+      "estimated_energy_range_j_per_inference": [
+        0.020577558232279247,
+        0.021813015835198252
+      ],
+      "estimated_power_w": 9.045092939550406,
+      "cpu_power_mode": "cpu_load",
+      "cpu_tdp_w": 35.0,
+      "evidence": "results/mac/full_runtime/summary.json",
+      "phase": "mac_cpu_full_runtime",
+      "status": "completed",
+      "label": "candidate_sleep",
+      "scope": "training_set",
+      "accuracy_evidence": "results/mac/eval27000/candidate_accuracy.json",
+      "implementation": [
+        "scripts/measure_mac.py",
+        "edgeprep/benchmark.py"
+      ],
+      "machine": {
+        "cpu": "Apple M4 Pro",
+        "os": "macOS-27.0.1-arm64-arm-64bit",
+        "power_source": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=36307043)\t99%; discharging; 15:01 remaining present: true",
+        "settings": {
+          "baseline": "artifacts/mac/baseline/model_fp32.onnx",
+          "candidate": "best_models/resize192_head_ce_w16_e391533162d7/model_weight16.onnx",
+          "output": "results/mac/full_runtime",
+          "inputs": "results/mac/data/timing_input.npy",
+          "labels": "results/mac/data/timing_label.npy",
+          "threads": 4,
+          "repetitions": 3,
+          "runs": 1000,
+          "warmup": 100,
+          "energy_seconds": 30
+        },
+        "candidate_status": "provided",
+        "protocol": "Serial fresh processes; rotated scenario order each repetition; CPU only; batch size one",
+        "power_caveat": "CodeCarbon CPU-load/TDP and RAM heuristic only, not Apple sensors or a device power meter",
+        "accuracy_caveat": "Timing sample correctness is only a smoke test, not model accuracy"
+      },
+      "examples": 27000,
+      "accuracy_pct": 99.11111111111111,
+      "worst_class_recall_pct": 97.24000000000001,
+      "correct_predictions": 26760,
+      "evaluation_seconds_including_preprocessing": 65.91115216701292,
+      "projected_inference_only_energy_j_for_dataset": 569.4909888922392,
+      "run_evidence": [
+        "results/mac/full_runtime/candidate_sleep_rep1.json",
+        "results/mac/full_runtime/candidate_sleep_rep2.json",
+        "results/mac/full_runtime/candidate_sleep_rep3.json"
+      ]
+    },
+    {
+      "name": "mac_baseline_eval50",
+      "phase": "mac_cpu_diagnostic50",
+      "status": "completed",
+      "model_sha256": "33f281351022a7580ba30c6dc3c7a0d22ba05a3b20e70eea11bf6c7b73202876",
+      "diagnostic_examples": 50,
+      "diagnostic_accuracy_pct": 100.0,
+      "worst_class_recall_pct": null,
+      "scope": "training_pool_diagnostic_subset",
+      "provider": "CPUExecutionProvider",
+      "evidence": "results/mac/eval50/baseline_accuracy.json",
+      "manifest": "results/mac/eval50/manifest.json"
+    },
+    {
+      "name": "mac_candidate_eval50",
+      "phase": "mac_cpu_diagnostic50",
+      "status": "completed",
+      "model_sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+      "diagnostic_examples": 50,
+      "diagnostic_accuracy_pct": 100.0,
+      "worst_class_recall_pct": null,
+      "scope": "training_pool_diagnostic_subset",
+      "provider": "CPUExecutionProvider",
+      "evidence": "results/mac/eval50/candidate_accuracy.json",
+      "manifest": "results/mac/eval50/manifest.json"
+    },
+    {
+      "name": "mac_baseline_eval15000",
+      "phase": "mac_cpu_diagnostic15000",
+      "status": "completed",
+      "model_sha256": "33f281351022a7580ba30c6dc3c7a0d22ba05a3b20e70eea11bf6c7b73202876",
+      "diagnostic_examples": 15000,
+      "diagnostic_accuracy_pct": 99.09333333333333,
+      "worst_class_recall_pct": 95.8,
+      "scope": "training_pool_diagnostic_subset",
+      "provider": "CPUExecutionProvider",
+      "evidence": "results/mac/eval15000/baseline_accuracy.json",
+      "manifest": "results/mac/eval15000/manifest.json"
+    },
+    {
+      "name": "mac_candidate_eval15000",
+      "phase": "mac_cpu_diagnostic15000",
+      "status": "completed",
+      "model_sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+      "diagnostic_examples": 15000,
+      "diagnostic_accuracy_pct": 99.03333333333333,
+      "worst_class_recall_pct": 97.2,
+      "scope": "training_pool_diagnostic_subset",
+      "provider": "CPUExecutionProvider",
+      "evidence": "results/mac/eval15000/candidate_accuracy.json",
+      "manifest": "results/mac/eval15000/manifest.json"
+    },
+    {
+      "name": "mac_baseline_eval27000",
+      "phase": "mac_cpu_full_data",
+      "status": "completed",
+      "model_sha256": "33f281351022a7580ba30c6dc3c7a0d22ba05a3b20e70eea11bf6c7b73202876",
+      "worst_class_recall_pct": 95.84,
+      "scope": "training_set",
+      "provider": "CPUExecutionProvider",
+      "evidence": "results/mac/eval27000/baseline_accuracy.json",
+      "manifest": "results/mac/eval27000/manifest.json",
+      "examples": 27000,
+      "accuracy_pct": 99.16296296296296
+    },
+    {
+      "name": "mac_candidate_eval27000",
+      "phase": "mac_cpu_full_data",
+      "status": "completed",
+      "model_sha256": "e391533162d7443b8cb74af7e1b73a3c92055a924499b1db10f3d8d243cadfc0",
+      "worst_class_recall_pct": 97.24000000000001,
+      "scope": "training_set",
+      "provider": "CPUExecutionProvider",
+      "evidence": "results/mac/eval27000/candidate_accuracy.json",
+      "manifest": "results/mac/eval27000/manifest.json",
+      "examples": 27000,
+      "accuracy_pct": 99.11111111111111
     }
   ]
 }

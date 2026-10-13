@@ -1,11 +1,11 @@
-# 13. Saved 192 FP16-storage model on an edge phone
+# 14. Saved 192 FP16-storage model on an edge phone
 
 Test the exact saved winner on Samsung Galaxy S24 (Snapdragon 8 Gen 3), separately on CPU and QNN NPU, without additional quantization. Compile from the saved FP16-storage source; inspect compiler output size and actual operation placement. Accuracy uses 500 balanced real images (50/class), disjoint from 512 calibration images, with a local reference from this exact model. Separate microbenchmark profiles give steady inference latency, excluding upload/preprocessing. This is a training-pool diagnostic sample, not 27000-image or held-out accuracy. Jobs can route to separate units of the same named phone.
 
 | name | status | device | precision | performance_mode | hub_estimated_latency_ms | accuracy_pct | worst_recall_pct | labelled_samples | labelled_top1_agreement_pct |
 |---|---|---|---|---|---|---|---|---|---|
-| resize192_s24_cpu | completed | Samsung Galaxy S24 | none | burst | 4.183 | 99.4 | 96.0 | 500.0 | 100.0 |
-| resize192_s24_npu | pending | Samsung Galaxy S24 | none | burst | 0.435 | pending / n/a | pending / n/a | pending / n/a | pending / n/a |
+| resize192_s24_cpu | completed | Samsung Galaxy S24 | none | burst | 4.183 | 99.4 | 96.0 | 500 | 100.0 |
+| resize192_s24_npu | completed | Samsung Galaxy S24 | none | burst | 0.435 | 99.4 | 96.0 | 500 | 100.0 |
 
 Labelled sample count is 500. Precision 'none' means no extra Hub quantization; the source already has FP16 weight storage with FP32 restores. Read the source/compiled hashes and deployment asset sizes before claiming precision or compression on the device.
 

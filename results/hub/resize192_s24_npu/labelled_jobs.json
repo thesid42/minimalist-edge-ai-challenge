@@ -6,14 +6,14 @@
       "start": 0,
       "count": 250,
       "id": "j5wy4ewjg",
-      "status": "RUNNING_INFERENCE",
+      "status": "SUCCESS",
       "message": ""
     },
     {
       "start": 250,
       "count": 250,
       "id": "jg9odl0vg",
-      "status": "RUNNING_INFERENCE",
+      "status": "SUCCESS",
       "message": ""
     }
   ]
